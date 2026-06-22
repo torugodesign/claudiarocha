@@ -1,0 +1,94 @@
+{% extends "painel/base.html" %}
+{% block title %}{% if artigo %}Editar artigo{% else %}Novo artigo{% endif %}{% endblock %}
+{% block nav_novo %}{% if not artigo %}active{% endif %}{% endblock %}
+{% block nav_artigos %}{% if artigo %}active{% endif %}{% endblock %}
+{% block topbar_title %}{% if artigo %}Editar artigo{% else %}Novo artigo{% endif %}{% endblock %}
+{% block topbar_actions %}
+  <a href="/painel/artigos/" class="btn btn-ghost btn-sm">← Voltar</a>
+  {% if artigo and artigo.publicado %}
+    <a href="/blog/{{ artigo.slug }}/" target="_blank" class="btn btn-ghost btn-sm">Ver no site</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div style="display:grid;grid-template-columns:1fr 300px;gap:1.5rem;align-items:start;">
+
+    <!-- Coluna principal -->
+    <div style="display:flex;flex-direction:column;gap:1.25rem;">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="titulo">Título</label>
+              <input type="text" id="titulo" name="titulo" value="{{ artigo.titulo|default:'' }}" placeholder="Escreva um título claro e direto" required/>
+            </div>
+            <div class="form-group">
+              <label for="resumo">Resumo <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:.68rem;color:#bbb">— aparece na listagem do blog</span></label>
+              <textarea id="resumo" name="resumo" rows="3" placeholder="Descreva o artigo em 1–2 frases que convençam o leitor a clicar">{{ artigo.resumo|default:'' }}</textarea>
+            </div>
+            <div class="form-group">
+              <label for="conteudo">Conteúdo</label>
+              <textarea id="conteudo" name="conteudo" rows="20" placeholder="Escreva o conteúdo completo do artigo aqui...">{{ artigo.conteudo|default:'' }}</textarea>
+              <span class="form-hint">Use linhas em branco para separar parágrafos.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coluna lateral -->
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+
+      <!-- Publicação -->
+      <div class="card">
+        <div class="card-header"><h2>Publicação</h2></div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:1rem;">
+          <label class="form-check">
+            <input type="checkbox" name="publicado" {% if artigo.publicado %}checked{% endif %}/>
+            <span>Publicar no site</span>
+          </label>
+          <p class="form-hint">Artigos não publicados ficam salvos como rascunho e não aparecem no blog.</p>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+            {% if artigo %}Salvar alterações{% else %}Criar artigo{% endif %}
+          </button>
+        </div>
+      </div>
+
+      <!-- Imagem de capa -->
+      <div class="card">
+        <div class="card-header"><h2>Imagem de capa</h2></div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:.75rem;">
+          {% if artigo.imagem_capa %}
+            <img src="{{ artigo.imagem_capa.url }}" style="width:100%;height:160px;object-fit:cover;border-radius:3px;"/>
+            <label class="form-check" style="font-size:.75rem;color:#888;">
+              <input type="checkbox" name="remover_imagem"/>
+              <span>Remover imagem atual</span>
+            </label>
+          {% endif %}
+          <div class="form-group">
+            <label for="imagem_capa">{% if artigo.imagem_capa %}Substituir{% else %}Adicionar imagem{% endif %}</label>
+            <input type="file" id="imagem_capa" name="imagem_capa" accept="image/*"
+              style="font-size:.78rem;color:#666;border:1px dashed #ddd;padding:.75rem;border-radius:3px;background:#fafaf9;cursor:pointer;"/>
+          </div>
+        </div>
+      </div>
+
+      {% if artigo %}
+      <!-- Danger zone -->
+      <div class="card" style="border-color:#fde8e8;">
+        <div class="card-header" style="border-color:#fde8e8;"><h2 style="color:#c0392b;">Zona de risco</h2></div>
+        <div class="card-body">
+          <form method="post" action="/painel/artigos/{{ artigo.id }}/deletar/" onsubmit="return confirm('Deletar permanentemente? Esta ação não pode ser desfeita.')">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger" style="width:100%;justify-content:center;">Deletar artigo</button>
+          </form>
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</form>
+{% endblock %}

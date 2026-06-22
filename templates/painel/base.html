@@ -1,0 +1,475 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Painel{% endblock %} — Cláudia Rocha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --grafite:   #232425;
+      --grafite2:  #1a1b1b;
+      --vinho:     #432A35;
+      --vinho-lt:  #5a3847;
+      --pedra:     #C0BFBF;
+      --bg:        #F4F3F1;
+      --white:     #FFFFFF;
+      --border:    rgba(0,0,0,.08);
+      --text:      #1e1f20;
+      --text-muted:#888;
+      --success:   #2d6a4f;
+      --danger:    #8b3a3a;
+      --sidebar-w: 240px;
+      --header-h:  60px;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--grafite2);
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+    }
+    .sidebar__brand {
+      height: var(--header-h);
+      padding: 0 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      text-decoration: none;
+    }
+    .sidebar__brand svg { flex-shrink: 0; }
+    .sidebar__brand-text { line-height: 1.1; }
+    .sidebar__brand-name {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      color: #E0E0DE;
+    }
+    .sidebar__brand-sub {
+      font-size: .55rem;
+      letter-spacing: .18em;
+      color: var(--pedra);
+      opacity: .5;
+      text-transform: uppercase;
+    }
+
+    .sidebar__nav { flex: 1; padding: 1.25rem 0; overflow-y: auto; }
+    .sidebar__section {
+      font-size: .58rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--pedra);
+      opacity: .4;
+      padding: 1.25rem 1.25rem .5rem;
+    }
+    .sidebar__link {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .6rem 1.25rem;
+      color: #a8a8a8;
+      text-decoration: none;
+      font-size: .82rem;
+      font-weight: 400;
+      border-left: 2px solid transparent;
+      transition: all .18s ease;
+    }
+    .sidebar__link:hover { color: #e0e0de; background: rgba(255,255,255,.04); }
+    .sidebar__link.active {
+      color: var(--white);
+      background: rgba(67,42,53,.5);
+      border-left-color: var(--vinho);
+    }
+    .sidebar__link svg { width: 16px; height: 16px; flex-shrink: 0; opacity: .7; }
+    .sidebar__link.active svg { opacity: 1; }
+
+    .sidebar__footer {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid rgba(255,255,255,.05);
+    }
+    .sidebar__user {
+      font-size: .75rem;
+      color: var(--pedra);
+      opacity: .6;
+      margin-bottom: .5rem;
+    }
+    .sidebar__logout {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .7rem;
+      color: var(--pedra);
+      opacity: .5;
+      text-decoration: none;
+      letter-spacing: .06em;
+      transition: opacity .2s;
+    }
+    .sidebar__logout:hover { opacity: 1; color: #e88; }
+
+    /* ── MAIN ── */
+    .main {
+      margin-left: var(--sidebar-w);
+      min-height: 100vh;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      height: var(--header-h);
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .topbar__title {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -.01em;
+    }
+    .topbar__actions { display: flex; gap: .75rem; align-items: center; }
+
+    /* ── CONTENT ── */
+    .content { padding: 2rem; }
+
+    /* ── BOTÕES ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .5rem 1.1rem;
+      font-size: .75rem;
+      font-weight: 500;
+      letter-spacing: .04em;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .18s ease;
+      white-space: nowrap;
+    }
+    .btn svg { width: 14px; height: 14px; }
+    .btn-primary { background: var(--vinho); color: var(--white); }
+    .btn-primary:hover { background: var(--vinho-lt); }
+    .btn-dark { background: var(--grafite); color: var(--white); }
+    .btn-dark:hover { background: #3a3b3c; }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: #bbb; color: var(--text); background: var(--white); }
+    .btn-danger { background: var(--danger); color: var(--white); }
+    .btn-danger:hover { background: #a04444; }
+    .btn-sm { padding: .35rem .75rem; font-size: .7rem; }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .card-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-header h2 {
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .card-body { padding: 1.5rem; }
+
+    /* ── STAT CARDS ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+    }
+    .stat-card__label {
+      font-size: .68rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .stat-card__value {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1;
+    }
+    .stat-card__sub { font-size: .72rem; color: var(--text-muted); }
+    .stat-card--accent { border-left: 3px solid var(--vinho); }
+
+    /* ── TABELA ── */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      padding: .65rem 1rem;
+      text-align: left;
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .12s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #faf9f8; }
+    td {
+      padding: .85rem 1rem;
+      font-size: .82rem;
+      color: var(--text);
+      vertical-align: middle;
+    }
+    .td-title { font-weight: 500; max-width: 380px; }
+    .td-title a { color: var(--text); text-decoration: none; }
+    .td-title a:hover { color: var(--vinho); }
+    .td-actions { display: flex; gap: .4rem; justify-content: flex-end; }
+
+    /* ── BADGES ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      padding: .2rem .6rem;
+      border-radius: 99px;
+      font-size: .65rem;
+      font-weight: 500;
+      letter-spacing: .04em;
+    }
+    .badge-pub  { background: #e6f4ed; color: var(--success); }
+    .badge-rascunho { background: #f0f0ee; color: #888; }
+
+    /* ── FORMULÁRIO ── */
+    .form-grid { display: grid; gap: 1.25rem; }
+    .form-group { display: flex; flex-direction: column; gap: .35rem; }
+    .form-group label {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .form-group input[type=text],
+    .form-group input[type=email],
+    .form-group textarea,
+    .form-group select {
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      padding: .6rem .85rem;
+      font-size: .85rem;
+      font-family: inherit;
+      color: var(--text);
+      background: #fafaf9;
+      transition: border-color .18s, box-shadow .18s;
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--vinho);
+      box-shadow: 0 0 0 3px rgba(67,42,53,.1);
+      background: var(--white);
+    }
+    .form-group textarea { resize: vertical; min-height: 140px; line-height: 1.65; }
+    .form-hint { font-size: .7rem; color: var(--text-muted); }
+    .form-check {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      cursor: pointer;
+    }
+    .form-check input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--vinho); cursor: pointer; }
+    .form-check span { font-size: .82rem; font-weight: 500; }
+
+    /* ── ALERTS ── */
+    .alert {
+      padding: .75rem 1rem;
+      border-radius: 3px;
+      font-size: .8rem;
+      margin-bottom: 1.25rem;
+      border-left: 3px solid;
+    }
+    .alert-success { background: #edf7f0; color: var(--success); border-color: var(--success); }
+    .alert-error   { background: #fef0f0; color: var(--danger);  border-color: var(--danger); }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-muted);
+    }
+    .empty-state svg { width: 40px; height: 40px; opacity: .25; margin-bottom: 1rem; }
+    .empty-state p { font-size: .85rem; margin-bottom: 1rem; }
+
+    /* ── QUICK ACTIONS ── */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+    .quick-action {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.25rem 1.5rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: all .18s;
+      color: var(--text);
+    }
+    .quick-action:hover { border-color: var(--vinho); box-shadow: 0 2px 12px rgba(67,42,53,.1); }
+    .quick-action__icon {
+      width: 40px; height: 40px;
+      border-radius: 3px;
+      background: rgba(67,42,53,.08);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .quick-action__icon svg { width: 18px; height: 18px; color: var(--vinho); }
+    .quick-action__label { font-size: .82rem; font-weight: 600; }
+    .quick-action__sub { font-size: .72rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── TOGGLE PUBLICAR ── */
+    .toggle-form { display: inline; }
+    .toggle-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <a href="/painel/" class="sidebar__brand">
+      <svg width="20" height="19" viewBox="0 0 100 95">
+        <polygon points="0,0 96,0 91,5 0,5"   fill="#C0BFBF"/>
+        <polygon points="0,10 86,10 81,16 0,16" fill="#C0BFBF"/>
+        <polygon points="0,21 76,21 69,28 0,28" fill="#C0BFBF"/>
+        <polygon points="0,33 64,33 56,41 0,41" fill="#C0BFBF"/>
+        <polygon points="0,46 52,46 42,56 0,56" fill="#C0BFBF"/>
+        <polygon points="0,61 37,61 25,73 0,73" fill="#C0BFBF"/>
+        <polygon points="0,78 21,78 6,93 0,93"  fill="#C0BFBF"/>
+      </svg>
+      <div class="sidebar__brand-text">
+        <div class="sidebar__brand-name">CLÁUDIA ROCHA</div>
+        <div class="sidebar__brand-sub">Painel de gestão</div>
+      </div>
+    </a>
+
+    <nav class="sidebar__nav">
+      <div class="sidebar__section">Principal</div>
+      <a href="/painel/" class="sidebar__link {% block nav_dashboard %}{% endblock %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+        Visão geral
+      </a>
+
+      <div class="sidebar__section">Blog</div>
+      <a href="/painel/artigos/" class="sidebar__link {% block nav_artigos %}{% endblock %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        Artigos
+      </a>
+      <a href="/painel/artigos/novo/" class="sidebar__link {% block nav_novo %}{% endblock %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+        </svg>
+        Novo artigo
+      </a>
+
+      <div class="sidebar__section">Site</div>
+      <a href="/" target="_blank" class="sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        Ver site
+      </a>
+    </nav>
+
+    <div class="sidebar__footer">
+      <div class="sidebar__user">{{ request.user.username }}</div>
+      <form method="post" action="/painel/logout/" style="margin:0">
+        {% csrf_token %}
+        <button type="submit" class="sidebar__logout">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          Sair
+        </button>
+      </form>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <span class="topbar__title">{% block topbar_title %}Painel{% endblock %}</span>
+      <div class="topbar__actions">{% block topbar_actions %}{% endblock %}</div>
+    </div>
+
+    <div class="content">
+      {% if messages %}
+        {% for msg in messages %}
+          <div class="alert alert-{{ msg.tags }}">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+</body>
+</html>

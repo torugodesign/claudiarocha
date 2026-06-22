@@ -1,0 +1,305 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — Cláudia Rocha Advocacia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <style>
+    /* ── BLOG PAGE ── */
+    .blog-pg {
+      background: var(--off-white);
+      min-height: 100vh;
+    }
+
+    /* Hero editorial */
+    .blog-hero {
+      background: var(--grafite);
+      padding: 9rem 0 5rem;
+      border-bottom: 1px solid rgba(192,191,191,0.1);
+    }
+    .blog-hero__tag {
+      font-size: .62rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--pedra);
+      opacity: .6;
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+    .blog-hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 6rem);
+      font-weight: 600;
+      color: var(--white);
+      line-height: .95;
+      letter-spacing: -.01em;
+      max-width: 700px;
+    }
+    .blog-hero__title em {
+      font-family: var(--font-accent);
+      font-style: italic;
+      font-weight: 600;
+      color: var(--pedra);
+    }
+    .blog-hero__sub {
+      font-size: .9rem;
+      color: var(--pedra);
+      opacity: .6;
+      margin-top: 1.75rem;
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    /* Área de artigos */
+    .blog-body {
+      padding: 5rem 0 7rem;
+    }
+
+    /* Artigo destaque — primeiro */
+    .blog-destaque-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+      padding-bottom: 4rem;
+      margin-bottom: 4rem;
+      border-bottom: 1px solid rgba(35,36,37,.12);
+    }
+    .blog-destaque-item__num {
+      font-family: var(--font-display);
+      font-size: 7rem;
+      font-weight: 600;
+      color: var(--vinho);
+      line-height: 1;
+      opacity: .18;
+      margin-bottom: -.5rem;
+    }
+    .blog-destaque-item__data {
+      font-size: .62rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .blog-destaque-item__titulo {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 600;
+      color: var(--grafite);
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+    .blog-destaque-item__resumo {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 1.75rem;
+    }
+    .blog-destaque-item__link {
+      font-size: .72rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--vinho);
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      transition: gap .3s ease;
+    }
+    .blog-destaque-item__link:hover { gap: .85rem; color: var(--grafite); }
+
+    /* Faixa vinho separadora */
+    .blog-destaque-item__accent {
+      width: 3px;
+      height: 100%;
+      background: var(--vinho);
+      opacity: .25;
+      justify-self: center;
+    }
+
+    /* Grade de artigos secundários */
+    .blog-grade {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .blog-card {
+      padding: 2.25rem 2rem 2.25rem 0;
+      border-right: 1px solid rgba(35,36,37,.1);
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      transition: background .25s ease;
+    }
+    .blog-card:last-child { border-right: none; }
+    .blog-card:nth-child(n+4) {
+      border-top: 1px solid rgba(35,36,37,.1);
+      padding-top: 2.25rem;
+    }
+    .blog-card:hover { background: rgba(67,42,53,.04); }
+    .blog-card:hover .blog-card__titulo { color: var(--vinho); }
+    .blog-card:nth-child(3n+1) { padding-left: 0; }
+    .blog-card:nth-child(3n+2) { padding-left: 2rem; }
+    .blog-card:nth-child(3n)   { padding-left: 2rem; border-right: none; }
+
+    .blog-card__num {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 600;
+      color: var(--vinho);
+      opacity: .15;
+      line-height: 1;
+      margin-bottom: .5rem;
+    }
+    .blog-card__data {
+      font-size: .6rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: .75rem;
+      display: block;
+    }
+    .blog-card__titulo {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--grafite);
+      line-height: 1.3;
+      margin-bottom: .75rem;
+      flex: 1;
+      transition: color .25s ease;
+    }
+    .blog-card__resumo {
+      font-size: .88rem;
+      line-height: 1.7;
+      color: #666;
+      margin-bottom: 1.25rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .blog-card__ler {
+      font-size: .65rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--vinho);
+      font-weight: 500;
+    }
+
+    /* Linha separadora entre destaque e grade */
+    .blog-section-label {
+      font-size: .62rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: #aaa;
+      padding: 2rem 0 1.5rem;
+      border-top: 1px solid rgba(35,36,37,.1);
+      margin-bottom: 0;
+    }
+
+    /* Responsivo */
+    @media (max-width: 900px) {
+      .blog-destaque-item { grid-template-columns: 1fr; gap: 0; }
+      .blog-destaque-item__accent { display: none; }
+      .blog-grade { grid-template-columns: 1fr 1fr; }
+      .blog-card:nth-child(2n) { border-right: none; }
+      .blog-card:nth-child(2n+1) { padding-left: 0; }
+      .blog-card:nth-child(2n) { padding-left: 2rem; }
+    }
+    @media (max-width: 600px) {
+      .blog-grade { grid-template-columns: 1fr; }
+      .blog-card { border-right: none !important; padding-left: 0 !important; }
+      .blog-hero__title { font-size: 2.6rem; }
+    }
+  </style>
+</head>
+<body class="blog-pg">
+
+  <nav class="nav visible scrolled" id="nav">
+    <a href="/" class="nav__logo">
+      <svg class="nav__symbol" viewBox="0 0 100 95" aria-hidden="true">
+        <polygon points="0,0 96,0 91,5 0,5" fill="currentColor"/>
+        <polygon points="0,10 86,10 81,16 0,16" fill="currentColor"/>
+        <polygon points="0,21 76,21 69,28 0,28" fill="currentColor"/>
+        <polygon points="0,33 64,33 56,41 0,41" fill="currentColor"/>
+        <polygon points="0,46 52,46 42,56 0,56" fill="currentColor"/>
+        <polygon points="0,61 37,61 25,73 0,73" fill="currentColor"/>
+        <polygon points="0,78 21,78 6,93 0,93" fill="currentColor"/>
+      </svg>
+      <div class="nav__wordmark">
+        <span class="nav__name">CLÁUDIA ROCHA</span>
+        <span class="nav__tagline">Direito do Trabalho</span>
+      </div>
+    </a>
+    <ul class="nav__menu">
+      <li><a href="/#sobre"        class="nav__link">Sobre</a></li>
+      <li><a href="/#atuacao"      class="nav__link">Atuação</a></li>
+      <li><a href="/#diferenciais" class="nav__link">Diferenciais</a></li>
+      <li><a href="/blog/"         class="nav__link">Blog</a></li>
+      <li><a href="/#contato"      class="nav__link nav__link--cta">Contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero do blog -->
+  <header class="blog-hero">
+    <div class="container">
+      <span class="blog-hero__tag">blog</span>
+      <h1 class="blog-hero__title">Informação<br>que protege<br>seus <em>direitos.</em></h1>
+      <p class="blog-hero__sub">Artigos técnicos sobre Direito do Trabalho escritos para que você entenda seus direitos antes mesmo da primeira consulta.</p>
+    </div>
+  </header>
+
+  <div class="blog-body">
+    <div class="container">
+
+      {% if artigos %}
+
+        {% with destaque=artigos.0 %}
+        <!-- Artigo destaque -->
+        <article class="blog-destaque-item">
+          <div>
+            <div class="blog-destaque-item__num">01</div>
+            <span class="blog-destaque-item__data">{{ destaque.criado_em|date:"d \d\e F \d\e Y" }}</span>
+            <h2 class="blog-destaque-item__titulo">{{ destaque.titulo }}</h2>
+            <p class="blog-destaque-item__resumo">{{ destaque.resumo }}</p>
+            <a href="{% url 'blog:detalhe' destaque.slug %}" class="blog-destaque-item__link">Ler artigo completo →</a>
+          </div>
+          <div class="blog-destaque-item__accent"></div>
+        </article>
+        {% endwith %}
+
+        <!-- Grade de artigos restantes -->
+        {% if artigos|length > 1 %}
+        <p class="blog-section-label">Todos os artigos</p>
+        <div class="blog-grade">
+          {% for artigo in artigos %}
+          {% if not forloop.first %}
+          <a href="{% url 'blog:detalhe' artigo.slug %}" class="blog-card">
+            <div class="blog-card__num">0{{ forloop.counter }}</div>
+            <span class="blog-card__data">{{ artigo.criado_em|date:"d M Y" }}</span>
+            <h3 class="blog-card__titulo">{{ artigo.titulo }}</h3>
+            <p class="blog-card__resumo">{{ artigo.resumo }}</p>
+            <span class="blog-card__ler">Ler artigo →</span>
+          </a>
+          {% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
+
+      {% else %}
+        <p style="color:#888; padding: 4rem 0;">Nenhum artigo publicado ainda.</p>
+      {% endif %}
+
+    </div>
+  </div>
+
+</body>
+</html>
