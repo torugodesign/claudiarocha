@@ -49,6 +49,24 @@
   </a>
 </div>
 
+<!-- Conteúdo da página inicial -->
+<div style="margin-bottom:1.75rem;">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;">
+    <h2 style="font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);">Conteúdo do site</h2>
+    <a href="/painel/conteudo/" class="btn btn-ghost btn-sm">Ver todas as seções</a>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.75rem;">
+    {% for slug, info, icon, desc in secoes_site %}
+    <a href="/painel/conteudo/{{ slug }}/" class="secao-card">
+      <div class="secao-card__icon">{{ icon|safe }}</div>
+      <div class="secao-card__label">{{ info.label }}</div>
+      <div class="secao-card__desc">{{ desc }}</div>
+      <span class="secao-card__arrow">Editar →</span>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+
 <div class="card">
   <div class="card-header">
     <h2>Artigos recentes</h2>

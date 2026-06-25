@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Cormorant Garamond: fonte dos itálicos / citações -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260624g" />
 </head>
 <body>
 
@@ -81,7 +81,11 @@
       autoplay
       poster="video/poster.jpg"
     >
-      <source src="{% static 'video head.mp4' %}" type="video/mp4" />
+      {% if c.hero_video and c.hero_video.video %}
+        <source src="{{ c.hero_video.video.url }}" type="video/mp4" />
+      {% else %}
+        <source src="{% static 'video head.mp4' %}" type="video/mp4" />
+      {% endif %}
     </video>
 
     <!-- Placeholder centralizado enquanto o vídeo não carrega -->
@@ -128,27 +132,35 @@
   <section class="sobre" id="sobre">
     <div class="container">
       <div class="sobre__grid">
+
         <div class="sobre__left">
           <div class="sobre__tag reveal">sobre</div>
           <h2 class="sobre__title reveal">
-            A justiça não é apenas um resultado; é o retorno ao <em>equilíbrio.</em>
+            {% if c.sobre_titulo %}{{ c.sobre_titulo.titulo }}{% else %}A justiça não é apenas um resultado; é o retorno ao <em>equilíbrio.</em>{% endif %}
           </h2>
-        </div>
-        <div class="sobre__right">
           <p class="sobre__text reveal">
-            O trabalho é a base da sua dignidade. Quando esse ciclo é rompido por injustiças, você precisa de mais do que um advogado; você precisa de uma estratégia inabalável.
+            {% if c.sobre_p1 %}{{ c.sobre_p1.texto }}{% else %}O trabalho é a base da sua dignidade. Quando esse ciclo é rompido por injustiças, você precisa de mais do que um advogado; você precisa de uma estratégia inabalável.{% endif %}
           </p>
           <p class="sobre__text reveal">
-            No Escritório Cláudia Rocha, cada caso é uma missão de restauração. Unimos a precisão do Direito do Trabalho a uma condução sensível e firme.
+            {% if c.sobre_p2 %}{{ c.sobre_p2.texto }}{% else %}No Escritório Cláudia Rocha, cada caso é uma missão de restauração. Unimos a precisão do Direito do Trabalho a uma condução sensível e firme.{% endif %}
           </p>
           <p class="sobre__text reveal">
-            Aqui, sua voz é ouvida e sua história é protegida pelo rigor da técnica e pelo peso da <strong>ética.</strong>
+            {% if c.sobre_p3 %}{{ c.sobre_p3.texto }}{% else %}Aqui, sua voz é ouvida e sua história é protegida pelo rigor da técnica e pelo peso da <strong>ética.</strong>{% endif %}
           </p>
           <div class="sobre__credencial reveal">
-            <span class="sobre__numero">35</span>
-            <span class="sobre__label">anos de atuação</span>
+            <span class="sobre__numero">{% if c.sobre_credencial_num %}{{ c.sobre_credencial_num.titulo }}{% else %}35{% endif %}</span>
+            <span class="sobre__label">{% if c.sobre_credencial_label %}{{ c.sobre_credencial_label.titulo }}{% else %}anos de atuação{% endif %}</span>
           </div>
         </div>
+
+        <div class="sobre__right">
+          {% if c.sobre_imagem and c.sobre_imagem.imagem %}
+            <img src="{{ c.sobre_imagem.imagem.url }}" alt="Cláudia Rocha" class="sobre__foto reveal"/>
+          {% else %}
+            <img src="{% static 'img/foto-claudia-sobre.jpg' %}" alt="Cláudia Rocha" class="sobre__foto reveal"/>
+          {% endif %}
+        </div>
+
       </div>
     </div>
   </section>
@@ -159,9 +171,9 @@
     <div class="atuacao__intro-section">
       <div class="container">
         <div class="atuacao__tag reveal">atuação</div>
-        <h2 class="atuacao__title reveal">Especialidade a serviço da <em>sua reparação.</em></h2>
+        <h2 class="atuacao__title reveal">{% if c.atuacao_titulo %}{{ c.atuacao_titulo.titulo }}{% else %}Especialidade a serviço da <em>sua reparação.</em>{% endif %}</h2>
         <p class="atuacao__intro reveal">
-          Atuação focada no trabalhador — defesa técnica e estratégica para quem exige que seus direitos sejam respeitados com o rigor que merecem.
+          {% if c.atuacao_intro %}{{ c.atuacao_intro.texto }}{% else %}Atuação focada no trabalhador — defesa técnica e estratégica para quem exige que seus direitos sejam respeitados com o rigor que merecem.{% endif %}
         </p>
       </div>
     </div>
@@ -171,36 +183,133 @@
       <div class="atuacao__stack-item" style="--card-bg:#2c3334;z-index:1">
         <div class="container atuacao__stack-inner">
           <span class="atuacao__stack-num" aria-hidden="true">01</span>
-          <h3 class="atuacao__stack-title">Verbas &amp;<br><span>Direitos</span></h3>
-          <p class="atuacao__stack-desc">Reivindicação rigorosa de cada detalhe do seu contrato de trabalho — do início ao encerramento do vínculo.</p>
+          <h3 class="atuacao__stack-title">{% if c.atuacao_c1_titulo %}{{ c.atuacao_c1_titulo.titulo }}{% else %}Verbas &amp;<br><span>Direitos</span>{% endif %}</h3>
+          <p class="atuacao__stack-desc">{% if c.atuacao_c1_desc %}{{ c.atuacao_c1_desc.texto }}{% else %}Reivindicação rigorosa de cada detalhe do seu contrato de trabalho — do início ao encerramento do vínculo.{% endif %}</p>
         </div>
       </div>
 
       <div class="atuacao__stack-item" style="--card-bg:#353C3D;z-index:2">
         <div class="container atuacao__stack-inner">
           <span class="atuacao__stack-num" aria-hidden="true">02</span>
-          <h3 class="atuacao__stack-title">Rescisões<br><span>Contratuais</span></h3>
-          <p class="atuacao__stack-desc">Gestão estratégica para encerramentos de vínculo que exigem máxima atenção técnica e precisão jurídica.</p>
+          <h3 class="atuacao__stack-title">{% if c.atuacao_c2_titulo %}{{ c.atuacao_c2_titulo.titulo }}{% else %}Rescisões<br><span>Contratuais</span>{% endif %}</h3>
+          <p class="atuacao__stack-desc">{% if c.atuacao_c2_desc %}{{ c.atuacao_c2_desc.texto }}{% else %}Gestão estratégica para encerramentos de vínculo que exigem máxima atenção técnica e precisão jurídica.{% endif %}</p>
         </div>
       </div>
 
       <div class="atuacao__stack-item" style="--card-bg:#3d2f38;z-index:3">
         <div class="container atuacao__stack-inner">
           <span class="atuacao__stack-num" aria-hidden="true">03</span>
-          <h3 class="atuacao__stack-title">Danos &amp;<br><span>Assédio</span></h3>
-          <p class="atuacao__stack-desc">Defesa firme contra violações à integridade moral e psicológica no ambiente laboral.</p>
+          <h3 class="atuacao__stack-title">{% if c.atuacao_c3_titulo %}{{ c.atuacao_c3_titulo.titulo }}{% else %}Danos &amp;<br><span>Assédio</span>{% endif %}</h3>
+          <p class="atuacao__stack-desc">{% if c.atuacao_c3_desc %}{{ c.atuacao_c3_desc.texto }}{% else %}Defesa firme contra violações à integridade moral e psicológica no ambiente laboral.{% endif %}</p>
         </div>
       </div>
 
       <div class="atuacao__stack-item" style="--card-bg:#432A35;z-index:4">
         <div class="container atuacao__stack-inner">
           <span class="atuacao__stack-num" aria-hidden="true">04</span>
-          <h3 class="atuacao__stack-title">Vínculos<br><span>Empregatícios</span></h3>
-          <p class="atuacao__stack-desc">Análise e regularização de vínculos complexos — reconhecimento, formalização e proteção dos seus direitos.</p>
+          <h3 class="atuacao__stack-title">{% if c.atuacao_c4_titulo %}{{ c.atuacao_c4_titulo.titulo }}{% else %}Vínculos<br><span>Empregatícios</span>{% endif %}</h3>
+          <p class="atuacao__stack-desc">{% if c.atuacao_c4_desc %}{{ c.atuacao_c4_desc.texto }}{% else %}Análise e regularização de vínculos complexos — reconhecimento, formalização e proteção dos seus direitos.{% endif %}</p>
         </div>
       </div>
 
     </div>
+  </section>
+
+  <!-- CAPITAL HUMANO -->
+  <section class="equipe" id="equipe">
+    <div class="container">
+
+      <div class="equipe__tag reveal">capital humano</div>
+
+      <div class="equipe__layout">
+
+        <!-- Coluna esquerda: retrato que troca sozinho -->
+        <div class="equipe__col-foto">
+          <div class="equipe__frame" id="equipeFrame" aria-live="polite">
+            {% for m in equipe_membros %}
+            <img class="equipe__retrato-img {% if forloop.first %}is-active{% endif %}"
+                 src="{% if m.tipo == 'media' %}{{ m.url }}{% else %}{% static 'img/equipe/' %}{{ m.slug }}.jpg{% endif %}"
+                 alt="{{ m.nome }}" data-nome="{{ m.nome }}" loading="lazy"/>
+            {% endfor %}
+          </div>
+          <span class="equipe__nome" id="equipeNome">{{ equipe_membros.0.nome }}</span>
+        </div>
+
+        <!-- Coluna direita: texto fixo da seção -->
+        <div class="equipe__col-texto">
+          <h2 class="equipe__title reveal">
+            {% if c.equipe_titulo %}{{ c.equipe_titulo.titulo }}{% else %}Mentes preparadas para atender a sua <em>Causa.</em>{% endif %}
+          </h2>
+          <p class="equipe__text reveal">
+            {% if c.equipe_texto %}{{ c.equipe_texto.texto }}{% else %}Sob a liderança da Dra. Cláudia Rocha, nossa equipe opera com um único norte: a excelência técnica. Cada profissional aqui entende que, por trás de cada processo, existe uma vida que espera por justiça. Não entregamos apenas petições; entregamos o compromisso com o direito do cliente.{% endif %}
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- NOSSA ESTRUTURA -->
+  <section class="estrutura" id="estrutura">
+
+    <div class="container">
+      <div class="estrutura__tag reveal">o ambiente</div>
+    </div>
+
+    <!-- SVG filter — liquid glass distortion -->
+    <svg aria-hidden="true" focusable="false" style="display:none;position:absolute">
+      <defs>
+        <filter id="lg" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.014 0.009"
+                        numOctaves="4" seed="7" result="noise"/>
+          <feDisplacementMap id="lgDisp" in="SourceGraphic" in2="noise"
+                             scale="0" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+    </svg>
+
+    <!-- Full-bleed gallery -->
+    <div class="estrutura__gallery" id="estruturaGallery" aria-label="Galeria do escritório">
+
+      <div class="estrutura__edge estrutura__edge--left" id="edgeLeft" aria-hidden="true"></div>
+
+      <div class="estrutura__stage" id="estrutStage">
+        {% if estrutura_fotos %}
+          {% for url in estrutura_fotos %}
+          <img class="estrutura__img {% if forloop.first %}is-active{% endif %}"
+               src="{{ url }}" alt="Escritório Cláudia Rocha — foto {{ forloop.counter }}" data-i="{{ forloop.counter0 }}"/>
+          {% endfor %}
+        {% else %}
+          <img class="estrutura__img is-active" src="{% static 'img/escritorio/foto1.png' %}" alt="Escritório Cláudia Rocha — foto 1" data-i="0"/>
+          <img class="estrutura__img" src="{% static 'img/escritorio/foto2.png' %}" alt="Escritório Cláudia Rocha — foto 2" data-i="1"/>
+          <img class="estrutura__img" src="{% static 'img/escritorio/foto3.png' %}" alt="Escritório Cláudia Rocha — foto 3" data-i="2"/>
+          <img class="estrutura__img" src="{% static 'img/escritorio/foto4.jpg' %}" alt="Escritório Cláudia Rocha — foto 4" data-i="3"/>
+          <img class="estrutura__img" src="{% static 'img/escritorio/foto5.jpg' %}" alt="Escritório Cláudia Rocha — foto 5" data-i="4"/>
+        {% endif %}
+      </div>
+
+      <div class="estrutura__edge estrutura__edge--right" id="edgeRight" aria-hidden="true"></div>
+
+      <button class="estrutura__nav estrutura__nav--prev" type="button" aria-label="Foto anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="11 6 5 12 11 18"/></svg>
+      </button>
+      <button class="estrutura__nav estrutura__nav--next" type="button" aria-label="Próxima foto">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+      </button>
+
+    </div>
+
+    <div class="container">
+      <div class="estrutura__footer">
+        <h2 class="estrutura__title reveal">
+          {% if c.estrutura_titulo %}{{ c.estrutura_titulo.titulo }}{% else %}A solidez do espaço reflete o rigor da <em>nossa atuação.</em>{% endif %}
+        </h2>
+        <p class="estrutura__text reveal">
+          {% if c.estrutura_texto %}{{ c.estrutura_texto.texto }}{% else %}Um ambiente desenhado para acolher o cliente e sustentar a estratégia jurídica de alto nível. Atendimento em Araraquara e Governador Valadares/MG, e telepresencial em todo o Brasil — com possibilidade de agendamento presencial em outras localidades.{% endif %}
+        </p>
+      </div>
+    </div>
+
   </section>
 
   <!-- DIFERENCIAIS -->
@@ -211,10 +320,10 @@
         <div class="diferenciais__left">
           <div class="diferenciais__tag reveal">por que nós</div>
           <h2 class="diferenciais__title reveal">
-            Três pilares que sustentam cada <em>causa.</em>
+            {% if c.dif_titulo %}{{ c.dif_titulo.titulo }}{% else %}Três pilares que sustentam cada <em>causa.</em>{% endif %}
           </h2>
           <p class="diferenciais__text reveal">
-            Nossa atuação se ancora em princípios que não se negociam — porque a sua causa merece mais do que um processo; merece um compromisso real.
+            {% if c.dif_texto %}{{ c.dif_texto.texto }}{% else %}Nossa atuação se ancora em princípios que não se negociam — porque a sua causa merece mais do que um processo; merece um compromisso real.{% endif %}
           </p>
           <a href="#contato" class="btn btn--outline reveal">Fale conosco</a>
         </div>
@@ -224,8 +333,8 @@
               <svg viewBox="0 0 100 95" aria-hidden="true"><use href="#cr-symbol"/></svg>
             </div>
             <div>
-              <h3>Rigor Técnico Silencioso</h3>
-              <p>A competência que não precisa de alarde para se provar em juízo. Preparação profunda, estratégia precisa.</p>
+              <h3>{% if c.dif_i1_titulo %}{{ c.dif_i1_titulo.titulo }}{% else %}Rigor Técnico Silencioso{% endif %}</h3>
+              <p>{% if c.dif_i1_desc %}{{ c.dif_i1_desc.texto }}{% else %}A competência que não precisa de alarde para se provar em juízo. Preparação profunda, estratégia precisa.{% endif %}</p>
             </div>
           </div>
           <div class="diferenciais__item reveal">
@@ -233,8 +342,8 @@
               <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2"/><path d="M16 10v6l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             </div>
             <div>
-              <h3>Humanidade Estratégica</h3>
-              <p>O acolhimento do trabalhador como centro de toda a operação. Sua história importa tanto quanto o processo.</p>
+              <h3>{% if c.dif_i2_titulo %}{{ c.dif_i2_titulo.titulo }}{% else %}Humanidade Estratégica{% endif %}</h3>
+              <p>{% if c.dif_i2_desc %}{{ c.dif_i2_desc.texto }}{% else %}O acolhimento do trabalhador como centro de toda a operação. Sua história importa tanto quanto o processo.{% endif %}</p>
             </div>
           </div>
           <div class="diferenciais__item reveal">
@@ -242,12 +351,114 @@
               <svg viewBox="0 0 32 32" fill="none"><path d="M16 4L4 10v6c0 7 5.5 12.5 12 14 6.5-1.5 12-7 12-14v-6L16 4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
             </div>
             <div>
-              <h3>Ética Inegociável</h3>
-              <p>O compromisso com a verdade que eleva o valor percebido da causa — e protege cada passo da sua defesa.</p>
+              <h3>{% if c.dif_i3_titulo %}{{ c.dif_i3_titulo.titulo }}{% else %}Ética Inegociável{% endif %}</h3>
+              <p>{% if c.dif_i3_desc %}{{ c.dif_i3_desc.texto }}{% else %}O compromisso com a verdade que eleva o valor percebido da causa — e protege cada passo da sua defesa.{% endif %}</p>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÕES -->
+  <section class="avaliacoes" id="avaliacoes">
+    <div class="container">
+
+      <div class="avaliacoes__header reveal">
+        <div class="avaliacoes__tag">avaliações</div>
+        <h2 class="avaliacoes__title">O que dizem nossos <em>clientes.</em></h2>
+        <div class="avaliacoes__rating">
+          <span class="avaliacoes__stars">★★★★★</span>
+          <span class="avaliacoes__score">5,0</span>
+          <span class="avaliacoes__total">no Google</span>
+        </div>
+      </div>
+
+      <div class="avaliacoes__track-wrap">
+        <div class="avaliacoes__track" id="avaliacoesTrack">
+
+          <article class="avaliacoes__card">
+            <div class="avaliacoes__card-top">
+              <div class="avaliacoes__avatar">M</div>
+              <div class="avaliacoes__meta">
+                <strong>Maria Fernanda S.</strong>
+                <span>há 2 semanas</span>
+              </div>
+              <svg class="avaliacoes__google" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            </div>
+            <div class="avaliacoes__stars-sm">★★★★★</div>
+            <p class="avaliacoes__text">Fui muito bem atendida pela Dra. Cláudia. Ela explicou cada etapa do meu processo com clareza e conseguiu resolver minha situação trabalhista com rapidez e competência. Me senti amparada do início ao fim.</p>
+          </article>
+
+          <article class="avaliacoes__card">
+            <div class="avaliacoes__card-top">
+              <div class="avaliacoes__avatar">R</div>
+              <div class="avaliacoes__meta">
+                <strong>Ricardo A.</strong>
+                <span>há 1 mês</span>
+              </div>
+              <svg class="avaliacoes__google" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            </div>
+            <div class="avaliacoes__stars-sm">★★★★★</div>
+            <p class="avaliacoes__text">Profissional extremamente competente e dedicada. A Dra. Cláudia me orientou em todo o processo de rescisão indireta e obtivemos um resultado excelente. Transparência e seriedade em cada etapa.</p>
+          </article>
+
+          <article class="avaliacoes__card">
+            <div class="avaliacoes__card-top">
+              <div class="avaliacoes__avatar">J</div>
+              <div class="avaliacoes__meta">
+                <strong>Juliana M.</strong>
+                <span>há 2 meses</span>
+              </div>
+              <svg class="avaliacoes__google" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            </div>
+            <div class="avaliacoes__stars-sm">★★★★★</div>
+            <p class="avaliacoes__text">Fui indicada por uma amiga e não me arrependo. Atendimento humanizado, escritório bem localizado e equipe muito atenciosa. A Dra. Cláudia domina o direito do trabalho com muita propriedade.</p>
+          </article>
+
+          <article class="avaliacoes__card">
+            <div class="avaliacoes__card-top">
+              <div class="avaliacoes__avatar">C</div>
+              <div class="avaliacoes__meta">
+                <strong>Carlos E.</strong>
+                <span>há 3 meses</span>
+              </div>
+              <svg class="avaliacoes__google" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            </div>
+            <div class="avaliacoes__stars-sm">★★★★★</div>
+            <p class="avaliacoes__text">Excelente advogada! Cuidou do meu caso de assédio moral no trabalho com muita sensibilidade e rigor técnico. O resultado superou minhas expectativas. Recomendo sem hesitar.</p>
+          </article>
+
+          <article class="avaliacoes__card">
+            <div class="avaliacoes__card-top">
+              <div class="avaliacoes__avatar">P</div>
+              <div class="avaliacoes__meta">
+                <strong>Patricia L.</strong>
+                <span>há 4 meses</span>
+              </div>
+              <svg class="avaliacoes__google" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            </div>
+            <div class="avaliacoes__stars-sm">★★★★★</div>
+            <p class="avaliacoes__text">Ética, responsabilidade e comprometimento com o cliente. A Dra. Cláudia é uma profissional diferenciada — entende a dor de cada caso e trabalha com precisão cirúrgica para defender seus direitos.</p>
+          </article>
+
+        </div>
+
+        <button class="avaliacoes__nav avaliacoes__nav--prev" id="avalPrev" aria-label="Anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="avaliacoes__nav avaliacoes__nav--next" id="avalNext" aria-label="Próximo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      <div class="avaliacoes__footer reveal">
+        <a href="https://www.google.com/search?q=claudia+rocha+advocacia+araraquara#lrd=0x94b8f172ed923b51:0xb0c5b5057130d603,1,,,," target="_blank" rel="noopener" class="avaliacoes__cta">
+          Ver todas as avaliações no Google
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+
     </div>
   </section>
 
@@ -288,7 +499,7 @@
     <div class="container">
       <div class="contato__header">
         <div class="contato__tag reveal">contato</div>
-        <h2 class="contato__title reveal">Inicie a retomada<br />do seu direito.</h2>
+        <h2 class="contato__title reveal">{% if c.contato_titulo %}{{ c.contato_titulo.titulo }}{% else %}Inicie a retomada<br />do seu direito.{% endif %}</h2>
       </div>
       <div class="contato__grid">
         <div class="contato__info">
@@ -376,7 +587,7 @@
     <span class="whatsapp-float__tooltip">Fale conosco</span>
   </a>
 
-  <script src="{% static 'js/script.js' %}"></script>
+  <script src="{% static 'js/script.js' %}?v=20260624g"></script>
 </body>
 </html>
 

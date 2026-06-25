@@ -18,5 +18,9 @@ urlpatterns = [
     path('painel/artigos/<int:pk>/publicar/',    core_views.painel_artigo_publicar, name='painel_artigo_publicar'),
     path('painel/artigos/<int:pk>/deletar/',     core_views.painel_artigo_deletar,  name='painel_artigo_deletar'),
 
+    # Conteúdo do site
+    path('painel/conteudo/',           core_views.painel_conteudo,        name='painel_conteudo'),
+    path('painel/conteudo/<str:secao>/', core_views.painel_conteudo_secao, name='painel_conteudo_secao'),
+
     path('', core_views.home, name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

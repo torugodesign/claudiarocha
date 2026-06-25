@@ -1,0 +1,95 @@
+{% extends "painel/base.html" %}
+{% block title %}Conteúdo do Site{% endblock %}
+{% block nav_conteudo %}active{% endblock %}
+{% block topbar_title %}Conteúdo — {{ secao_label }}{% endblock %}
+{% block topbar_actions %}
+  <a href="/" target="_blank" class="btn btn-ghost btn-sm">Ver site →</a>
+{% endblock %}
+
+{% block content %}
+<div style="display:grid;grid-template-columns:200px 1fr;gap:1.5rem;align-items:start;">
+
+  <!-- Nav entre seções -->
+  <div style="position:sticky;top:1rem;background:var(--white);border:1px solid var(--border);border-radius:6px;padding:.6rem .5rem;">
+    <p style="font-size:.6rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:#bbb;padding:.2rem .5rem .5rem;">Seções do site</p>
+    {% for slug, info in secoes.items %}
+      <a href="/painel/conteudo/{{ slug }}/"
+         class="secao-nav-item {% if slug == secao %}active{% endif %}">
+        {{ info.label }}
+      </a>
+    {% endfor %}
+  </div>
+
+  <!-- Formulário -->
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="card">
+      <div class="card-header">
+        <h2>{{ secao_label }}</h2>
+        <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+      </div>
+      <div class="card-body">
+        <div class="form-grid">
+          {% for campo in campos %}
+
+            {% if campo.tipo == "grupo" %}
+              <div style="grid-column:1/-1;border-top:1px solid var(--border);padding-top:.75rem;margin-top:.25rem;">
+                <span style="font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">{{ campo.label }}</span>
+              </div>
+
+            {% elif campo.tipo == "titulo" %}
+              <div class="form-group">
+                <label>{{ campo.label }}</label>
+                <input type="text" name="{{ campo.chave }}"
+                       value="{{ campo.valor_titulo }}"
+                       placeholder="—"/>
+              </div>
+
+            {% elif campo.tipo == "texto" %}
+              <div class="form-group">
+                <label>{{ campo.label }}</label>
+                <textarea name="{{ campo.chave }}" rows="4">{{ campo.valor_texto }}</textarea>
+              </div>
+
+            {% elif campo.tipo == "imagem" %}
+              <div class="form-group">
+                <label>{{ campo.label }}</label>
+                {% if campo.imagem_url %}
+                  <img src="{{ campo.imagem_url }}"
+                       style="width:100%;max-height:200px;object-fit:cover;border-radius:3px;margin-bottom:.5rem;"/>
+                  <label class="form-check" style="margin-bottom:.5rem;">
+                    <input type="checkbox" name="remover_{{ campo.chave }}"/>
+                    <span style="font-size:.75rem;color:#888;">Remover imagem atual</span>
+                  </label>
+                {% endif %}
+                <input type="file" name="{{ campo.chave }}" accept="image/*"
+                       style="font-size:.78rem;color:#666;border:1px dashed #ddd;padding:.75rem;border-radius:3px;background:#fafaf9;cursor:pointer;width:100%;"/>
+              </div>
+
+            {% elif campo.tipo == "video" %}
+              <div class="form-group">
+                <label>{{ campo.label }}</label>
+                {% if campo.video_url %}
+                  <video src="{{ campo.video_url }}" controls
+                         style="width:100%;max-height:220px;border-radius:3px;margin-bottom:.5rem;background:#000;"></video>
+                  <label class="form-check" style="margin-bottom:.5rem;">
+                    <input type="checkbox" name="remover_{{ campo.chave }}"/>
+                    <span style="font-size:.75rem;color:#888;">Remover vídeo atual</span>
+                  </label>
+                {% else %}
+                  <p class="form-hint" style="margin-bottom:.5rem;">Nenhum vídeo cadastrado ainda.</p>
+                {% endif %}
+                <input type="file" name="{{ campo.chave }}" accept="video/*"
+                       style="font-size:.78rem;color:#666;border:1px dashed #ddd;padding:.75rem;border-radius:3px;background:#fafaf9;cursor:pointer;width:100%;"/>
+                <span class="form-hint">Formato recomendado: .mp4 — máximo 50 MB.</span>
+              </div>
+
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>
+{% endblock %}

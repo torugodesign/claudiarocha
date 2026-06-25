@@ -101,6 +101,110 @@ document.querySelectorAll('.reveal').forEach(el => {
   updateStack();
 })();
 
+// ── AVALIAÇÕES — carrossel ──
+(function () {
+  const track = document.getElementById('avaliacoesTrack');
+  const prev  = document.getElementById('avalPrev');
+  const next  = document.getElementById('avalNext');
+  if (!track) return;
+
+  function getStep() {
+    const card = track.querySelector('.avaliacoes__card');
+    return card ? card.offsetWidth + 20 : 300;
+  }
+
+  prev?.addEventListener('click', () => { track.scrollBy({ left: -getStep(), behavior: 'smooth' }); });
+  next?.addEventListener('click', () => { track.scrollBy({ left:  getStep(), behavior: 'smooth' }); });
+})();
+
+// ── EQUIPE: retrato troca a cada 1.3s (Web Worker — não throttled em aba inativa) ──
+(function () {
+  const retratos = Array.from(document.querySelectorAll('.equipe__retrato-img'));
+  const nomeEl   = document.getElementById('equipeNome');
+  if (retratos.length < 2 || !nomeEl) return;
+
+  let current = 0;
+
+  let busy = false;
+  function show(i) {
+    if (busy) return;
+    busy = true;
+    const from = retratos[current];
+    current = i;
+    const to = retratos[current];
+
+    // Próxima já aparece embaixo (z-index menor), atual blurs-out por cima
+    from.style.zIndex = '2';
+    to.style.zIndex   = '1';
+    to.classList.add('is-active');
+    nomeEl.textContent = to.dataset.nome;
+
+    from.classList.add('equipe--blur-out');
+
+    setTimeout(() => {
+      from.classList.remove('is-active', 'equipe--blur-out');
+      from.style.zIndex = '';
+      to.style.zIndex   = '';
+      busy = false;
+    }, 420);
+  }
+
+  // Worker inline: browsers não limitam setInterval dentro de workers
+  const blob   = new Blob([`
+    let t;
+    onmessage = e => {
+      if (e.data === 'start') { clearInterval(t); t = setInterval(() => postMessage(0), 2000); }
+      if (e.data === 'stop')  { clearInterval(t); }
+    };
+  `], { type: 'application/javascript' });
+  const worker = new Worker(URL.createObjectURL(blob));
+
+  worker.onmessage = () => show((current + 1) % retratos.length);
+  worker.postMessage('start');
+})();
+
+// ── CARROSSEL NOSSA ESTRUTURA (coverflow) ──
+(function () {
+  // ── Liquid Glass gallery ──
+  const gallery   = document.getElementById('estruturaGallery');
+  if (!gallery) return;
+
+  const stage = document.getElementById('estrutStage');
+  const imgs  = Array.from(stage.querySelectorAll('.estrutura__img'));
+  if (!imgs.length) return;
+
+  const edgeLeft  = document.getElementById('edgeLeft');
+  const edgeRight = document.getElementById('edgeRight');
+  const n         = imgs.length;
+  let current     = 0;
+  let timer       = null;
+
+  function setEdges(idx) {
+    edgeLeft.style.backgroundImage  = `url(${imgs[(idx - 1 + n) % n].src})`;
+    edgeRight.style.backgroundImage = `url(${imgs[(idx + 1) % n].src})`;
+  }
+
+  function go(toIdx) {
+    imgs[current].classList.remove('is-active');
+    current = (toIdx + n) % n;
+    imgs[current].classList.add('is-active');
+    setEdges(current);
+  }
+
+  setEdges(0);
+
+  gallery.querySelector('.estrutura__nav--prev')?.addEventListener('click', () => { go(current - 1); restart(); });
+  gallery.querySelector('.estrutura__nav--next')?.addEventListener('click', () => { go(current + 1); restart(); });
+
+  function start()   { timer = setInterval(() => go(current + 1), 5000); }
+  function stop()    { clearInterval(timer); timer = null; }
+  function restart() { stop(); start(); }
+
+  gallery.addEventListener('mouseenter', stop);
+  gallery.addEventListener('mouseleave', start);
+  start();
+})();
+
 // ── FORMULÁRIO DE CONTATO ──
 const form = document.getElementById('contactForm');
 if (form) {
