@@ -130,7 +130,7 @@
       gap: 0;
     }
     .blog-card {
-      padding: 2.25rem 2rem 2.25rem 0;
+      padding: 0 2rem 2.25rem 0;
       border-right: 1px solid rgba(35,36,37,.1);
       display: flex;
       flex-direction: column;
@@ -138,6 +138,27 @@
       color: inherit;
       transition: background .25s ease;
     }
+    .blog-card__thumb-wrap {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+      border-radius: 2px;
+      margin-bottom: 1.25rem;
+      background: rgba(35,36,37,.06);
+      flex-shrink: 0;
+    }
+    .blog-card__thumb {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform .4s ease;
+    }
+    .blog-card:hover .blog-card__thumb { transform: scale(1.02); }
     .blog-card:last-child { border-right: none; }
     .blog-card:nth-child(n+4) {
       border-top: 1px solid rgba(35,36,37,.1);
@@ -225,19 +246,7 @@
 
   <nav class="nav visible scrolled" id="nav">
     <a href="/" class="nav__logo">
-      <svg class="nav__symbol" viewBox="0 0 100 95" aria-hidden="true">
-        <polygon points="0,0 96,0 91,5 0,5" fill="currentColor"/>
-        <polygon points="0,10 86,10 81,16 0,16" fill="currentColor"/>
-        <polygon points="0,21 76,21 69,28 0,28" fill="currentColor"/>
-        <polygon points="0,33 64,33 56,41 0,41" fill="currentColor"/>
-        <polygon points="0,46 52,46 42,56 0,56" fill="currentColor"/>
-        <polygon points="0,61 37,61 25,73 0,73" fill="currentColor"/>
-        <polygon points="0,78 21,78 6,93 0,93" fill="currentColor"/>
-      </svg>
-      <div class="nav__wordmark">
-        <span class="nav__name">CLÁUDIA ROCHA</span>
-        <span class="nav__tagline">Direito do Trabalho</span>
-      </div>
+      <img src="{% static 'img/logo_horizontal.png' %}" alt="Cláudia Rocha — Direito do Trabalho" class="nav__logo-img" />
     </a>
     <ul class="nav__menu">
       <li><a href="/#sobre"        class="nav__link">Sobre</a></li>
@@ -272,7 +281,16 @@
             <p class="blog-destaque-item__resumo">{{ destaque.resumo }}</p>
             <a href="{% url 'blog:detalhe' destaque.slug %}" class="blog-destaque-item__link">Ler artigo completo →</a>
           </div>
+          {% if destaque.imagem_capa %}
+          <div style="overflow:hidden;border-radius:2px;">
+            <img src="{{ destaque.imagem_capa.url }}" alt="{{ destaque.titulo }}"
+                 style="width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center;display:block;transition:transform .4s ease;"
+                 onmouseenter="this.style.transform='scale(1.02)'" onmouseleave="this.style.transform='scale(1)'"
+                 loading="lazy"/>
+          </div>
+          {% else %}
           <div class="blog-destaque-item__accent"></div>
+          {% endif %}
         </article>
         {% endwith %}
 
@@ -283,6 +301,11 @@
           {% for artigo in artigos %}
           {% if not forloop.first %}
           <a href="{% url 'blog:detalhe' artigo.slug %}" class="blog-card">
+            {% if artigo.imagem_capa %}
+            <div class="blog-card__thumb-wrap">
+              <img src="{{ artigo.imagem_capa.url }}" alt="{{ artigo.titulo }}" class="blog-card__thumb" loading="lazy"/>
+            </div>
+            {% endif %}
             <div class="blog-card__num">0{{ forloop.counter }}</div>
             <span class="blog-card__data">{{ artigo.criado_em|date:"d M Y" }}</span>
             <h3 class="blog-card__titulo">{{ artigo.titulo }}</h3>

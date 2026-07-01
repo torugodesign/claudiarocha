@@ -21,7 +21,7 @@
   </div>
 
   <!-- Formulário -->
-  <form method="post" enctype="multipart/form-data">
+  <form method="post" enctype="multipart/form-data" id="conteudoForm">
     {% csrf_token %}
     <div class="card">
       <div class="card-header">
@@ -29,6 +29,152 @@
         <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
       </div>
       <div class="card-body">
+
+        {% if secao == "equipe" %}
+        <!-- ── Upload em lote para colaboradores ── -->
+        <div class="form-grid">
+          {% for campo in campos %}
+            {% if campo.tipo == "titulo" and campo.chave == "equipe_titulo" %}
+              <div class="form-group">
+                <label>{{ campo.label }}</label>
+                <input type="text" name="{{ campo.chave }}" value="{{ campo.valor_titulo }}" placeholder="—"/>
+              </div>
+            {% elif campo.tipo == "texto" and campo.chave == "equipe_texto" %}
+              <div class="form-group">
+                <label>{{ campo.label }}</label>
+                <textarea name="{{ campo.chave }}" rows="4">{{ campo.valor_texto }}</textarea>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <!-- Aviso importante -->
+        <div style="background:#fffbeb;border:1px solid #f6d860;border-radius:6px;padding:.9rem 1.1rem;margin-top:1.5rem;margin-bottom:1.25rem;display:flex;gap:.75rem;align-items:flex-start;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="1.8" style="width:20px;height:20px;flex-shrink:0;margin-top:.05rem;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <div style="font-size:.8rem;color:#92400e;line-height:1.6;">
+            <strong style="display:block;margin-bottom:.25rem;">Atenção — leia antes de enviar</strong>
+            O <strong>nome do arquivo</strong> de cada imagem será usado como o <strong>nome do colaborador</strong> exibido no site.<br>
+            Exemplo: <code style="background:rgba(0,0,0,.07);padding:.1em .35em;border-radius:3px;">Cláudia Rocha.png</code> → aparece como <em>"Cláudia Rocha"</em><br>
+            Formatos aceitos: JPG, PNG, WEBP &nbsp;·&nbsp; Mínimo: <strong>1 imagem</strong> &nbsp;·&nbsp; Máximo: <strong>50 imagens</strong>
+            <span style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.55rem;">
+              <span style="background:#fef3c7;border:1px solid #fcd34d;border-radius:3px;padding:.15em .55em;font-size:.72rem;font-weight:600;color:#92400e;">📐 800 × 1000 px recomendado</span>
+              <span style="background:#fef3c7;border:1px solid #fcd34d;border-radius:3px;padding:.15em .55em;font-size:.72rem;font-weight:600;color:#92400e;">⚖️ máx. 400 KB por arquivo</span>
+              <span style="background:#fef3c7;border:1px solid #fcd34d;border-radius:3px;padding:.15em .55em;font-size:.72rem;font-weight:600;color:#92400e;">📷 proporção retrato 4:5</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Colaboradores já cadastrados -->
+        {% if colaboradores_atuais %}
+        <div style="margin-bottom:1.25rem;">
+          <p style="font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.6rem;">{{ colaboradores_atuais|length }} colaborador{{ colaboradores_atuais|length|pluralize:"es" }} cadastrado{{ colaboradores_atuais|length|pluralize:"s" }}</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:.5rem;">
+            {% for col in colaboradores_atuais %}
+            <div style="text-align:center;">
+              <div style="aspect-ratio:3/4;border-radius:3px;overflow:hidden;background:#eee;margin-bottom:.3rem;">
+                <img src="{{ col.url }}" style="width:100%;height:100%;object-fit:cover;display:block;" alt="{{ col.nome }}"/>
+              </div>
+              <span style="font-size:.65rem;color:var(--text-muted);line-height:1.2;display:block;">{{ col.nome }}</span>
+            </div>
+            {% endfor %}
+          </div>
+          <p style="font-size:.73rem;color:#999;margin-top:.6rem;">Ao enviar novas fotos, <strong>todas as anteriores serão substituídas</strong>.</p>
+        </div>
+        {% endif %}
+
+        <!-- Dropzone colaboradores -->
+        <label style="font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:.75rem;">Fotos dos Colaboradores</label>
+        <div id="dropzoneEquipe"
+             style="border:2px dashed var(--border);border-radius:8px;padding:3rem 2rem;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;background:#fafaf9;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" style="width:48px;height:48px;color:#ccc;margin:0 auto .75rem;display:block;">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <p style="font-size:1rem;font-weight:600;color:var(--grafite);margin-bottom:.35rem;">Selecione as fotos dos colaboradores</p>
+          <p style="font-size:.8rem;color:#999;margin-bottom:1.25rem;">Mínimo 1 · Máximo 50 · Nome do arquivo = nome no site</p>
+          <button type="button" onclick="document.getElementById('fotosBatchEquipe').click()"
+                  style="background:var(--vinho);color:#fff;border:none;border-radius:4px;padding:.55rem 1.4rem;font-size:.8rem;font-weight:600;cursor:pointer;letter-spacing:.04em;">
+            Escolher imagens
+          </button>
+          <input type="file" id="fotosBatchEquipe" name="eq_fotos_batch" multiple accept="image/*"
+                 style="display:none;" onchange="handleEquipe(this)"/>
+        </div>
+
+        <div id="previewEquipe" style="display:none;margin-top:1rem;">
+          <p id="previewEquipeCount" style="font-size:.78rem;color:var(--text-muted);margin-bottom:.6rem;"></p>
+          <div id="previewEquipeCells" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:.5rem;"></div>
+        </div>
+        <p id="equipeError" style="display:none;color:#c0392b;font-size:.78rem;font-weight:600;margin-top:.6rem;"></p>
+
+        {% elif secao == "estrutura" %}
+        <!-- ── Upload em lote para o escritório ── -->
+        <div class="form-grid">
+          {% for campo in campos %}
+            {% if campo.tipo == "titulo" %}
+              <div class="form-group">
+                <label>{{ campo.label }}</label>
+                <input type="text" name="{{ campo.chave }}" value="{{ campo.valor_titulo }}" placeholder="—"/>
+              </div>
+            {% elif campo.tipo == "texto" %}
+              <div class="form-group">
+                <label>{{ campo.label }}</label>
+                <textarea name="{{ campo.chave }}" rows="4">{{ campo.valor_texto }}</textarea>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <!-- Dropzone de fotos do escritório -->
+        <div style="margin-top:1.5rem;">
+          <label style="font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:.75rem;">Fotos do Escritório</label>
+
+          <!-- Fotos já cadastradas -->
+          {% if fotos_escritorio %}
+          <div id="fotosAtuais" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.6rem;margin-bottom:1.25rem;">
+            {% for url in fotos_escritorio %}
+            <div style="position:relative;border-radius:4px;overflow:hidden;aspect-ratio:4/3;">
+              <img src="{{ url }}" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+              <label style="position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:opacity .2s;" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">
+                <input type="checkbox" name="remover_est_foto_{{ forloop.counter|stringformat:'02d' }}" style="display:none;"/>
+                <span style="color:#fff;font-size:.7rem;font-weight:600;letter-spacing:.05em;">✕ Remover</span>
+              </label>
+            </div>
+            {% endfor %}
+          </div>
+          <p style="font-size:.75rem;color:var(--text-muted);margin-bottom:1rem;">{{ fotos_escritorio|length }} foto{{ fotos_escritorio|length|pluralize }} cadastrada{{ fotos_escritorio|length|pluralize }}. Selecione novas fotos abaixo para substituir todas.</p>
+          {% endif %}
+
+          <!-- Dropzone -->
+          <div id="dropzone"
+               style="border:2px dashed var(--border);border-radius:8px;padding:3rem 2rem;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;background:#fafaf9;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" style="width:48px;height:48px;color:#ccc;margin:0 auto .75rem;display:block;">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
+            </svg>
+            <p style="font-size:1rem;font-weight:600;color:var(--grafite);margin-bottom:.35rem;">Selecione de 5 a 10 imagens</p>
+            <p style="font-size:.8rem;color:#999;margin-bottom:.6rem;">Arraste e solte aqui ou clique para escolher</p>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center;margin-bottom:1.1rem;">
+              <span style="background:#f0fdf4;border:1px solid #86efac;border-radius:3px;padding:.15em .55em;font-size:.7rem;font-weight:600;color:#166534;">📐 1920 × 840 px recomendado</span>
+              <span style="background:#f0fdf4;border:1px solid #86efac;border-radius:3px;padding:.15em .55em;font-size:.7rem;font-weight:600;color:#166534;">⚖️ máx. 1 MB por arquivo</span>
+              <span style="background:#f0fdf4;border:1px solid #86efac;border-radius:3px;padding:.15em .55em;font-size:.7rem;font-weight:600;color:#166534;">🖼️ proporção paisagem 16:7</span>
+            </div>
+            <button type="button" onclick="document.getElementById('fotosBatch').click()"
+                    style="background:var(--vinho);color:#fff;border:none;border-radius:4px;padding:.55rem 1.4rem;font-size:.8rem;font-weight:600;cursor:pointer;letter-spacing:.04em;">
+              Escolher imagens
+            </button>
+            <input type="file" id="fotosBatch" name="est_fotos_batch" multiple accept="image/*"
+                   style="display:none;" onchange="handleFotos(this)"/>
+          </div>
+
+          <!-- Preview das selecionadas -->
+          <div id="previewGrid" style="display:none;margin-top:1rem;display:none;">
+            <p id="previewCount" style="font-size:.78rem;color:var(--text-muted);margin-bottom:.6rem;"></p>
+            <div id="previewCells" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.6rem;"></div>
+          </div>
+
+          <p id="dropzoneError" style="display:none;color:#c0392b;font-size:.78rem;font-weight:600;margin-top:.6rem;"></p>
+        </div>
+
+        {% else %}
+        <!-- ── Campos padrão para todas as outras seções ── -->
         <div class="form-grid">
           {% for campo in campos %}
 
@@ -40,9 +186,7 @@
             {% elif campo.tipo == "titulo" %}
               <div class="form-group">
                 <label>{{ campo.label }}</label>
-                <input type="text" name="{{ campo.chave }}"
-                       value="{{ campo.valor_titulo }}"
-                       placeholder="—"/>
+                <input type="text" name="{{ campo.chave }}" value="{{ campo.valor_titulo }}" placeholder="—"/>
               </div>
 
             {% elif campo.tipo == "texto" %}
@@ -55,8 +199,7 @@
               <div class="form-group">
                 <label>{{ campo.label }}</label>
                 {% if campo.imagem_url %}
-                  <img src="{{ campo.imagem_url }}"
-                       style="width:100%;max-height:200px;object-fit:cover;border-radius:3px;margin-bottom:.5rem;"/>
+                  <img src="{{ campo.imagem_url }}" style="width:100%;max-height:200px;object-fit:cover;border-radius:3px;margin-bottom:.5rem;"/>
                   <label class="form-check" style="margin-bottom:.5rem;">
                     <input type="checkbox" name="remover_{{ campo.chave }}"/>
                     <span style="font-size:.75rem;color:#888;">Remover imagem atual</span>
@@ -64,14 +207,18 @@
                 {% endif %}
                 <input type="file" name="{{ campo.chave }}" accept="image/*"
                        style="font-size:.78rem;color:#666;border:1px dashed #ddd;padding:.75rem;border-radius:3px;background:#fafaf9;cursor:pointer;width:100%;"/>
+                <div style="display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.45rem;">
+                  <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:3px;padding:.12em .5em;font-size:.68rem;font-weight:600;color:#1e40af;">📐 900 × 1200 px recomendado</span>
+                  <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:3px;padding:.12em .5em;font-size:.68rem;font-weight:600;color:#1e40af;">⚖️ máx. 600 KB</span>
+                  <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:3px;padding:.12em .5em;font-size:.68rem;font-weight:600;color:#1e40af;">JPG · PNG · WEBP</span>
+                </div>
               </div>
 
             {% elif campo.tipo == "video" %}
               <div class="form-group">
                 <label>{{ campo.label }}</label>
                 {% if campo.video_url %}
-                  <video src="{{ campo.video_url }}" controls
-                         style="width:100%;max-height:220px;border-radius:3px;margin-bottom:.5rem;background:#000;"></video>
+                  <video src="{{ campo.video_url }}" controls style="width:100%;max-height:220px;border-radius:3px;margin-bottom:.5rem;background:#000;"></video>
                   <label class="form-check" style="margin-bottom:.5rem;">
                     <input type="checkbox" name="remover_{{ campo.chave }}"/>
                     <span style="font-size:.75rem;color:#888;">Remover vídeo atual</span>
@@ -79,17 +226,236 @@
                 {% else %}
                   <p class="form-hint" style="margin-bottom:.5rem;">Nenhum vídeo cadastrado ainda.</p>
                 {% endif %}
-                <input type="file" name="{{ campo.chave }}" accept="video/*"
-                       style="font-size:.78rem;color:#666;border:1px dashed #ddd;padding:.75rem;border-radius:3px;background:#fafaf9;cursor:pointer;width:100%;"/>
-                <span class="form-hint">Formato recomendado: .mp4 — máximo 50 MB.</span>
+                <input type="file" name="{{ campo.chave }}" accept="video/*" id="videoInput_{{ campo.chave }}"
+                       style="font-size:.78rem;color:#666;border:1px dashed #ddd;padding:.75rem;border-radius:3px;background:#fafaf9;cursor:pointer;width:100%;"
+                       onchange="initVideoUpload(this, '{{ campo.chave }}')"/>
+                <div id="videoProgress_{{ campo.chave }}" style="display:none;margin-top:.5rem;">
+                  <div style="height:6px;background:#eee;border-radius:3px;overflow:hidden;">
+                    <div id="videoBar_{{ campo.chave }}" style="height:100%;width:0%;background:var(--vinho);transition:width .2s ease;border-radius:3px;"></div>
+                  </div>
+                  <span id="videoLabel_{{ campo.chave }}" style="font-size:.7rem;color:#888;margin-top:.25rem;display:block;">Preparando...</span>
+                </div>
+                <span class="form-hint">Formato recomendado: .mp4 — máximo 100 MB.</span>
               </div>
 
             {% endif %}
           {% endfor %}
         </div>
+        {% endif %}
+
       </div>
     </div>
   </form>
 
 </div>
+
+<script>
+// ── Dropzone colaboradores ──
+const dropzoneEquipe = document.getElementById('dropzoneEquipe');
+if (dropzoneEquipe) {
+  dropzoneEquipe.addEventListener('dragover', e => {
+    e.preventDefault();
+    dropzoneEquipe.style.borderColor = 'var(--vinho)';
+    dropzoneEquipe.style.background  = 'rgba(67,42,53,.04)';
+  });
+  dropzoneEquipe.addEventListener('dragleave', () => {
+    dropzoneEquipe.style.borderColor = 'var(--border)';
+    dropzoneEquipe.style.background  = '#fafaf9';
+  });
+  dropzoneEquipe.addEventListener('drop', e => {
+    e.preventDefault();
+    dropzoneEquipe.style.borderColor = 'var(--border)';
+    dropzoneEquipe.style.background  = '#fafaf9';
+    const input = document.getElementById('fotosBatchEquipe');
+    const dt = new DataTransfer();
+    Array.from(e.dataTransfer.files).forEach(f => dt.items.add(f));
+    input.files = dt.files;
+    handleEquipe(input);
+  });
+}
+
+function handleEquipe(input) {
+  const files    = Array.from(input.files);
+  const errorEl  = document.getElementById('equipeError');
+  const preview  = document.getElementById('previewEquipe');
+  const cells    = document.getElementById('previewEquipeCells');
+  const countEl  = document.getElementById('previewEquipeCount');
+
+  errorEl.style.display  = 'none';
+  preview.style.display  = 'none';
+  cells.innerHTML = '';
+
+  if (files.length < 1) return;
+
+  if (files.length > 50) {
+    errorEl.textContent = `Máximo de 50 imagens (você escolheu ${files.length}). Remova ${files.length - 50} arquivo(s).`;
+    errorEl.style.display = 'block';
+    input.value = '';
+    return;
+  }
+
+  countEl.textContent = `${files.length} imagem${files.length > 1 ? 'ns' : ''} selecionada${files.length > 1 ? 's' : ''}`;
+  preview.style.display = 'block';
+  dropzoneEquipe.style.borderColor = 'var(--vinho)';
+
+  files.forEach(f => {
+    // extrai nome sem extensão
+    const nome = f.name.replace(/\.[^.]+$/, '');
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const div = document.createElement('div');
+      div.style.cssText = 'text-align:center;';
+      const imgWrap = document.createElement('div');
+      imgWrap.style.cssText = 'aspect-ratio:3/4;border-radius:3px;overflow:hidden;background:#eee;margin-bottom:.3rem;';
+      const img = document.createElement('img');
+      img.src = ev.target.result;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+      const label = document.createElement('span');
+      label.textContent = nome;
+      label.style.cssText = 'font-size:.65rem;color:#666;line-height:1.2;display:block;word-break:break-word;';
+      imgWrap.appendChild(img);
+      div.appendChild(imgWrap);
+      div.appendChild(label);
+      cells.appendChild(div);
+    };
+    reader.readAsDataURL(f);
+  });
+}
+
+// ── Dropzone escritório ──
+const dropzone = document.getElementById('dropzone');
+if (dropzone) {
+  dropzone.addEventListener('dragover', e => {
+    e.preventDefault();
+    dropzone.style.borderColor = 'var(--vinho)';
+    dropzone.style.background  = 'rgba(67,42,53,.04)';
+  });
+  dropzone.addEventListener('dragleave', () => {
+    dropzone.style.borderColor = 'var(--border)';
+    dropzone.style.background  = '#fafaf9';
+  });
+  dropzone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropzone.style.borderColor = 'var(--border)';
+    dropzone.style.background  = '#fafaf9';
+    const input = document.getElementById('fotosBatch');
+    const dt = new DataTransfer();
+    Array.from(e.dataTransfer.files).forEach(f => dt.items.add(f));
+    input.files = dt.files;
+    handleFotos(input);
+  });
+}
+
+function handleFotos(input) {
+  const files   = Array.from(input.files);
+  const errorEl = document.getElementById('dropzoneError');
+  const preview = document.getElementById('previewGrid');
+  const cells   = document.getElementById('previewCells');
+  const count   = document.getElementById('previewCount');
+
+  errorEl.style.display = 'none';
+  preview.style.display = 'none';
+  cells.innerHTML = '';
+
+  if (files.length < 5) {
+    errorEl.textContent = `Selecione pelo menos 5 imagens (você escolheu ${files.length}).`;
+    errorEl.style.display = 'block';
+    input.value = '';
+    return;
+  }
+  if (files.length > 10) {
+    errorEl.textContent = `Máximo de 10 imagens (você escolheu ${files.length}). Remova ${files.length - 10} arquivo(s).`;
+    errorEl.style.display = 'block';
+    input.value = '';
+    return;
+  }
+
+  count.textContent = `${files.length} imagem${files.length > 1 ? 'ns' : ''} selecionada${files.length > 1 ? 's' : ''}`;
+  preview.style.display = 'block';
+
+  files.forEach(f => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const div = document.createElement('div');
+      div.style.cssText = 'border-radius:4px;overflow:hidden;aspect-ratio:4/3;';
+      const img = document.createElement('img');
+      img.src = ev.target.result;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+      div.appendChild(img);
+      cells.appendChild(div);
+    };
+    reader.readAsDataURL(f);
+  });
+
+  dropzone.style.borderColor = 'var(--vinho)';
+}
+
+// ── Progresso de upload de vídeo ──
+let _videoInputKey = null;
+function initVideoUpload(input, chave) {
+  _videoInputKey = chave;
+  const bar   = document.getElementById('videoBar_'   + chave);
+  const label = document.getElementById('videoLabel_' + chave);
+  const wrap  = document.getElementById('videoProgress_' + chave);
+  if (!input.files.length) { wrap.style.display = 'none'; return; }
+  const mb = (input.files[0].size / 1024 / 1024).toFixed(1);
+  wrap.style.display = 'block';
+  bar.style.width    = '0%';
+  label.textContent  = `Arquivo selecionado: ${input.files[0].name} (${mb} MB) — clique em Salvar para enviar.`;
+}
+
+// Bloqueia submit se arquivos inválidos; usa XHR com progresso quando há vídeo
+document.getElementById('conteudoForm')?.addEventListener('submit', function(e) {
+  // Validação de batch de fotos escritório
+  const batchInput = document.getElementById('fotosBatch');
+  if (batchInput) {
+    const n = batchInput.files.length;
+    if (n > 0 && (n < 5 || n > 10)) {
+      e.preventDefault();
+      const errorEl = document.getElementById('dropzoneError');
+      errorEl.textContent = n < 5
+        ? `Selecione pelo menos 5 imagens (você escolheu ${n}).`
+        : `Máximo de 10 imagens (você escolheu ${n}).`;
+      errorEl.style.display = 'block';
+      return;
+    }
+  }
+
+  // Upload com progresso se há vídeo selecionado
+  if (_videoInputKey) {
+    const videoInput = document.getElementById('videoInput_' + _videoInputKey);
+    if (videoInput && videoInput.files.length > 0) {
+      e.preventDefault();
+      const bar   = document.getElementById('videoBar_'      + _videoInputKey);
+      const label = document.getElementById('videoLabel_'    + _videoInputKey);
+      const wrap  = document.getElementById('videoProgress_' + _videoInputKey);
+      const btn   = this.querySelector('[type="submit"]');
+      if (btn) { btn.disabled = true; btn.textContent = 'Enviando...'; }
+      wrap.style.display = 'block';
+
+      const fd  = new FormData(this);
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', window.location.href);
+      xhr.upload.addEventListener('progress', ev => {
+        if (!ev.lengthComputable) return;
+        const pct = Math.round(ev.loaded / ev.total * 100);
+        bar.style.width   = pct + '%';
+        label.textContent = pct < 100 ? `Enviando… ${pct}%` : 'Processando no servidor…';
+      });
+      xhr.addEventListener('load', () => {
+        if (xhr.status === 200 || xhr.status === 302) {
+          label.textContent = 'Salvo! Recarregando…';
+          bar.style.width = '100%';
+          // Extrai URL de redirecionamento do response final
+          window.location.href = xhr.responseURL || window.location.href;
+        } else {
+          label.textContent = 'Erro ao enviar. Tente novamente.';
+          if (btn) { btn.disabled = false; btn.textContent = 'Salvar alterações'; }
+        }
+      });
+      xhr.send(fd);
+    }
+  }
+});
+</script>
 {% endblock %}

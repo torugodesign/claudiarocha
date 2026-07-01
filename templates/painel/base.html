@@ -493,20 +493,9 @@
 <body>
 
   <aside class="sidebar">
-    <a href="/painel/" class="sidebar__brand">
-      <svg width="20" height="19" viewBox="0 0 100 95">
-        <polygon points="0,0 96,0 91,5 0,5"   fill="#C0BFBF"/>
-        <polygon points="0,10 86,10 81,16 0,16" fill="#C0BFBF"/>
-        <polygon points="0,21 76,21 69,28 0,28" fill="#C0BFBF"/>
-        <polygon points="0,33 64,33 56,41 0,41" fill="#C0BFBF"/>
-        <polygon points="0,46 52,46 42,56 0,56" fill="#C0BFBF"/>
-        <polygon points="0,61 37,61 25,73 0,73" fill="#C0BFBF"/>
-        <polygon points="0,78 21,78 6,93 0,93"  fill="#C0BFBF"/>
-      </svg>
-      <div class="sidebar__brand-text">
-        <div class="sidebar__brand-name">CLÁUDIA ROCHA</div>
-        <div class="sidebar__brand-sub">Painel de gestão</div>
-      </div>
+    <a href="/painel/" class="sidebar__brand" style="flex-direction:column;align-items:flex-start;height:auto;padding:.85rem 1.25rem;">
+      <div class="sidebar__brand-sub" style="margin-bottom:.45rem;">PAINEL DE GESTÃO</div>
+      <img src="{% static 'img/logo_horizontal.png' %}" alt="Cláudia Rocha" style="height:28px;width:auto;opacity:.85;"/>
     </a>
 
     <nav class="sidebar__nav">

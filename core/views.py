@@ -12,6 +12,7 @@ SECOES = {
         'label': 'Hero',
         'campos': [
             {'chave': 'hero_video', 'label': 'Vídeo de fundo', 'tipo': 'video'},
+            {'chave': 'hero_logo',  'label': 'Logo',           'tipo': 'imagem'},
         ],
     },
     'sobre': {
@@ -250,7 +251,10 @@ def painel_artigo_editar(request, pk):
         artigo.conteudo  = request.POST['conteudo']
         artigo.publicado = 'publicado' in request.POST
         if 'remover_imagem' in request.POST:
-            artigo.imagem_capa.delete(save=False)
+            try:
+                artigo.imagem_capa.delete(save=False)
+            except OSError:
+                pass
             artigo.imagem_capa = None
         if request.FILES.get('imagem_capa'):
             artigo.imagem_capa = request.FILES['imagem_capa']
@@ -297,6 +301,91 @@ def painel_conteudo_secao(request, secao):
     objetos = {c.chave: c for c in ConteudoSite.objects.filter(chave__in=chaves)}
 
     if request.method == 'POST':
+        # Upload em lote para colaboradores
+        if secao == 'equipe' and request.FILES.getlist('eq_fotos_batch'):
+            fotos = request.FILES.getlist('eq_fotos_batch')
+            if len(fotos) > 50:
+                messages.error(request, f'Máximo de 50 fotos (você enviou {len(fotos)}).')
+                return redirect('painel_conteudo_secao', secao=secao)
+            for i in range(1, 51):
+                chave_foto = f'eq_foto_{i:02d}'
+                chave_nome = f'eq_nome_{i:02d}'
+                obj_foto, _ = ConteudoSite.objects.get_or_create(chave=chave_foto, defaults={'secao': secao})
+                obj_nome, _ = ConteudoSite.objects.get_or_create(chave=chave_nome, defaults={'secao': secao})
+                if i <= len(fotos):
+                    f = fotos[i - 1]
+                    if obj_foto.imagem:
+                        obj_foto.imagem.delete(save=False)
+                    obj_foto.imagem = f
+                    obj_foto.secao  = secao
+                    obj_foto.save()
+                    # nome = filename sem extensão
+                    import os
+                    nome = os.path.splitext(f.name)[0]
+                    obj_nome.titulo = nome
+                    obj_nome.secao  = secao
+                    obj_nome.save()
+                else:
+                    if obj_foto.imagem:
+                        obj_foto.imagem.delete(save=False)
+                    obj_foto.imagem = None
+                    obj_foto.secao  = secao
+                    obj_foto.save()
+                    obj_nome.titulo = ''
+                    obj_nome.secao  = secao
+                    obj_nome.save()
+            # salva título e texto
+            for campo in campos:
+                chave = campo.get('chave')
+                if not chave or campo['tipo'] not in ('titulo', 'texto'):
+                    continue
+                if chave in ('equipe_titulo', 'equipe_texto'):
+                    obj, _ = ConteudoSite.objects.get_or_create(chave=chave, defaults={'secao': secao})
+                    if campo['tipo'] == 'titulo':
+                        obj.titulo = request.POST.get(chave, '')
+                    else:
+                        obj.texto = request.POST.get(chave, '')
+                    obj.secao = secao
+                    obj.save()
+            messages.success(request, f'{len(fotos)} colaborador{"es" if len(fotos) != 1 else ""} salvo{"s" if len(fotos) != 1 else ""}.')
+            return redirect('painel_conteudo_secao', secao=secao)
+
+        # Upload em lote para o escritório
+        if secao == 'estrutura' and request.FILES.getlist('est_fotos_batch'):
+            fotos = request.FILES.getlist('est_fotos_batch')
+            if len(fotos) < 5 or len(fotos) > 10:
+                messages.error(request, f'Selecione entre 5 e 10 fotos (você enviou {len(fotos)}).')
+                return redirect('painel_conteudo_secao', secao=secao)
+            # Apaga slots anteriores e salva os novos
+            for i in range(1, 11):
+                chave = f'est_foto_{i:02d}'
+                obj, _ = ConteudoSite.objects.get_or_create(chave=chave, defaults={'secao': secao})
+                if obj.imagem:
+                    try:
+                        obj.imagem.delete(save=False)
+                    except OSError:
+                        pass
+                if i <= len(fotos):
+                    obj.imagem = fotos[i - 1]
+                else:
+                    obj.imagem = None
+                obj.secao = secao
+                obj.save()
+            # Salva título e texto normalmente
+            for campo in campos:
+                chave = campo.get('chave')
+                if not chave or campo['tipo'] not in ('titulo', 'texto'):
+                    continue
+                obj, _ = ConteudoSite.objects.get_or_create(chave=chave, defaults={'secao': secao})
+                if campo['tipo'] == 'titulo':
+                    obj.titulo = request.POST.get(chave, '')
+                else:
+                    obj.texto = request.POST.get(chave, '')
+                obj.secao = secao
+                obj.save()
+            messages.success(request, f'{len(fotos)} fotos salvas com sucesso.')
+            return redirect('painel_conteudo_secao', secao=secao)
+
         for campo in campos:
             chave = campo.get('chave')
             if not chave:
@@ -310,13 +399,19 @@ def painel_conteudo_secao(request, secao):
                 obj.texto = request.POST.get(chave, '')
             elif campo['tipo'] == 'imagem':
                 if f'remover_{chave}' in request.POST:
-                    obj.imagem.delete(save=False)
+                    try:
+                        obj.imagem.delete(save=False)
+                    except OSError:
+                        pass
                     obj.imagem = None
                 if request.FILES.get(chave):
                     obj.imagem = request.FILES[chave]
             elif campo['tipo'] == 'video':
                 if f'remover_{chave}' in request.POST:
-                    obj.video.delete(save=False)
+                    try:
+                        obj.video.delete(save=False)
+                    except OSError:
+                        pass
                     obj.video = None
                 if request.FILES.get(chave):
                     obj.video = request.FILES[chave]
@@ -342,10 +437,30 @@ def painel_conteudo_secao(request, secao):
             'video_url':    obj.video.url  if obj and obj.video  else '',
         })
 
+    fotos_escritorio = []
+    if secao == 'estrutura':
+        for i in range(1, 11):
+            obj = objetos.get(f'est_foto_{i:02d}')
+            if obj and obj.imagem:
+                fotos_escritorio.append(obj.imagem.url)
+
+    colaboradores_atuais = []
+    if secao == 'equipe':
+        for i in range(1, 51):
+            obj_foto = objetos.get(f'eq_foto_{i:02d}')
+            obj_nome = objetos.get(f'eq_nome_{i:02d}')
+            if obj_foto and obj_foto.imagem:
+                colaboradores_atuais.append({
+                    'url':  obj_foto.imagem.url,
+                    'nome': obj_nome.titulo if obj_nome else '',
+                })
+
     ctx = {
-        'secao':       secao,
-        'secao_label': SECOES[secao]['label'],
-        'secoes':      SECOES,
-        'campos':      campos_ctx,
+        'secao':               secao,
+        'secao_label':         SECOES[secao]['label'],
+        'secoes':              SECOES,
+        'campos':              campos_ctx,
+        'fotos_escritorio':    fotos_escritorio,
+        'colaboradores_atuais': colaboradores_atuais,
     }
     return render(request, 'painel/conteudo.html', ctx)

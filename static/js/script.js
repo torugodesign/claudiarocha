@@ -27,7 +27,10 @@ const muteIcon    = document.getElementById('muteIcon');
 const soundIcon   = document.getElementById('soundIcon');
 
 if (video) {
-  // Esconde placeholder assim que o vídeo começa
+  // Esconde placeholder assim que o vídeo pode tocar (canplay = mais rápido)
+  video.addEventListener('canplay', () => {
+    if (placeholder) placeholder.classList.add('hidden');
+  });
   video.addEventListener('playing', () => {
     if (placeholder) placeholder.classList.add('hidden');
     playIcon.style.display  = 'none';
@@ -210,15 +213,24 @@ const form = document.getElementById('contactForm');
 if (form) {
   form.addEventListener('submit', e => {
     e.preventDefault();
-    const btn = form.querySelector('button[type="submit"]');
-    btn.textContent       = 'Mensagem enviada';
-    btn.style.background  = '#432A35';
-    btn.style.borderColor = '#432A35';
-    setTimeout(() => {
-      btn.textContent       = 'Enviar mensagem';
-      btn.style.background  = '';
-      btn.style.borderColor = '';
-      form.reset();
-    }, 3500);
+    const nome      = document.getElementById('nome').value.trim();
+    const email     = document.getElementById('email').value.trim();
+    const telefone  = document.getElementById('telefone').value.trim();
+    const mensagem  = document.getElementById('mensagem').value.trim();
+
+    const texto = [
+      `Olá, Cláudia! Vim pelo site e gostaria de agendar uma consulta.`,
+      ``,
+      `*Nome:* ${nome}`,
+      email    ? `*E-mail:* ${email}`    : '',
+      telefone ? `*Telefone:* ${telefone}` : '',
+      ``,
+      `*Mensagem:*`,
+      mensagem,
+    ].filter(l => l !== null).join('\n');
+
+    const numero = '5516991120865';
+    const url    = `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
+    window.open(url, '_blank');
   });
 }

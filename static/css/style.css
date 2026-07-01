@@ -144,6 +144,35 @@ ul { list-style: none; }
   background: var(--off-white);
   color: var(--grafite);
 }
+.btn--vinho {
+  background: var(--vinho);
+  color: var(--off-white);
+  border-color: var(--vinho);
+  text-decoration: none;
+}
+.btn--vinho:hover {
+  background: transparent;
+  color: var(--vinho);
+}
+.btn--vinho-outline {
+  background: transparent;
+  color: var(--vinho);
+  border: 1px solid var(--vinho);
+  text-decoration: none;
+  font-size: .68rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding: .6rem 1.4rem;
+  line-height: 1.5;
+  text-align: left;
+  display: inline-block;
+  transition: background .25s ease, color .25s ease;
+}
+.btn--vinho-outline:hover {
+  background: var(--vinho);
+  color: var(--off-white);
+}
 .btn--dark {
   background: var(--grafite);
   color: var(--off-white);
@@ -293,10 +322,10 @@ ul { list-style: none; }
 }
 
 .hero__logo-overlay-img {
-  width: clamp(260px, 38vw, 560px);
+  width: clamp(160px, 22vw, 320px);
   height: auto;
   opacity: 0.92;
-  filter: drop-shadow(0 4px 24px rgba(0,0,0,0.45));
+  filter: drop-shadow(0 2px 12px rgba(0,0,0,0.3));
   animation: logoFadeIn 1.8s ease forwards;
 }
 
@@ -492,8 +521,9 @@ ul { list-style: none; }
 .sobre__title em {
   font-family: var(--font-accent);
   font-style: italic;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--vinho);
+  font-size: 1.15em;
 }
 
 .sobre__text {
@@ -564,6 +594,7 @@ ul { list-style: none; }
   font-family: var(--font-accent);
   font-style: italic;
   font-weight: 700;
+  font-size: 1.15em;
   color: #C0BFBF;
 }
 .atuacao__intro {
@@ -577,6 +608,7 @@ ul { list-style: none; }
 /* ── Cards empilháveis ── */
 .atuacao__stack {
   position: relative;
+  background: var(--teal);
 }
 .atuacao__stack-item {
   position: sticky;
@@ -588,6 +620,8 @@ ul { list-style: none; }
   overflow: hidden;
   will-change: transform;
   transform-origin: top center;
+  padding-top: 10vh;
+  clip-path: polygon(0% 12%, 100% 3%, 100% 100%, 0% 100%);
 }
 .atuacao__stack-inner {
   position: relative;
@@ -709,7 +743,8 @@ ul { list-style: none; }
 .equipe__title em {
   font-family: var(--font-accent);
   font-style: italic;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1.15em;
   color: var(--vinho);
 }
 .equipe__text {
@@ -819,7 +854,8 @@ ul { list-style: none; }
 .estrutura__title em {
   font-family: var(--font-accent);
   font-style: italic;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1.15em;
   color: var(--pedra);
 }
 .estrutura__text {
@@ -882,7 +918,8 @@ ul { list-style: none; }
 .diferenciais__title em {
   font-family: var(--font-accent);
   font-style: italic;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1.15em;
 }
 .diferenciais__text {
   font-size: 1rem;
@@ -956,6 +993,7 @@ ul { list-style: none; }
   font-family: var(--font-accent);
   font-style: italic;
   font-weight: 700;
+  font-size: 1.15em;
   color: var(--pedra);
 }
 .avaliacoes__rating {
@@ -1151,7 +1189,8 @@ ul { list-style: none; }
 .blog-destaque__title em {
   font-family: var(--font-accent);
   font-style: italic;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1.15em;
   color: var(--pedra);
 }
 

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Cormorant Garamond: fonte dos itálicos / citações -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260624g" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260630b" />
 </head>
 <body>
 
@@ -90,7 +90,7 @@
 
     <!-- Placeholder centralizado enquanto o vídeo não carrega -->
     <div class="hero__placeholder" id="videoPlaceholder">
-      <img src="{% static 'img/logo_horizontal.png' %}" alt="Cláudia Rocha" class="hero__placeholder-logo" />
+      {% if c.hero_logo and c.hero_logo.imagem %}<img src="{{ c.hero_logo.imagem.url }}" alt="Cláudia Rocha" class="hero__placeholder-logo" />{% else %}<img src="{% static 'img/logo_horizontal.png' %}" alt="Cláudia Rocha" class="hero__placeholder-logo" />{% endif %}
     </div>
 
     <!-- Controles discretos no canto inferior direito -->
@@ -114,7 +114,7 @@
 
     <!-- Logo centralizada sobre o vídeo -->
     <div class="hero__logo-overlay">
-      <img src="{% static 'img/logo simples - claro.png' %}" alt="Cláudia Rocha" class="hero__logo-overlay-img" />
+      {% if c.hero_logo and c.hero_logo.imagem %}<img src="{{ c.hero_logo.imagem.url }}" alt="Cláudia Rocha" class="hero__logo-overlay-img" style="opacity:.7;" />{% else %}<img src="{% static 'img/CLAUDIAROCHA_pedra.png' %}" alt="Cláudia Rocha" class="hero__logo-overlay-img" style="opacity:.7;" />{% endif %}
     </div>
 
     <!-- Indicador de scroll -->
@@ -147,9 +147,12 @@
           <p class="sobre__text reveal">
             {% if c.sobre_p3 %}{{ c.sobre_p3.texto }}{% else %}Aqui, sua voz é ouvida e sua história é protegida pelo rigor da técnica e pelo peso da <strong>ética.</strong>{% endif %}
           </p>
-          <div class="sobre__credencial reveal">
-            <span class="sobre__numero">{% if c.sobre_credencial_num %}{{ c.sobre_credencial_num.titulo }}{% else %}35{% endif %}</span>
-            <span class="sobre__label">{% if c.sobre_credencial_label %}{{ c.sobre_credencial_label.titulo }}{% else %}anos de atuação{% endif %}</span>
+          <div class="sobre__credencial reveal" style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap;">
+            <div style="display:flex;align-items:baseline;gap:.5rem;">
+              <span class="sobre__numero">{% if c.sobre_credencial_num %}{{ c.sobre_credencial_num.titulo }}{% else %}35{% endif %}</span>
+              <span class="sobre__label">{% if c.sobre_credencial_label %}{{ c.sobre_credencial_label.titulo }}{% else %}anos de atuação{% endif %}</span>
+            </div>
+            <a href="#contato" class="btn btn--vinho-outline">Agende um atendimento</a>
           </div>
         </div>
 
@@ -556,11 +559,7 @@
     <div class="container">
       <div class="footer__inner">
         <a href="#home" class="footer__logo">
-          <svg class="footer__symbol" aria-hidden="true"><use href="#cr-symbol"/></svg>
-          <div class="footer__text">
-            <strong>CLÁUDIA ROCHA</strong>
-            <span>DIREITO DO TRABALHO</span>
-          </div>
+          <img src="{% static 'img/logo_horizontal.png' %}" alt="Cláudia Rocha — Direito do Trabalho" class="nav__logo-img" />
         </a>
         <p class="footer__copy">© 2026 Cláudia Rocha Advocacia. Todos os direitos reservados.</p>
         <a href="/painel/" class="footer__admin-link">Painel</a>
@@ -587,7 +586,9 @@
     <span class="whatsapp-float__tooltip">Fale conosco</span>
   </a>
 
-  <script src="{% static 'js/script.js' %}?v=20260624g"></script>
+  <script src="{% static 'js/script.js' %}?v=20260630b"></script>
 </body>
 </html>
+
+
 
