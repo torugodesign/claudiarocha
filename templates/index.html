@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Cormorant Garamond: fonte dos itálicos / citações -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260630b" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260713z" />
 </head>
 <body>
 
@@ -51,12 +51,14 @@
     </symbol>
   </svg>
 
+  <a href="#home" class="skip-link">Pular para o conteúdo</a>
+
   <!-- NAV -->
   <nav class="nav" id="nav">
     <a href="#home" class="nav__logo">
       <img src="{% static 'img/logo_horizontal.png' %}" alt="Cláudia Rocha — Direito do Trabalho" class="nav__logo-img" />
     </a>
-    <button class="nav__toggle" id="navToggle" aria-label="Menu">
+    <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navMenu">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav__menu" id="navMenu">
@@ -88,6 +90,9 @@
       {% endif %}
     </video>
 
+    <!-- Camada sólida sobre o vídeo — realça o logo e o título -->
+    <div class="hero__scrim" aria-hidden="true"></div>
+
     <!-- Placeholder centralizado enquanto o vídeo não carrega -->
     <div class="hero__placeholder" id="videoPlaceholder">
       {% if c.hero_logo and c.hero_logo.imagem %}<img src="{{ c.hero_logo.imagem.url }}" alt="Cláudia Rocha" class="hero__placeholder-logo" />{% else %}<img src="{% static 'img/logo_horizontal.png' %}" alt="Cláudia Rocha" class="hero__placeholder-logo" />{% endif %}
@@ -112,9 +117,10 @@
       </button>
     </div>
 
-    <!-- Logo centralizada sobre o vídeo -->
+    <!-- Logo + título centralizados sobre o vídeo -->
     <div class="hero__logo-overlay">
       {% if c.hero_logo and c.hero_logo.imagem %}<img src="{{ c.hero_logo.imagem.url }}" alt="Cláudia Rocha" class="hero__logo-overlay-img" style="opacity:.7;" />{% else %}<img src="{% static 'img/CLAUDIAROCHA_pedra.png' %}" alt="Cláudia Rocha" class="hero__logo-overlay-img" style="opacity:.7;" />{% endif %}
+      <h1 class="hero__headline"><span>Onde a sua história encontra</span><br>a <b>verdadeira</b> <em>justiça.</em></h1>
     </div>
 
     <!-- Indicador de scroll -->
@@ -128,40 +134,54 @@
     </div>
   </section>
 
+  <!-- HERO — texto de apoio abaixo do vídeo -->
+  <div class="hero-copy">
+    <div class="container hero-copy__inner">
+      <a href="#contato" class="hero-copy__cta">Inicie a retomada<br>do <em>seu direito</em></a>
+      <div class="hero-copy__text">
+        <p>Causas trabalhistas envolvem mais do que documentos. Envolvem dignidade, ruptura, prova e reconstrução.</p>
+        <p>No Escritório Cláudia Rocha, sua história é conduzida com escuta, coragem e rigor técnico.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- SOBRE -->
   <section class="sobre" id="sobre">
     <div class="container">
       <div class="sobre__grid">
 
-        <div class="sobre__left">
-          <div class="sobre__tag reveal">sobre</div>
-          <h2 class="sobre__title reveal">
-            {% if c.sobre_titulo %}{{ c.sobre_titulo.titulo }}{% else %}A justiça não é apenas um resultado; é o retorno ao <em>equilíbrio.</em>{% endif %}
-          </h2>
-          <p class="sobre__text reveal">
-            {% if c.sobre_p1 %}{{ c.sobre_p1.texto }}{% else %}O trabalho é a base da sua dignidade. Quando esse ciclo é rompido por injustiças, você precisa de mais do que um advogado; você precisa de uma estratégia inabalável.{% endif %}
-          </p>
-          <p class="sobre__text reveal">
-            {% if c.sobre_p2 %}{{ c.sobre_p2.texto }}{% else %}No Escritório Cláudia Rocha, cada caso é uma missão de restauração. Unimos a precisão do Direito do Trabalho a uma condução sensível e firme.{% endif %}
-          </p>
-          <p class="sobre__text reveal">
-            {% if c.sobre_p3 %}{{ c.sobre_p3.texto }}{% else %}Aqui, sua voz é ouvida e sua história é protegida pelo rigor da técnica e pelo peso da <strong>ética.</strong>{% endif %}
-          </p>
-          <div class="sobre__credencial reveal" style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap;">
-            <div style="display:flex;align-items:baseline;gap:.5rem;">
-              <span class="sobre__numero">{% if c.sobre_credencial_num %}{{ c.sobre_credencial_num.titulo }}{% else %}35{% endif %}</span>
-              <span class="sobre__label">{% if c.sobre_credencial_label %}{{ c.sobre_credencial_label.titulo }}{% else %}anos de atuação{% endif %}</span>
-            </div>
-            <a href="#contato" class="btn btn--vinho-outline">Agende um atendimento</a>
-          </div>
-        </div>
+        <div class="sobre__tag reveal">sobre</div>
+
+        <h2 class="sobre__title reveal">
+          {% if c.sobre_titulo %}{{ c.sobre_titulo.titulo }}{% else %}A justiça não é apenas um resultado. É a retomada da sua <em>dignidade.</em>{% endif %}
+        </h2>
 
         <div class="sobre__right">
           {% if c.sobre_imagem and c.sobre_imagem.imagem %}
-            <img src="{{ c.sobre_imagem.imagem.url }}" alt="Cláudia Rocha" class="sobre__foto reveal"/>
+            <img src="{{ c.sobre_imagem.imagem.url }}" alt="Cláudia Rocha" class="sobre__foto reveal" loading="lazy"/>
           {% else %}
-            <img src="{% static 'img/foto-claudia-sobre.jpg' %}" alt="Cláudia Rocha" class="sobre__foto reveal"/>
+            <img src="{% static 'img/foto-claudia-sobre.jpg' %}" alt="Cláudia Rocha" class="sobre__foto reveal" loading="lazy"/>
           {% endif %}
+        </div>
+
+        <div class="sobre__credencial reveal">
+          <div class="sobre__credencial-num">
+            <span class="sobre__numero">{% if c.sobre_credencial_num %}{{ c.sobre_credencial_num.titulo }}{% else %}35{% endif %}</span>
+            <span class="sobre__label">{% if c.sobre_credencial_label %}{{ c.sobre_credencial_label.titulo }}{% else %}anos de atuação{% endif %}</span>
+          </div>
+          <a href="#contato" class="btn btn--vinho-outline">Agende um atendimento</a>
+        </div>
+
+        <div class="sobre__paragrafos">
+          <p class="sobre__text reveal">
+            {% if c.sobre_p1 %}{{ c.sobre_p1.texto }}{% else %}O trabalho sustenta planos, responsabilidades e parte importante da identidade de uma pessoa. Quando esse ciclo é rompido por abusos, irregularidades ou conflitos, é preciso mais do que orientação: é preciso condução.{% endif %}
+          </p>
+          <p class="sobre__text reveal">
+            {% if c.sobre_p2 %}{{ c.sobre_p2.texto }}{% else %}O Escritório Cláudia Rocha atua no Direito do Trabalho com estratégia, firmeza e sensibilidade para transformar situações de insegurança em caminhos juridicamente estruturados.{% endif %}
+          </p>
+          <p class="sobre__text reveal">
+            {% if c.sobre_p3 %}{{ c.sobre_p3.texto }}{% else %}Cada caso é analisado a partir dos fatos, das provas e da <strong>história de quem chega até nós.</strong>{% endif %}
+          </p>
         </div>
 
       </div>
@@ -176,7 +196,7 @@
         <div class="atuacao__tag reveal">atuação</div>
         <h2 class="atuacao__title reveal">{% if c.atuacao_titulo %}{{ c.atuacao_titulo.titulo }}{% else %}Especialidade a serviço da <em>sua reparação.</em>{% endif %}</h2>
         <p class="atuacao__intro reveal">
-          {% if c.atuacao_intro %}{{ c.atuacao_intro.texto }}{% else %}Atuação focada no trabalhador — defesa técnica e estratégica para quem exige que seus direitos sejam respeitados com o rigor que merecem.{% endif %}
+          {% if c.atuacao_intro %}{{ c.atuacao_intro.texto }}{% else %}Com 35 anos de atuação, o Escritório Cláudia Rocha defende trabalhadores em causas que exigem atenção técnica, leitura estratégica e compromisso real com a justiça. A atuação é voltada para quem precisa reivindicar direitos com seriedade, clareza e firmeza.{% endif %}
         </p>
       </div>
     </div>
@@ -186,32 +206,32 @@
       <div class="atuacao__stack-item" style="--card-bg:#2c3334;z-index:1">
         <div class="container atuacao__stack-inner">
           <span class="atuacao__stack-num" aria-hidden="true">01</span>
-          <h3 class="atuacao__stack-title">{% if c.atuacao_c1_titulo %}{{ c.atuacao_c1_titulo.titulo }}{% else %}Verbas &amp;<br><span>Direitos</span>{% endif %}</h3>
-          <p class="atuacao__stack-desc">{% if c.atuacao_c1_desc %}{{ c.atuacao_c1_desc.texto }}{% else %}Reivindicação rigorosa de cada detalhe do seu contrato de trabalho — do início ao encerramento do vínculo.{% endif %}</p>
+          <h3 class="atuacao__stack-title">{% if c.atuacao_c1_titulo %}{{ c.atuacao_c1_titulo.titulo }}{% else %}Direitos<br><span>Trabalhistas</span>{% endif %}</h3>
+          <p class="atuacao__stack-desc">{% if c.atuacao_c1_desc %}{{ c.atuacao_c1_desc.texto }}{% else %}Análise técnica de verbas, jornadas, registros, contratos e demais pontos da relação de trabalho, do início ao encerramento do vínculo.{% endif %}</p>
         </div>
       </div>
 
       <div class="atuacao__stack-item" style="--card-bg:#353C3D;z-index:2">
         <div class="container atuacao__stack-inner">
           <span class="atuacao__stack-num" aria-hidden="true">02</span>
-          <h3 class="atuacao__stack-title">{% if c.atuacao_c2_titulo %}{{ c.atuacao_c2_titulo.titulo }}{% else %}Rescisões<br><span>Contratuais</span>{% endif %}</h3>
-          <p class="atuacao__stack-desc">{% if c.atuacao_c2_desc %}{{ c.atuacao_c2_desc.texto }}{% else %}Gestão estratégica para encerramentos de vínculo que exigem máxima atenção técnica e precisão jurídica.{% endif %}</p>
+          <h3 class="atuacao__stack-title">{% if c.atuacao_c2_titulo %}{{ c.atuacao_c2_titulo.titulo }}{% else %}Rescisão<br><span>Contratual</span>{% endif %}</h3>
+          <p class="atuacao__stack-desc">{% if c.atuacao_c2_desc %}{{ c.atuacao_c2_desc.texto }}{% else %}Orientação estratégica em encerramentos de vínculo, com atenção aos documentos, valores, prazos, riscos e possibilidades jurídicas.{% endif %}</p>
         </div>
       </div>
 
       <div class="atuacao__stack-item" style="--card-bg:#3d2f38;z-index:3">
         <div class="container atuacao__stack-inner">
           <span class="atuacao__stack-num" aria-hidden="true">03</span>
-          <h3 class="atuacao__stack-title">{% if c.atuacao_c3_titulo %}{{ c.atuacao_c3_titulo.titulo }}{% else %}Danos &amp;<br><span>Assédio</span>{% endif %}</h3>
-          <p class="atuacao__stack-desc">{% if c.atuacao_c3_desc %}{{ c.atuacao_c3_desc.texto }}{% else %}Defesa firme contra violações à integridade moral e psicológica no ambiente laboral.{% endif %}</p>
+          <h3 class="atuacao__stack-title">{% if c.atuacao_c3_titulo %}{{ c.atuacao_c3_titulo.titulo }}{% else %}Assédio<br><span>Moral</span>{% endif %}</h3>
+          <p class="atuacao__stack-desc">{% if c.atuacao_c3_desc %}{{ c.atuacao_c3_desc.texto }}{% else %}Atuação em situações que envolvem violação à dignidade, à integridade moral e ao equilíbrio nas relações de trabalho.{% endif %}</p>
         </div>
       </div>
 
       <div class="atuacao__stack-item" style="--card-bg:#432A35;z-index:4">
         <div class="container atuacao__stack-inner">
           <span class="atuacao__stack-num" aria-hidden="true">04</span>
-          <h3 class="atuacao__stack-title">{% if c.atuacao_c4_titulo %}{{ c.atuacao_c4_titulo.titulo }}{% else %}Vínculos<br><span>Empregatícios</span>{% endif %}</h3>
-          <p class="atuacao__stack-desc">{% if c.atuacao_c4_desc %}{{ c.atuacao_c4_desc.texto }}{% else %}Análise e regularização de vínculos complexos — reconhecimento, formalização e proteção dos seus direitos.{% endif %}</p>
+          <h3 class="atuacao__stack-title">{% if c.atuacao_c4_titulo %}{{ c.atuacao_c4_titulo.titulo }}{% else %}Vínculo<br><span>Empregatício</span>{% endif %}</h3>
+          <p class="atuacao__stack-desc">{% if c.atuacao_c4_desc %}{{ c.atuacao_c4_desc.texto }}{% else %}Análise de vínculos formais e informais, reconhecimento de relação de emprego e regularização de direitos conforme a realidade dos fatos.{% endif %}</p>
         </div>
       </div>
 
@@ -220,33 +240,29 @@
 
   <!-- CAPITAL HUMANO -->
   <section class="equipe" id="equipe">
+    <div class="equipe__bg-pattern" aria-hidden="true"></div>
     <div class="container">
 
       <div class="equipe__tag reveal">capital humano</div>
 
       <div class="equipe__layout">
 
-        <!-- Coluna esquerda: retrato que troca sozinho -->
+        <h2 class="equipe__title reveal">
+          {% if c.equipe_titulo %}{{ c.equipe_titulo.titulo }}{% else %}Uma equipe preparada para<br>compreender e conduzir <em>a sua causa.</em>{% endif %}
+        </h2>
+
+        <!-- Foto única do escritório -->
         <div class="equipe__col-foto">
-          <div class="equipe__frame" id="equipeFrame" aria-live="polite">
-            {% for m in equipe_membros %}
-            <img class="equipe__retrato-img {% if forloop.first %}is-active{% endif %}"
-                 src="{% if m.tipo == 'media' %}{{ m.url }}{% else %}{% static 'img/equipe/' %}{{ m.slug }}.jpg{% endif %}"
-                 alt="{{ m.nome }}" data-nome="{{ m.nome }}" loading="lazy"/>
-            {% endfor %}
+          <div class="equipe__frame">
+            <img class="equipe__retrato-img is-active"
+                 src="{% static 'img/equipe/IMG_1686.jpg' %}"
+                 alt="Equipe do Escritório Cláudia Rocha" loading="lazy"/>
           </div>
-          <span class="equipe__nome" id="equipeNome">{{ equipe_membros.0.nome }}</span>
         </div>
 
-        <!-- Coluna direita: texto fixo da seção -->
-        <div class="equipe__col-texto">
-          <h2 class="equipe__title reveal">
-            {% if c.equipe_titulo %}{{ c.equipe_titulo.titulo }}{% else %}Mentes preparadas para atender a sua <em>Causa.</em>{% endif %}
-          </h2>
-          <p class="equipe__text reveal">
-            {% if c.equipe_texto %}{{ c.equipe_texto.texto }}{% else %}Sob a liderança da Dra. Cláudia Rocha, nossa equipe opera com um único norte: a excelência técnica. Cada profissional aqui entende que, por trás de cada processo, existe uma vida que espera por justiça. Não entregamos apenas petições; entregamos o compromisso com o direito do cliente.{% endif %}
-          </p>
-        </div>
+        <p class="equipe__text reveal">
+          {% if c.equipe_texto %}{{ c.equipe_texto.texto }}{% else %}Sob a liderança da Dra. Cláudia Rocha, o escritório atua com um princípio claro: cada caso precisa ser compreendido antes de ser conduzido. Por trás de um processo, existem documentos, provas, prazos, expectativas e decisões importantes.<span class="equipe__text-col2">Por isso, a equipe trabalha com organização, atenção técnica e comunicação clara em cada etapa. Mais do que movimentar processos, o compromisso é oferecer uma condução jurídica responsável.</span>{% endif %}
+        </p>
 
       </div>
     </div>
@@ -280,14 +296,14 @@
         {% if estrutura_fotos %}
           {% for url in estrutura_fotos %}
           <img class="estrutura__img {% if forloop.first %}is-active{% endif %}"
-               src="{{ url }}" alt="Escritório Cláudia Rocha — foto {{ forloop.counter }}" data-i="{{ forloop.counter0 }}"/>
+               src="{{ url }}" alt="Escritório Cláudia Rocha — foto {{ forloop.counter }}" data-i="{{ forloop.counter0 }}" loading="lazy"/>
           {% endfor %}
         {% else %}
-          <img class="estrutura__img is-active" src="{% static 'img/escritorio/foto1.png' %}" alt="Escritório Cláudia Rocha — foto 1" data-i="0"/>
-          <img class="estrutura__img" src="{% static 'img/escritorio/foto2.png' %}" alt="Escritório Cláudia Rocha — foto 2" data-i="1"/>
-          <img class="estrutura__img" src="{% static 'img/escritorio/foto3.png' %}" alt="Escritório Cláudia Rocha — foto 3" data-i="2"/>
-          <img class="estrutura__img" src="{% static 'img/escritorio/foto4.jpg' %}" alt="Escritório Cláudia Rocha — foto 4" data-i="3"/>
-          <img class="estrutura__img" src="{% static 'img/escritorio/foto5.jpg' %}" alt="Escritório Cláudia Rocha — foto 5" data-i="4"/>
+          <img class="estrutura__img is-active" src="{% static 'img/escritorio/foto1.png' %}" alt="Escritório Cláudia Rocha — foto 1" data-i="0" loading="lazy"/>
+          <img class="estrutura__img" src="{% static 'img/escritorio/foto2.png' %}" alt="Escritório Cláudia Rocha — foto 2" data-i="1" loading="lazy"/>
+          <img class="estrutura__img" src="{% static 'img/escritorio/foto3.png' %}" alt="Escritório Cláudia Rocha — foto 3" data-i="2" loading="lazy"/>
+          <img class="estrutura__img" src="{% static 'img/escritorio/foto4.jpg' %}" alt="Escritório Cláudia Rocha — foto 4" data-i="3" loading="lazy"/>
+          <img class="estrutura__img" src="{% static 'img/escritorio/foto5.jpg' %}" alt="Escritório Cláudia Rocha — foto 5" data-i="4" loading="lazy"/>
         {% endif %}
       </div>
 
@@ -305,10 +321,10 @@
     <div class="container">
       <div class="estrutura__footer">
         <h2 class="estrutura__title reveal">
-          {% if c.estrutura_titulo %}{{ c.estrutura_titulo.titulo }}{% else %}A solidez do espaço reflete o rigor da <em>nossa atuação.</em>{% endif %}
+          {% if c.estrutura_titulo %}{{ c.estrutura_titulo.titulo }}{% else %}Um espaço pensado para receber com seriedade, clareza e <em>confiança.</em>{% endif %}
         </h2>
         <p class="estrutura__text reveal">
-          {% if c.estrutura_texto %}{{ c.estrutura_texto.texto }}{% else %}Um ambiente desenhado para acolher o cliente e sustentar a estratégia jurídica de alto nível. Atendimento em Araraquara e Governador Valadares/MG, e telepresencial em todo o Brasil — com possibilidade de agendamento presencial em outras localidades.{% endif %}
+          {% if c.estrutura_texto %}{{ c.estrutura_texto.texto }}{% else %}O ambiente do escritório reflete a forma como a atuação jurídica é conduzida: com sobriedade, organização e atenção ao cliente. O atendimento acontece de maneira presencial em Araraquara/SP e Governador Valadares/MG, além do formato telepresencial para clientes em todo o Brasil. Quando necessário, também pode haver avaliação sobre atendimento presencial em outras localidades.{% endif %}
         </p>
       </div>
     </div>
@@ -323,10 +339,10 @@
         <div class="diferenciais__left">
           <div class="diferenciais__tag reveal">por que nós</div>
           <h2 class="diferenciais__title reveal">
-            {% if c.dif_titulo %}{{ c.dif_titulo.titulo }}{% else %}Três pilares que sustentam cada <em>causa.</em>{% endif %}
+            {% if c.dif_titulo %}{{ c.dif_titulo.titulo }}{% else %}Defender uma causa é assumir uma <em>posição.</em>{% endif %}
           </h2>
           <p class="diferenciais__text reveal">
-            {% if c.dif_texto %}{{ c.dif_texto.texto }}{% else %}Nossa atuação se ancora em princípios que não se negociam — porque a sua causa merece mais do que um processo; merece um compromisso real.{% endif %}
+            {% if c.dif_texto %}{{ c.dif_texto.texto }}{% else %}A atuação do Escritório Cláudia Rocha se apoia em princípios que não se negociam: coragem, técnica, ética e compromisso com a dignidade do trabalhador. A força da defesa não está no alarde. Está na preparação, na leitura precisa dos fatos e na condução firme de cada etapa.{% endif %}
           </p>
           <a href="#contato" class="btn btn--outline reveal">Fale conosco</a>
         </div>
@@ -336,8 +352,8 @@
               <svg viewBox="0 0 100 95" aria-hidden="true"><use href="#cr-symbol"/></svg>
             </div>
             <div>
-              <h3>{% if c.dif_i1_titulo %}{{ c.dif_i1_titulo.titulo }}{% else %}Rigor Técnico Silencioso{% endif %}</h3>
-              <p>{% if c.dif_i1_desc %}{{ c.dif_i1_desc.texto }}{% else %}A competência que não precisa de alarde para se provar em juízo. Preparação profunda, estratégia precisa.{% endif %}</p>
+              <h3>{% if c.dif_i1_titulo %}{{ c.dif_i1_titulo.titulo }}{% else %}Coragem com técnica{% endif %}</h3>
+              <p>{% if c.dif_i1_desc %}{{ c.dif_i1_desc.texto }}{% else %}Firmeza para enfrentar violações trabalhistas sem abrir mão da estratégia jurídica.{% endif %}</p>
             </div>
           </div>
           <div class="diferenciais__item reveal">
@@ -345,8 +361,8 @@
               <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2"/><path d="M16 10v6l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             </div>
             <div>
-              <h3>{% if c.dif_i2_titulo %}{{ c.dif_i2_titulo.titulo }}{% else %}Humanidade Estratégica{% endif %}</h3>
-              <p>{% if c.dif_i2_desc %}{{ c.dif_i2_desc.texto }}{% else %}O acolhimento do trabalhador como centro de toda a operação. Sua história importa tanto quanto o processo.{% endif %}</p>
+              <h3>{% if c.dif_i2_titulo %}{{ c.dif_i2_titulo.titulo }}{% else %}Escuta com direção{% endif %}</h3>
+              <p>{% if c.dif_i2_desc %}{{ c.dif_i2_desc.texto }}{% else %}A sua história importa. Mas, para se transformar em defesa, ela precisa ser organizada com clareza, provas e método.{% endif %}</p>
             </div>
           </div>
           <div class="diferenciais__item reveal">
@@ -354,8 +370,8 @@
               <svg viewBox="0 0 32 32" fill="none"><path d="M16 4L4 10v6c0 7 5.5 12.5 12 14 6.5-1.5 12-7 12-14v-6L16 4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
             </div>
             <div>
-              <h3>{% if c.dif_i3_titulo %}{{ c.dif_i3_titulo.titulo }}{% else %}Ética Inegociável{% endif %}</h3>
-              <p>{% if c.dif_i3_desc %}{{ c.dif_i3_desc.texto }}{% else %}O compromisso com a verdade que eleva o valor percebido da causa — e protege cada passo da sua defesa.{% endif %}</p>
+              <h3>{% if c.dif_i3_titulo %}{{ c.dif_i3_titulo.titulo }}{% else %}Ética inegociável{% endif %}</h3>
+              <p>{% if c.dif_i3_desc %}{{ c.dif_i3_desc.texto }}{% else %}A busca por justiça precisa caminhar com responsabilidade, verdade e respeito aos limites da advocacia.{% endif %}</p>
             </div>
           </div>
         </div>
@@ -369,7 +385,7 @@
 
       <div class="avaliacoes__header reveal">
         <div class="avaliacoes__tag">avaliações</div>
-        <h2 class="avaliacoes__title">O que dizem nossos <em>clientes.</em></h2>
+        <h2 class="avaliacoes__title">Confiança construída na condução de cada <em>caso.</em></h2>
         <div class="avaliacoes__rating">
           <span class="avaliacoes__stars">★★★★★</span>
           <span class="avaliacoes__score">5,0</span>
@@ -470,7 +486,7 @@
     <div class="container">
       <div class="blog-destaque__header reveal">
         <div class="blog-destaque__tag">blog</div>
-        <h2 class="blog-destaque__title">Informação que protege<br>seus <em>direitos.</em></h2>
+        <h2 class="blog-destaque__title">Informação que ajuda você a entender seus <em>direitos.</em></h2>
         <a href="/blog/" class="blog-destaque__ver-todos">Ver todos os artigos →</a>
       </div>
       <div class="blog-destaque__grid">
@@ -478,7 +494,7 @@
         <a href="/blog/{{ artigo.slug }}/" class="blog-destaque__card reveal">
           <div class="blog-destaque__img-wrap">
             {% if artigo.imagem_capa %}
-              <img src="{{ artigo.imagem_capa.url }}" alt="{{ artigo.titulo }}" class="blog-destaque__img" />
+              <img src="{{ artigo.imagem_capa.url }}" alt="{{ artigo.titulo }}" class="blog-destaque__img" loading="lazy"/>
             {% else %}
               <div class="blog-destaque__img-placeholder">
                 <svg viewBox="0 0 100 95" aria-hidden="true"><use href="#cr-symbol"/></svg>
@@ -502,7 +518,8 @@
     <div class="container">
       <div class="contato__header">
         <div class="contato__tag reveal">contato</div>
-        <h2 class="contato__title reveal">{% if c.contato_titulo %}{{ c.contato_titulo.titulo }}{% else %}Inicie a retomada<br />do seu direito.{% endif %}</h2>
+        <h2 class="contato__title reveal">{% if c.contato_titulo %}{{ c.contato_titulo.titulo }}{% else %}Inicie a retomada<br />do <em>seu direito.</em>{% endif %}</h2>
+        {% if c.contato_texto %}<p class="contato__intro reveal">{{ c.contato_texto.texto }}</p>{% else %}<p class="contato__intro reveal">Se uma relação de trabalho feriu a sua dignidade, o primeiro passo é organizar a sua história e entender quais caminhos jurídicos podem ser avaliados. Envie sua mensagem para o Escritório Cláudia Rocha e inicie uma análise responsável do seu caso.</p>{% endif %}
       </div>
       <div class="contato__grid">
         <div class="contato__info">
@@ -534,21 +551,21 @@
         <form class="contato__form reveal" id="contactForm">
           <div class="form__group">
             <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required />
+            <input type="text" id="nome" name="nome" autocomplete="name" placeholder="Seu nome completo" required />
           </div>
           <div class="form__group">
             <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" placeholder="seu@email.com" required />
+            <input type="email" id="email" name="email" autocomplete="email" placeholder="seu@email.com" required />
           </div>
           <div class="form__group">
             <label for="telefone">Telefone</label>
-            <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" />
+            <input type="tel" id="telefone" name="telefone" autocomplete="tel" placeholder="(00) 00000-0000" />
           </div>
           <div class="form__group">
             <label for="mensagem">Mensagem</label>
             <textarea id="mensagem" name="mensagem" rows="4" placeholder="Descreva brevemente sua situação para uma análise técnica preliminar. Nossa condução começa no seu primeiro contato." required></textarea>
           </div>
-          <button type="submit" class="btn btn--dark">Agendar consulta</button>
+          <button type="submit" class="btn btn--dark">Enviar mensagem ao escritório</button>
         </form>
       </div>
     </div>
@@ -586,7 +603,7 @@
     <span class="whatsapp-float__tooltip">Fale conosco</span>
   </a>
 
-  <script src="{% static 'js/script.js' %}?v=20260630b"></script>
+  <script src="{% static 'js/script.js' %}?v=20260713b"></script>
 </body>
 </html>
 

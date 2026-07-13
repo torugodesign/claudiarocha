@@ -1,3 +1,26 @@
+// ── HERO — logo cresce e frase encolhe ao rolar ──
+(function () {
+  const heroSection = document.getElementById('home');
+  const logoImg     = document.querySelector('.hero__logo-overlay-img');
+  const headline    = document.querySelector('.hero__headline');
+  const scrollHint  = document.querySelector('.hero__scroll-hint');
+  if (!heroSection || !logoImg || !headline) return;
+
+  function updateHeroScale() {
+    const heroHeight = heroSection.offsetHeight;
+    const progress = Math.max(0, Math.min(1, window.scrollY / (heroHeight * 0.7)));
+
+    logoImg.style.transform  = `scale(${1 + progress * 0.6})`;
+    headline.style.transform = `scale(${1 - progress * 0.35})`;
+    headline.style.opacity   = String(Math.max(0, 1 - progress * 1.3));
+
+    if (scrollHint) scrollHint.style.opacity = String(Math.max(0, 1 - progress * 3));
+  }
+
+  window.addEventListener('scroll', updateHeroScale, { passive: true });
+  updateHeroScale();
+})();
+
 // ── NAV — aparece ao sair do hero fullscreen ──
 const nav = document.getElementById('nav');
 function updateNav() {
@@ -11,9 +34,15 @@ updateNav();
 // ── MOBILE MENU ──
 const toggle = document.getElementById('navToggle');
 const menu   = document.getElementById('navMenu');
-toggle.addEventListener('click', () => menu.classList.toggle('is-open'));
+toggle.addEventListener('click', () => {
+  const isOpen = menu.classList.toggle('is-open');
+  toggle.setAttribute('aria-expanded', String(isOpen));
+});
 menu.querySelectorAll('.nav__link').forEach(link => {
-  link.addEventListener('click', () => menu.classList.remove('is-open'));
+  link.addEventListener('click', () => {
+    menu.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+  });
 });
 
 // ── HERO VIDEO ──
@@ -85,6 +114,10 @@ document.querySelectorAll('.reveal').forEach(el => {
   const items = document.querySelectorAll('.atuacao__stack-item');
   if (!items.length) return;
 
+  // Efeito sticky/scale é exclusivo do layout desktop — cards mobile são estáticos
+  const mq = window.matchMedia('(max-width: 900px)');
+  if (mq.matches) return;
+
   function updateStack() {
     const vh = window.innerHeight;
     items.forEach((item, i) => {
@@ -152,6 +185,9 @@ document.querySelectorAll('.reveal').forEach(el => {
     }, 420);
   }
 
+  // Respeita prefers-reduced-motion: mantém a primeira foto parada, sem troca automática
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
   // Worker inline: browsers não limitam setInterval dentro de workers
   const blob   = new Blob([`
     let t;
@@ -199,7 +235,9 @@ document.querySelectorAll('.reveal').forEach(el => {
   gallery.querySelector('.estrutura__nav--prev')?.addEventListener('click', () => { go(current - 1); restart(); });
   gallery.querySelector('.estrutura__nav--next')?.addEventListener('click', () => { go(current + 1); restart(); });
 
-  function start()   { timer = setInterval(() => go(current + 1), 5000); }
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function start()   { if (reduceMotion) return; timer = setInterval(() => go(current + 1), 5000); }
   function stop()    { clearInterval(timer); timer = null; }
   function restart() { stop(); start(); }
 
