@@ -1,0 +1,26 @@
+# Arquivo de serviço systemd para o Gunicorn
+# Instalar em: /etc/systemd/system/gunicorn.service
+#
+# Após copiar, rode:
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable gunicorn
+#   sudo systemctl start gunicorn
+
+[Unit]
+Description=Gunicorn — site Cláudia Rocha
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/claudia_rocha
+Environment="DJANGO_DEBUG=False"
+Environment="DJANGO_SECRET_KEY=TROCAR_POR_UMA_CHAVE_SECRETA_UNICA"
+Environment="DJANGO_ALLOWED_HOSTS=claudiarochaadv.com,www.claudiarochaadv.com"
+ExecStart=/var/www/claudia_rocha/venv/bin/gunicorn \
+    --workers 2 \
+    --bind unix:/run/gunicorn_claudia.sock \
+    claudia_rocha.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
