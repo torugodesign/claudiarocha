@@ -88,11 +88,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/painel/login/'
 
 # Endurecimento de segurança — ativo apenas em produção (DEBUG=False)
+# HTTPS_READY controla tudo que depende de certificado SSL já emitido.
+# Deixe em False (via DJANGO_HTTPS_READY=False) até o domínio ter HTTPS
+# configurado, senão o site fica inacessível (cookies/redirect exigem HTTPS
+# que ainda não existe).
 if not DEBUG:
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_HSTS_SECONDS = 31536000
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
+    HTTPS_READY = os.environ.get('DJANGO_HTTPS_READY', 'True') == 'True'
+    SECURE_SSL_REDIRECT = HTTPS_READY
+    SESSION_COOKIE_SECURE = HTTPS_READY
+    CSRF_COOKIE_SECURE = HTTPS_READY
+    SECURE_HSTS_SECONDS = 31536000 if HTTPS_READY else 0
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = HTTPS_READY
+    SECURE_HSTS_PRELOAD = HTTPS_READY
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
