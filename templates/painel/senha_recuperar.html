@@ -1,0 +1,21 @@
+{% extends "painel/_auth_base.html" %}
+{% block titulo %}Recuperar senha — Cláudia Rocha{% endblock %}
+{% block content %}
+  <h1>Recuperar senha</h1>
+  <p class="login-sub">Digite o e-mail cadastrado no acesso. Vamos enviar um link para você criar uma nova senha.</p>
+
+  {% if form.errors %}
+  <div class="error">Não foi possível enviar o e-mail. Confira o endereço digitado.</div>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="id_email">E-mail</label>
+      <input type="email" id="id_email" name="email" autocomplete="email" autofocus required/>
+    </div>
+    <button type="submit" class="btn-login">Enviar link de recuperação</button>
+  </form>
+
+  <a href="{% url 'painel_login' %}" class="back-link">← Voltar ao login</a>
+{% endblock %}

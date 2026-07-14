@@ -1,6 +1,7 @@
-from django.urls import path, include
+from django.urls import path, include, reverse_lazy
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 from core import views as core_views
 
 urlpatterns = [
@@ -9,6 +10,36 @@ urlpatterns = [
     # Autenticação do painel
     path('painel/login/',  core_views.painel_login,  name='painel_login'),
     path('painel/logout/', core_views.painel_logout, name='painel_logout'),
+
+    # Recuperação de senha do painel
+    path(
+        'painel/senha/recuperar/',
+        auth_views.PasswordResetView.as_view(
+            template_name='painel/senha_recuperar.html',
+            email_template_name='painel/senha_email.txt',
+            subject_template_name='painel/senha_email_assunto.txt',
+            success_url=reverse_lazy('painel_senha_recuperar_enviado'),
+        ),
+        name='painel_senha_recuperar',
+    ),
+    path(
+        'painel/senha/recuperar/enviado/',
+        auth_views.PasswordResetDoneView.as_view(template_name='painel/senha_enviado.html'),
+        name='painel_senha_recuperar_enviado',
+    ),
+    path(
+        'painel/senha/redefinir/<uidb64>/<token>/',
+        auth_views.PasswordResetConfirmView.as_view(
+            template_name='painel/senha_redefinir.html',
+            success_url=reverse_lazy('painel_senha_redefinir_completo'),
+        ),
+        name='painel_senha_redefinir',
+    ),
+    path(
+        'painel/senha/redefinir/completo/',
+        auth_views.PasswordResetCompleteView.as_view(template_name='painel/senha_completo.html'),
+        name='painel_senha_redefinir_completo',
+    ),
 
     # Painel customizado
     path('painel/',                              core_views.painel_dashboard,       name='painel_dashboard'),

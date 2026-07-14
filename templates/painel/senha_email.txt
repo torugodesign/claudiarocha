@@ -1,0 +1,13 @@
+Olá,
+
+Recebemos um pedido de recuperação de senha para o painel de gerenciamento do site da Cláudia Rocha Advocacia.
+
+Para criar uma nova senha, acesse o link abaixo (válido por 1 hora):
+
+{{ protocol }}://{{ domain }}{% url 'painel_senha_redefinir' uidb64=uid token=token %}
+
+Se você não pediu essa alteração, pode ignorar este e-mail — sua senha continua a mesma.
+
+—
+Painel de gerenciamento
+Cláudia Rocha Advocacia

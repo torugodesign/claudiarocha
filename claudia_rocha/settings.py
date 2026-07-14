@@ -87,6 +87,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/painel/login/'
 
+# ── E-mail (recuperação de senha do painel) ──
+# Em desenvolvimento local, sem variáveis definidas, os e-mails aparecem
+# apenas no terminal (console backend) — não é necessário configurar nada
+# para testar. Em produção, defina as variáveis DJANGO_EMAIL_* no servidor.
+if os.environ.get('DJANGO_EMAIL_HOST'):
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.environ.get('DJANGO_EMAIL_HOST')
+    EMAIL_PORT = int(os.environ.get('DJANGO_EMAIL_PORT', '587'))
+    EMAIL_HOST_USER = os.environ.get('DJANGO_EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_EMAIL_HOST_PASSWORD')
+    EMAIL_USE_TLS = os.environ.get('DJANGO_EMAIL_USE_TLS', 'True') == 'True'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+DEFAULT_FROM_EMAIL = os.environ.get('DJANGO_DEFAULT_FROM_EMAIL', 'nao-responda@claudiarochaadv.com')
+PASSWORD_RESET_TIMEOUT = 3600  # link válido por 1 hora
+
 # Endurecimento de segurança — ativo apenas em produção (DEBUG=False)
 # HTTPS_READY controla tudo que depende de certificado SSL já emitido.
 # Deixe em False (via DJANGO_HTTPS_READY=False) até o domínio ter HTTPS

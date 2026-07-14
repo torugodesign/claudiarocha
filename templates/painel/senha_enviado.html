@@ -1,0 +1,15 @@
+{% extends "painel/_auth_base.html" %}
+{% block titulo %}E-mail enviado — Cláudia Rocha{% endblock %}
+{% block content %}
+  <div class="success-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+      <polyline points="22,6 12,13 2,6"/>
+    </svg>
+  </div>
+  <h1 style="text-align:center;">Verifique seu e-mail</h1>
+  <p class="login-sub" style="text-align:center;">
+    Se o e-mail informado estiver cadastrado, você vai receber um link para redefinir a senha em instantes.
+    Confira também a caixa de spam.
+  </p>
+{% endblock %}

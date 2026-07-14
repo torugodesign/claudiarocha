@@ -1,0 +1,12 @@
+{% extends "painel/_auth_base.html" %}
+{% block titulo %}Senha alterada — Cláudia Rocha{% endblock %}
+{% block content %}
+  <div class="success-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20,6 9,17 4,12"/>
+    </svg>
+  </div>
+  <h1 style="text-align:center;">Senha alterada com sucesso</h1>
+  <p class="login-sub" style="text-align:center;">Já pode entrar no painel usando a nova senha.</p>
+  <a href="{% url 'painel_login' %}" class="btn-login">Ir para o login</a>
+{% endblock %}

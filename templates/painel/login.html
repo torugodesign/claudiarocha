@@ -1,172 +1,24 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Entrar — Cláudia Rocha</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --grafite:  #232425;
-      --grafite2: #1a1b1b;
-      --vinho:    #432A35;
-      --vinho-lt: #5a3847;
-      --pedra:    #C0BFBF;
-      --border:   rgba(0,0,0,.1);
-    }
-    body {
-      position: relative;
-      font-family: 'Inter', system-ui, sans-serif;
-      background: var(--grafite2);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    .login-bg-pattern {
-      position: absolute;
-      inset: 0;
-      background-color: var(--pedra);
-      -webkit-mask-image: url('/static/img/PATTERN_02.png');
-      mask-image: url('/static/img/PATTERN_02.png');
-      -webkit-mask-repeat: repeat;
-      mask-repeat: repeat;
-      -webkit-mask-size: 900px auto;
-      mask-size: 900px auto;
-      opacity: 0.05;
-      pointer-events: none;
-    }
-    .login-card {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 380px;
-      padding: 2rem;
-    }
-    .login-brand {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 2.5rem;
-    }
-    .login-brand-img {
-      width: clamp(120px, 30vw, 160px);
-      height: auto;
-      opacity: .9;
-    }
-    h1 {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #e0e0de;
-      letter-spacing: -.02em;
-      margin-bottom: .4rem;
-    }
-    .login-sub {
-      font-size: .78rem;
-      color: var(--pedra);
-      opacity: .5;
-      margin-bottom: 2rem;
-    }
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: .35rem;
-      margin-bottom: 1rem;
-    }
-    label {
-      font-size: .68rem;
-      font-weight: 600;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--pedra);
-      opacity: .6;
-    }
-    input[type=text], input[type=password] {
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 3px;
-      padding: .65rem .9rem;
-      font-size: .85rem;
-      font-family: inherit;
-      color: #e0e0de;
-      transition: border-color .18s, box-shadow .18s;
-      width: 100%;
-    }
-    input:focus {
-      outline: none;
-      border-color: var(--vinho);
-      box-shadow: 0 0 0 3px rgba(67,42,53,.3);
-      background: rgba(255,255,255,.07);
-    }
-    .btn-login {
-      width: 100%;
-      margin-top: 1.5rem;
-      padding: .75rem;
-      background: var(--vinho);
-      color: #fff;
-      border: none;
-      border-radius: 3px;
-      font-size: .82rem;
-      font-weight: 600;
-      letter-spacing: .06em;
-      cursor: pointer;
-      transition: background .18s;
-    }
-    .btn-login:hover { background: var(--vinho-lt); }
-    .error {
-      background: rgba(139,58,58,.2);
-      border: 1px solid rgba(139,58,58,.4);
-      border-radius: 3px;
-      padding: .65rem .9rem;
-      font-size: .78rem;
-      color: #e8a8a8;
-      margin-bottom: 1.25rem;
-    }
-    .back-link {
-      display: block;
-      text-align: center;
-      margin-top: 1.5rem;
-      font-size: .72rem;
-      color: var(--pedra);
-      opacity: .4;
-      text-decoration: none;
-      transition: opacity .2s;
-    }
-    .back-link:hover { opacity: .8; }
-  </style>
-</head>
-<body>
-  <div class="login-bg-pattern" aria-hidden="true"></div>
-  <div class="login-card">
-    <div class="login-brand">
-      <img src="{% static 'img/CLAUDIAROCHA_pedra.png' %}" alt="Cláudia Rocha" class="login-brand-img"/>
+{% extends "painel/_auth_base.html" %}
+{% block titulo %}Entrar — Cláudia Rocha{% endblock %}
+{% block content %}
+  <h1>Acesso restrito</h1>
+  <p class="login-sub">Entre com suas credenciais para acessar o painel.</p>
+
+  {% if erro %}
+  <div class="error">Usuário ou senha incorretos. Tente novamente.</div>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="username">Usuário</label>
+      <input type="text" id="username" name="username" autocomplete="username" autofocus/>
     </div>
-
-    <h1>Acesso restrito</h1>
-    <p class="login-sub">Entre com suas credenciais para acessar o painel.</p>
-
-    {% if erro %}
-    <div class="error">Usuário ou senha incorretos. Tente novamente.</div>
-    {% endif %}
-
-    <form method="post">
-      {% csrf_token %}
-      <div class="form-group">
-        <label for="username">Usuário</label>
-        <input type="text" id="username" name="username" autocomplete="username" autofocus/>
-      </div>
-      <div class="form-group">
-        <label for="password">Senha</label>
-        <input type="password" id="password" name="password" autocomplete="current-password"/>
-      </div>
-      <button type="submit" class="btn-login">Entrar</button>
-    </form>
-
-    <a href="/" class="back-link">← Voltar ao site</a>
-  </div>
-</body>
-</html>
+    <div class="form-group">
+      <label for="password">Senha</label>
+      <input type="password" id="password" name="password" autocomplete="current-password"/>
+    </div>
+    <a href="{% url 'painel_senha_recuperar' %}" class="forgot-link">Esqueceu a senha?</a>
+    <button type="submit" class="btn-login">Entrar</button>
+  </form>
+{% endblock %}
