@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Cormorant Garamond: fonte dos itálicos / citações -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260713z" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260714a" />
 </head>
 <body>
 
@@ -66,6 +66,7 @@
       <li><a href="#atuacao"     class="nav__link">Atuação</a></li>
       <li><a href="#diferenciais" class="nav__link">Diferenciais</a></li>
       <li><a href="/blog/"        class="nav__link">Blog</a></li>
+      <li><a href="#faq"         class="nav__link">Dúvidas</a></li>
       <li><a href="#contato"     class="nav__link nav__link--cta">Contato</a></li>
     </ul>
   </nav>
@@ -509,6 +510,58 @@
         {% empty %}
         <p class="blog-destaque__vazio">Em breve, artigos sobre Direito do Trabalho.</p>
         {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- DÚVIDAS FREQUENTES -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="faq__header reveal">
+        <div class="faq__tag">dúvidas frequentes</div>
+        <h2 class="faq__title">Perguntas que merecem uma <em>resposta clara.</em></h2>
+      </div>
+
+      <div class="faq__list">
+        <details class="faq__item reveal">
+          <summary class="faq__question">
+            Quanto tempo tenho para entrar com uma ação trabalhista?
+            <span class="faq__icon" aria-hidden="true"></span>
+          </summary>
+          <p class="faq__answer">O prazo prescricional é de até 2 anos após o fim do contrato de trabalho, podendo cobrar direitos referentes aos últimos 5 anos trabalhados. Por isso, quanto antes buscar orientação, mais direitos ficam preservados.</p>
+        </details>
+
+        <details class="faq__item reveal">
+          <summary class="faq__question">
+            Preciso ter provas para procurar um advogado trabalhista?
+            <span class="faq__icon" aria-hidden="true"></span>
+          </summary>
+          <p class="faq__answer">Não necessariamente. Na primeira consulta, avaliamos os fatos relatados e orientamos sobre quais documentos, testemunhas ou registros podem fortalecer o caso — mesmo que você ainda não tenha reunido nada.</p>
+        </details>
+
+        <details class="faq__item reveal">
+          <summary class="faq__question">
+            Como funciona a primeira consulta?
+            <span class="faq__icon" aria-hidden="true"></span>
+          </summary>
+          <p class="faq__answer">É um momento de escuta técnica: você conta sua situação, analisamos os pontos relevantes e explicamos, com clareza, os caminhos jurídicos possíveis, riscos e próximos passos — antes de qualquer decisão.</p>
+        </details>
+
+        <details class="faq__item reveal">
+          <summary class="faq__question">
+            O atendimento é presencial ou posso resolver tudo online?
+            <span class="faq__icon" aria-hidden="true"></span>
+          </summary>
+          <p class="faq__answer">Ambos. Atendemos presencialmente em Araraquara/SP e Governador Valadares/MG, e também de forma telepresencial para clientes em qualquer lugar do Brasil.</p>
+        </details>
+
+        <details class="faq__item reveal">
+          <summary class="faq__question">
+            Quais direitos posso reivindicar em uma rescisão?
+            <span class="faq__icon" aria-hidden="true"></span>
+          </summary>
+          <p class="faq__answer">Depende do tipo de encerramento do contrato e das circunstâncias específicas — verbas rescisórias, FGTS, aviso prévio e eventuais indenizações variam caso a caso. Uma análise técnica é o que define exatamente o que cabe à sua situação.</p>
+        </details>
       </div>
     </div>
   </section>

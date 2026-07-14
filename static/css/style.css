@@ -1515,6 +1515,105 @@ ul { list-style: none; }
 }
 
 /* ════════════════════════════════════════
+   DÚVIDAS FREQUENTES (FAQ)
+   ════════════════════════════════════════ */
+.faq {
+  padding: var(--space-xl) 0;
+  background: var(--off-white);
+  color: var(--grafite);
+}
+
+.faq__header {
+  max-width: 640px;
+  margin: 0 auto 3.5rem;
+  text-align: center;
+}
+.faq__tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--vinho);
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+.faq__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.25;
+  text-wrap: balance;
+  color: var(--grafite);
+}
+.faq__title em {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.15em;
+  color: var(--vinho);
+}
+
+.faq__list {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.faq__item {
+  border-bottom: 1px solid rgba(35, 36, 37, 0.15);
+}
+.faq__item:first-child {
+  border-top: 1px solid rgba(35, 36, 37, 0.15);
+}
+
+.faq__question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.75rem 0.25rem;
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-weight: 600;
+  color: var(--grafite);
+  cursor: pointer;
+  list-style: none;
+  transition: color .25s ease;
+}
+.faq__question::-webkit-details-marker { display: none; }
+.faq__question:hover { color: var(--vinho); }
+
+.faq__icon {
+  flex-shrink: 0;
+  position: relative;
+  width: 18px;
+  height: 18px;
+}
+.faq__icon::before,
+.faq__icon::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.faq__icon::before { width: 18px; height: 1.5px; }
+.faq__icon::after   { width: 1.5px; height: 18px; transition: transform .3s ease; }
+.faq__item[open] .faq__icon::after { transform: translate(-50%, -50%) rotate(90deg) scaleY(0); }
+
+.faq__answer {
+  padding: 0 0.25rem 1.75rem;
+  max-width: 640px;
+  font-size: 0.98rem;
+  line-height: 1.85;
+  color: #444;
+}
+
+@media (max-width: 640px) {
+  .faq__header { margin-bottom: 2.5rem; }
+  .faq__question { padding: 1.35rem 0.25rem; gap: 1rem; }
+}
+
+/* ════════════════════════════════════════
    CONTATO
    ════════════════════════════════════════ */
 .contato {
