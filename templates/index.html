@@ -255,9 +255,11 @@
         <!-- Foto única do escritório -->
         <div class="equipe__col-foto">
           <div class="equipe__frame">
-            <img class="equipe__retrato-img is-active"
-                 src="{% static 'img/equipe/IMG_1686.jpg' %}"
-                 alt="Equipe do Escritório Cláudia Rocha" loading="lazy"/>
+            {% if c.equipe_foto and c.equipe_foto.imagem %}
+              <img class="equipe__retrato-img is-active" src="{{ c.equipe_foto.imagem.url }}" alt="Equipe do Escritório Cláudia Rocha" loading="lazy"/>
+            {% else %}
+              <img class="equipe__retrato-img is-active" src="{% static 'img/equipe/IMG_1686.jpg' %}" alt="Equipe do Escritório Cláudia Rocha" loading="lazy"/>
+            {% endif %}
           </div>
         </div>
 

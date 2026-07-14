@@ -44,20 +44,11 @@ SECOES = {
     },
     'equipe': {
         'label': 'Capital Humano',
-        'campos': (
-            [
-                {'chave': 'equipe_titulo', 'label': 'Título', 'tipo': 'titulo'},
-                {'chave': 'equipe_texto',  'label': 'Texto',  'tipo': 'texto'},
-            ] + [
-                item
-                for i in range(1, 51)
-                for item in [
-                    {'tipo': 'grupo', 'label': f'Colaborador {i}'},
-                    {'chave': f'eq_foto_{i:02d}', 'label': 'Foto',  'tipo': 'imagem'},
-                    {'chave': f'eq_nome_{i:02d}', 'label': 'Nome',  'tipo': 'titulo'},
-                ]
-            ]
-        ),
+        'campos': [
+            {'chave': 'equipe_titulo', 'label': 'Título',           'tipo': 'titulo'},
+            {'chave': 'equipe_foto',   'label': 'Foto (paisagem)',  'tipo': 'imagem'},
+            {'chave': 'equipe_texto',  'label': 'Texto',            'tipo': 'texto'},
+        ],
     },
     'estrutura': {
         'label': 'Nossa Estrutura',
@@ -105,45 +96,9 @@ def _carregar_conteudo():
     return {c.chave: c for c in ConteudoSite.objects.all()}
 
 
-_EQUIPE = [
-    ('adriana',       'Adriana'),
-    ('concei-o',      'Conceição'),
-    ('f-tima',        'Fátima'),
-    ('gabrielle',     'Gabrielle'),
-    ('j-lia',         'Júlia'),
-    ('karine',        'Karine'),
-    ('la-s',          'Laís'),
-    ('larissa',       'Larissa'),
-    ('lidiane',       'Lidiane'),
-    ('lilian',        'Lilian'),
-    ('lucas',         'Lucas'),
-    ('luis-henrique', 'Luis Henrique'),
-    ('luiza',         'Luiza'),
-    ('maira',         'Maira'),
-    ('patr-cia',      'Patrícia'),
-    ('roberval',      'Roberval'),
-    ('tarik',         'Tarik'),
-    ('valkiria',      'Valkiria'),
-]
-
 def home(request):
     artigos_recentes = Artigo.objects.filter(publicado=True)[:4]
     c = _carregar_conteudo()
-
-    # Colaboradores: lê do painel (eq_foto_01..50 + eq_nome_01..50)
-    # Fallback: lista estática _EQUIPE com arquivos em static/img/equipe/
-    equipe_membros = []
-    for i in range(1, 51):
-        foto_obj = c.get(f'eq_foto_{i:02d}')
-        nome_obj = c.get(f'eq_nome_{i:02d}')
-        if foto_obj and foto_obj.imagem:
-            equipe_membros.append({
-                'url':  foto_obj.imagem.url,
-                'nome': nome_obj.titulo if nome_obj else '',
-                'tipo': 'media',
-            })
-    if not equipe_membros:
-        equipe_membros = [{'slug': s, 'nome': n, 'tipo': 'static'} for s, n in _EQUIPE]
 
     # Fotos do escritório: lê do painel (est_foto_01..10)
     # Fallback: hardcoded no template
@@ -156,7 +111,6 @@ def home(request):
     return render(request, 'index.html', {
         'artigos_recentes': artigos_recentes,
         'c': c,
-        'equipe_membros':   equipe_membros,
         'estrutura_fotos':  estrutura_fotos,
     })
 
@@ -301,55 +255,6 @@ def painel_conteudo_secao(request, secao):
     objetos = {c.chave: c for c in ConteudoSite.objects.filter(chave__in=chaves)}
 
     if request.method == 'POST':
-        # Upload em lote para colaboradores
-        if secao == 'equipe' and request.FILES.getlist('eq_fotos_batch'):
-            fotos = request.FILES.getlist('eq_fotos_batch')
-            if len(fotos) > 50:
-                messages.error(request, f'Máximo de 50 fotos (você enviou {len(fotos)}).')
-                return redirect('painel_conteudo_secao', secao=secao)
-            for i in range(1, 51):
-                chave_foto = f'eq_foto_{i:02d}'
-                chave_nome = f'eq_nome_{i:02d}'
-                obj_foto, _ = ConteudoSite.objects.get_or_create(chave=chave_foto, defaults={'secao': secao})
-                obj_nome, _ = ConteudoSite.objects.get_or_create(chave=chave_nome, defaults={'secao': secao})
-                if i <= len(fotos):
-                    f = fotos[i - 1]
-                    if obj_foto.imagem:
-                        obj_foto.imagem.delete(save=False)
-                    obj_foto.imagem = f
-                    obj_foto.secao  = secao
-                    obj_foto.save()
-                    # nome = filename sem extensão
-                    import os
-                    nome = os.path.splitext(f.name)[0]
-                    obj_nome.titulo = nome
-                    obj_nome.secao  = secao
-                    obj_nome.save()
-                else:
-                    if obj_foto.imagem:
-                        obj_foto.imagem.delete(save=False)
-                    obj_foto.imagem = None
-                    obj_foto.secao  = secao
-                    obj_foto.save()
-                    obj_nome.titulo = ''
-                    obj_nome.secao  = secao
-                    obj_nome.save()
-            # salva título e texto
-            for campo in campos:
-                chave = campo.get('chave')
-                if not chave or campo['tipo'] not in ('titulo', 'texto'):
-                    continue
-                if chave in ('equipe_titulo', 'equipe_texto'):
-                    obj, _ = ConteudoSite.objects.get_or_create(chave=chave, defaults={'secao': secao})
-                    if campo['tipo'] == 'titulo':
-                        obj.titulo = request.POST.get(chave, '')
-                    else:
-                        obj.texto = request.POST.get(chave, '')
-                    obj.secao = secao
-                    obj.save()
-            messages.success(request, f'{len(fotos)} colaborador{"es" if len(fotos) != 1 else ""} salvo{"s" if len(fotos) != 1 else ""}.')
-            return redirect('painel_conteudo_secao', secao=secao)
-
         # Upload em lote para o escritório
         if secao == 'estrutura' and request.FILES.getlist('est_fotos_batch'):
             fotos = request.FILES.getlist('est_fotos_batch')
@@ -444,23 +349,11 @@ def painel_conteudo_secao(request, secao):
             if obj and obj.imagem:
                 fotos_escritorio.append(obj.imagem.url)
 
-    colaboradores_atuais = []
-    if secao == 'equipe':
-        for i in range(1, 51):
-            obj_foto = objetos.get(f'eq_foto_{i:02d}')
-            obj_nome = objetos.get(f'eq_nome_{i:02d}')
-            if obj_foto and obj_foto.imagem:
-                colaboradores_atuais.append({
-                    'url':  obj_foto.imagem.url,
-                    'nome': obj_nome.titulo if obj_nome else '',
-                })
-
     ctx = {
-        'secao':               secao,
-        'secao_label':         SECOES[secao]['label'],
-        'secoes':              SECOES,
-        'campos':              campos_ctx,
-        'fotos_escritorio':    fotos_escritorio,
-        'colaboradores_atuais': colaboradores_atuais,
+        'secao':            secao,
+        'secao_label':      SECOES[secao]['label'],
+        'secoes':           SECOES,
+        'campos':           campos_ctx,
+        'fotos_escritorio': fotos_escritorio,
     }
     return render(request, 'painel/conteudo.html', ctx)
