@@ -216,10 +216,10 @@ document.querySelectorAll('.reveal').forEach(el => {
   let timer   = null;
 
   // Espaçamento/rotação/escala de cada card conforme a distância do centro
-  const STEP_X   = 62;   // % da largura do card por passo lateral
-  const STEP_ROT = 26;   // graus por passo lateral
-  const SCALE_DROP = 0.16;
-  const MAX_VISIBLE = 3; // quantos cards de cada lado ficam visíveis
+  const STEP_X   = 92;   // % da largura do card por passo lateral — cards com espaço entre si, em leque
+  const STEP_ROT = 42;   // graus por passo lateral — tilt pronunciado, como a referência
+  const SCALE_DROP = 0.1;
+  const MAX_VISIBLE = 2; // 2 cards de cada lado = 5 cards visíveis no total, como a referência
 
   function render() {
     slides.forEach((slide, i) => {
@@ -229,8 +229,8 @@ document.querySelectorAll('.reveal').forEach(el => {
       if (offset < -n / 2) offset += n;
 
       const abs = Math.abs(offset);
-      const scale   = Math.max(1 - abs * SCALE_DROP, 0.4);
-      const opacity = abs > MAX_VISIBLE ? 0 : 1 - (abs / (MAX_VISIBLE + 1)) * 0.85;
+      const scale   = Math.max(1 - abs * SCALE_DROP, 0.55);
+      const opacity = abs > MAX_VISIBLE ? 0 : 1 - (abs / (MAX_VISIBLE + 1)) * 0.35;
       const zIndex  = 100 - abs;
 
       slide.style.transform =

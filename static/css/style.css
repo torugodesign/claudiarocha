@@ -978,8 +978,8 @@ ul { list-style: none; }
 /* Stage — palco 3D onde os cards ficam posicionados */
 .estrutura__stage {
   position: relative;
-  height: clamp(280px, 34vw, 460px);
-  perspective: 1600px;
+  height: clamp(240px, 26vw, 380px);
+  perspective: 1400px;
 }
 
 /* Cada card — dimensões próprias da foto (16:9), sem forçar recorte de referência */
@@ -987,7 +987,7 @@ ul { list-style: none; }
   position: absolute;
   top: 50%;
   left: 50%;
-  width: clamp(280px, 34vw, 560px);
+  width: clamp(220px, 24vw, 400px);
   aspect-ratio: 16 / 9;
   transform-style: preserve-3d;
   will-change: transform, opacity;
