@@ -970,15 +970,16 @@ ul { list-style: none; }
 .estrutura__gallery {
   position: relative;
   background: var(--grafite);
-  padding: clamp(1.5rem, 3vw, 2.5rem) 0;
+  padding: clamp(1rem, 2vw, 1.5rem) 0;
   margin-bottom: 2rem;
   overflow: hidden;
 }
 
-/* Stage — palco 3D onde os cards ficam posicionados */
+/* Stage — palco 3D onde os cards ficam posicionados
+   Altura ~= altura do card central ampliado (1.35x), sem sobra vertical */
 .estrutura__stage {
   position: relative;
-  height: clamp(300px, 34vw, 500px);
+  height: clamp(240px, 24vw, 430px);
   perspective: 1400px;
 }
 
@@ -987,7 +988,7 @@ ul { list-style: none; }
   position: absolute;
   top: 50%;
   left: 50%;
-  width: clamp(220px, 24vw, 400px);
+  width: clamp(260px, 30vw, 520px);
   aspect-ratio: 16 / 9;
   transform-style: preserve-3d;
   will-change: transform, opacity;

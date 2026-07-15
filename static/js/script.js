@@ -216,7 +216,7 @@ document.querySelectorAll('.reveal').forEach(el => {
   let timer   = null;
 
   // Espaçamento/rotação/escala de cada card conforme a distância do centro
-  const STEP_X   = 92;   // % da largura do card por passo lateral — cards com espaço entre si, em leque
+  const STEP_X   = 78;   // % da largura do card por passo lateral — laterais mais próximas do centro
   const STEP_ROT = 42;   // graus por passo lateral — tilt pronunciado, como a referência
   const SCALE_DROP = 0.1;
   const MAX_VISIBLE = 2; // 2 cards de cada lado = 5 cards visíveis no total, como a referência
