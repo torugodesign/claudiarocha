@@ -278,39 +278,29 @@
       <div class="estrutura__tag reveal">o ambiente</div>
     </div>
 
-    <!-- SVG filter — liquid glass distortion -->
-    <svg aria-hidden="true" focusable="false" style="display:none;position:absolute">
-      <defs>
-        <filter id="lg" x="-5%" y="-5%" width="110%" height="110%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.014 0.009"
-                        numOctaves="4" seed="7" result="noise"/>
-          <feDisplacementMap id="lgDisp" in="SourceGraphic" in2="noise"
-                             scale="0" xChannelSelector="R" yChannelSelector="G"/>
-        </filter>
-      </defs>
-    </svg>
-
-    <!-- Full-bleed gallery -->
+    <!-- Coverflow gallery -->
     <div class="estrutura__gallery" id="estruturaGallery" aria-label="Galeria do escritório">
-
-      <div class="estrutura__edge estrutura__edge--left" id="edgeLeft" aria-hidden="true"></div>
 
       <div class="estrutura__stage" id="estrutStage">
         {% if estrutura_fotos %}
           {% for url in estrutura_fotos %}
-          <img class="estrutura__img {% if forloop.first %}is-active{% endif %}"
-               src="{{ url }}" alt="Escritório Cláudia Rocha — foto {{ forloop.counter }}" data-i="{{ forloop.counter0 }}" loading="lazy"/>
+          <div class="estrutura__slide" data-i="{{ forloop.counter0 }}">
+            <img class="estrutura__img" src="{{ url }}" alt="Escritório Cláudia Rocha — foto {{ forloop.counter }}" loading="lazy"/>
+          </div>
           {% endfor %}
         {% else %}
-          <img class="estrutura__img is-active" src="{% static 'img/escritorio/foto1.png' %}" alt="Escritório Cláudia Rocha — foto 1" data-i="0" loading="lazy"/>
-          <img class="estrutura__img" src="{% static 'img/escritorio/foto2.png' %}" alt="Escritório Cláudia Rocha — foto 2" data-i="1" loading="lazy"/>
-          <img class="estrutura__img" src="{% static 'img/escritorio/foto3.png' %}" alt="Escritório Cláudia Rocha — foto 3" data-i="2" loading="lazy"/>
-          <img class="estrutura__img" src="{% static 'img/escritorio/foto4.jpg' %}" alt="Escritório Cláudia Rocha — foto 4" data-i="3" loading="lazy"/>
-          <img class="estrutura__img" src="{% static 'img/escritorio/foto5.jpg' %}" alt="Escritório Cláudia Rocha — foto 5" data-i="4" loading="lazy"/>
+          <div class="estrutura__slide" data-i="0"><img class="estrutura__img" src="{% static 'img/escritorio/foto1.jpg' %}" alt="Escritório Cláudia Rocha — foto 1" loading="lazy"/></div>
+          <div class="estrutura__slide" data-i="1"><img class="estrutura__img" src="{% static 'img/escritorio/foto2.jpg' %}" alt="Escritório Cláudia Rocha — foto 2" loading="lazy"/></div>
+          <div class="estrutura__slide" data-i="2"><img class="estrutura__img" src="{% static 'img/escritorio/foto3.jpg' %}" alt="Escritório Cláudia Rocha — foto 3" loading="lazy"/></div>
+          <div class="estrutura__slide" data-i="3"><img class="estrutura__img" src="{% static 'img/escritorio/foto4.jpg' %}" alt="Escritório Cláudia Rocha — foto 4" loading="lazy"/></div>
+          <div class="estrutura__slide" data-i="4"><img class="estrutura__img" src="{% static 'img/escritorio/foto5.jpg' %}" alt="Escritório Cláudia Rocha — foto 5" loading="lazy"/></div>
+          <div class="estrutura__slide" data-i="5"><img class="estrutura__img" src="{% static 'img/escritorio/foto6.jpg' %}" alt="Escritório Cláudia Rocha — foto 6" loading="lazy"/></div>
+          <div class="estrutura__slide" data-i="6"><img class="estrutura__img" src="{% static 'img/escritorio/foto7.jpg' %}" alt="Escritório Cláudia Rocha — foto 7" loading="lazy"/></div>
+          <div class="estrutura__slide" data-i="7"><img class="estrutura__img" src="{% static 'img/escritorio/foto8.jpg' %}" alt="Escritório Cláudia Rocha — foto 8" loading="lazy"/></div>
+          <div class="estrutura__slide" data-i="8"><img class="estrutura__img" src="{% static 'img/escritorio/foto9.jpg' %}" alt="Escritório Cláudia Rocha — foto 9" loading="lazy"/></div>
+          <div class="estrutura__slide" data-i="9"><img class="estrutura__img" src="{% static 'img/escritorio/foto10.jpg' %}" alt="Escritório Cláudia Rocha — foto 10" loading="lazy"/></div>
         {% endif %}
       </div>
-
-      <div class="estrutura__edge estrutura__edge--right" id="edgeRight" aria-hidden="true"></div>
 
       <button class="estrutura__nav estrutura__nav--prev" type="button" aria-label="Foto anterior">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="11 6 5 12 11 18"/></svg>

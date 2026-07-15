@@ -204,45 +204,63 @@ document.querySelectorAll('.reveal').forEach(el => {
 
 // ── CARROSSEL NOSSA ESTRUTURA (coverflow) ──
 (function () {
-  // ── Liquid Glass gallery ──
-  const gallery   = document.getElementById('estruturaGallery');
+  const gallery = document.getElementById('estruturaGallery');
   if (!gallery) return;
 
-  const stage = document.getElementById('estrutStage');
-  const imgs  = Array.from(stage.querySelectorAll('.estrutura__img'));
-  if (!imgs.length) return;
+  const stage  = document.getElementById('estrutStage');
+  const slides = Array.from(stage.querySelectorAll('.estrutura__slide'));
+  if (!slides.length) return;
 
-  const edgeLeft  = document.getElementById('edgeLeft');
-  const edgeRight = document.getElementById('edgeRight');
-  const n         = imgs.length;
-  let current     = 0;
-  let timer       = null;
+  const n = slides.length;
+  let current = 0;
+  let timer   = null;
 
-  function setEdges(idx) {
-    edgeLeft.style.backgroundImage  = `url(${imgs[(idx - 1 + n) % n].src})`;
-    edgeRight.style.backgroundImage = `url(${imgs[(idx + 1) % n].src})`;
+  // Espaçamento/rotação/escala de cada card conforme a distância do centro
+  const STEP_X   = 62;   // % da largura do card por passo lateral
+  const STEP_ROT = 26;   // graus por passo lateral
+  const SCALE_DROP = 0.16;
+  const MAX_VISIBLE = 3; // quantos cards de cada lado ficam visíveis
+
+  function render() {
+    slides.forEach((slide, i) => {
+      let offset = i - current;
+      // caminho mais curto no loop (ex: última foto fica "à esquerda" da primeira)
+      if (offset > n / 2)  offset -= n;
+      if (offset < -n / 2) offset += n;
+
+      const abs = Math.abs(offset);
+      const scale   = Math.max(1 - abs * SCALE_DROP, 0.4);
+      const opacity = abs > MAX_VISIBLE ? 0 : 1 - (abs / (MAX_VISIBLE + 1)) * 0.85;
+      const zIndex  = 100 - abs;
+
+      slide.style.transform =
+        `translate(-50%, -50%) translateX(${offset * STEP_X}%) rotateY(${-offset * STEP_ROT}deg) scale(${scale})`;
+      slide.style.opacity      = opacity.toFixed(2);
+      slide.style.zIndex       = zIndex;
+      slide.style.pointerEvents = abs > MAX_VISIBLE ? 'none' : 'auto';
+    });
   }
 
   function go(toIdx) {
-    imgs[current].classList.remove('is-active');
     current = (toIdx + n) % n;
-    imgs[current].classList.add('is-active');
-    setEdges(current);
+    render();
   }
 
-  setEdges(0);
+  slides.forEach((slide, i) => slide.addEventListener('click', () => { go(i); restart(); }));
 
   gallery.querySelector('.estrutura__nav--prev')?.addEventListener('click', () => { go(current - 1); restart(); });
   gallery.querySelector('.estrutura__nav--next')?.addEventListener('click', () => { go(current + 1); restart(); });
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function start()   { if (reduceMotion) return; timer = setInterval(() => go(current + 1), 5000); }
+  function start()   { if (reduceMotion) return; timer = setInterval(() => go(current + 1), 3500); }
   function stop()    { clearInterval(timer); timer = null; }
   function restart() { stop(); start(); }
 
   gallery.addEventListener('mouseenter', stop);
   gallery.addEventListener('mouseleave', start);
+
+  render();
   start();
 })();
 
