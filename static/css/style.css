@@ -953,7 +953,7 @@ ul { list-style: none; }
    NOSSA ESTRUTURA (LIQUID GLASS)
    ════════════════════════════════════════ */
 .estrutura {
-  padding: var(--space-xl) 0 0;
+  padding: clamp(2rem, 5vw, 3.5rem) 0 0;
   background: var(--grafite);
   color: var(--off-white);
 }
@@ -963,22 +963,22 @@ ul { list-style: none; }
   text-transform: uppercase;
   color: var(--pedra);
   font-weight: 500;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 /* Gallery: coverflow com fundo sólido liso */
 .estrutura__gallery {
   position: relative;
   background: var(--grafite);
-  padding: clamp(2.5rem, 6vw, 5rem) 0;
-  margin-bottom: 3.5rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem) 0;
+  margin-bottom: 2rem;
   overflow: hidden;
 }
 
 /* Stage — palco 3D onde os cards ficam posicionados */
 .estrutura__stage {
   position: relative;
-  height: clamp(240px, 26vw, 380px);
+  height: clamp(300px, 34vw, 500px);
   perspective: 1400px;
 }
 

@@ -229,7 +229,7 @@ document.querySelectorAll('.reveal').forEach(el => {
       if (offset < -n / 2) offset += n;
 
       const abs = Math.abs(offset);
-      const scale   = Math.max(1 - abs * SCALE_DROP, 0.55);
+      const scale   = abs === 0 ? 1.35 : Math.max(1 - abs * SCALE_DROP, 0.55);
       const opacity = abs > MAX_VISIBLE ? 0 : 1 - (abs / (MAX_VISIBLE + 1)) * 0.35;
       const zIndex  = 100 - abs;
 
