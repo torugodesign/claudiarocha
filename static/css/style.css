@@ -620,7 +620,8 @@ ul { list-style: none; }
     "title foto"
     "para  foto"
     "cred  foto";
-  gap: 5rem;
+  column-gap: 5rem;
+  row-gap: 0.5rem;
   align-items: start;
 }
 
@@ -679,7 +680,7 @@ ul { list-style: none; }
   line-height: 1.25;
   text-wrap: balance;
   color: var(--grafite);
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 .sobre__title em {
   font-family: var(--font-accent);
@@ -707,8 +708,8 @@ ul { list-style: none; }
   align-items: center;
   gap: 2rem;
   flex-wrap: wrap;
-  margin-top: var(--space-md);
-  padding-top: var(--space-md);
+  margin-top: 1rem;
+  padding-top: 1.5rem;
   border-top: 1px solid rgba(35, 36, 37, 0.15);
 }
 .sobre__credencial-num {
