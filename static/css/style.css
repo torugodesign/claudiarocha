@@ -1941,6 +1941,19 @@ ul { list-style: none; }
   .atuacao__stack-num   { display: none; }
   .atuacao__stack-desc { max-width: 100%; }
 
+  /* Títulos das seções — no mobile os clamp() batiam no piso (2rem+) e
+     quebravam em muitas linhas. Reduz para ocupar menos linhas mantendo
+     a leitura confortável. */
+  .sobre__title          { font-size: 1.55rem; }
+  .atuacao__title        { font-size: 1.7rem; }
+  .equipe__title         { font-size: 1.4rem; }
+  .estrutura__title      { font-size: 1.5rem; }
+  .diferenciais__title   { font-size: 1.7rem; }
+  .avaliacoes__title     { font-size: 1.7rem; }
+  .blog-destaque__title  { font-size: 1.55rem; }
+  .faq__title            { font-size: 1.7rem; }
+  .contato__title        { font-size: 1.9rem; }
+
   /* Capital Humano — texto em coluna única no mobile (2 colunas fica apertado) */
   .equipe__layout { gap: 2.5rem; }
   .equipe__text { columns: 1; }
