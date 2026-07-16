@@ -1907,9 +1907,15 @@ ul { list-style: none; }
   .atuacao__stack-item {
     position: relative;
     height: auto;
-    padding: 3rem 0;
-    clip-path: polygon(0% 12%, 100% 3%, 100% 100%, 0% 100%);
-    margin-top: -3rem;
+    /* Mais respiro vertical interno (entre o recorte, o título/texto e a base) */
+    padding: 4.5rem 0 3.5rem;
+    /* Recorte com dois níveis: rampa diagonal à esquerda + patamar reto à
+       direita, com a "ponta" visível no vértice — mesmo formato do
+       arquivo plano de fundo.png (não é uma diagonal única) */
+    clip-path: polygon(0% 14%, 46% 4%, 100% 4%, 100% 100%, 0% 100%);
+    /* Todos os cards se sobrepõem igualmente (mesmo padrão estético),
+       revelando a cor do card anterior no recorte — sem vãos cinzas */
+    margin-top: -3.5rem;
     transform: none !important;
     filter: none !important;
   }
@@ -1919,14 +1925,7 @@ ul { list-style: none; }
     position: relative;
     z-index: 1;
   }
-  /* Espaço entre os cards de tópicos (Direitos Trabalhistas, Restrição
-     Contratual, Assédio Moral, Vínculo Empregatício) — mantém o recorte
-     diagonal de cada card (mesmo formato do plano de fundo.png), só
-     separa visualmente um do outro em vez de ficarem colados */
-  .atuacao__stack-item:not(:first-child) {
-    margin-top: 1.75rem;
-  }
-  .atuacao__stack-title { font-size: clamp(2.2rem, 9vw, 3rem); margin-bottom: 1rem; }
+  .atuacao__stack-title { font-size: clamp(2.2rem, 9vw, 3rem); margin-bottom: 1.25rem; }
   .atuacao__stack-num   { display: none; }
   .atuacao__stack-desc { max-width: 100%; }
 
