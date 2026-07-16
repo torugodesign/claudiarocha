@@ -86,6 +86,18 @@ if (video) {
     if (!document.hidden && video.paused) forcePlay();
   });
 
+  // Se o autoplay inicial for bloqueado (ex: iOS em Modo de Baixo Consumo),
+  // qualquer gesto do usuário — inclusive o primeiro scroll da página —
+  // libera a reprodução automaticamente, sem precisar tocar no vídeo.
+  const gestureEvents = ['touchstart', 'scroll', 'pointerdown', 'click'];
+  function retryOnGesture() {
+    if (video.paused) forcePlay();
+    if (!video.paused) {
+      gestureEvents.forEach(evt => document.removeEventListener(evt, retryOnGesture));
+    }
+  }
+  gestureEvents.forEach(evt => document.addEventListener(evt, retryOnGesture, { passive: true }));
+
   // Esconde placeholder assim que o vídeo pode tocar (canplay = mais rápido)
   video.addEventListener('canplay', () => {
     if (placeholder) placeholder.classList.add('hidden');
