@@ -476,8 +476,17 @@ ul { list-style: none; }
   .hero__headline { font-size: 1.75rem; }
   .hero-copy__inner {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
+  /* CTA "Inicie a retomada do seu direito" — centraliza e adiciona uma
+     borda ao redor para sinalizar que é um botão (mesma tipografia) */
+  .hero-copy__cta {
+    align-self: center;
+    text-align: center;
+    border: 1px solid var(--grafite);
+    padding: 1.1rem 1.75rem;
+  }
+  .hero-copy__cta::after { display: none; }
 }
 
 @keyframes logoFadeIn {
@@ -975,6 +984,9 @@ ul { list-style: none; }
   position: relative;
   height: clamp(240px, 24vw, 430px);
   perspective: 1400px;
+  /* Permite arrastar com o dedo para trocar de foto (JS) sem brigar com
+     a rolagem vertical nativa da página — só o eixo X é "tomado" */
+  touch-action: pan-y;
 }
 
 /* Cada card — dimensões próprias da foto (16:9), sem forçar recorte de referência */
@@ -1000,17 +1012,17 @@ ul { list-style: none; }
   display: block;
 }
 
-/* Nav arrows — minimal lines */
+/* Nav arrows — discretas, só um leve indicativo (não devem competir com as fotos) */
 .estrutura__nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   border: none;
   background: transparent;
-  color: rgba(224,224,222,.55);
+  color: rgba(224,224,222,.32);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -1018,8 +1030,8 @@ ul { list-style: none; }
   transition: color .25s;
   padding: 0;
 }
-.estrutura__nav:hover { color: var(--off-white); }
-.estrutura__nav svg { width: 28px; height: 28px; stroke-width: 1; }
+.estrutura__nav:hover { color: rgba(224,224,222,.75); }
+.estrutura__nav svg { width: 20px; height: 20px; stroke-width: 1; }
 .estrutura__nav--prev { left: clamp(.5rem, 3vw, 2rem); }
 .estrutura__nav--next { right: clamp(.5rem, 3vw, 2rem); }
 
@@ -1896,6 +1908,13 @@ ul { list-style: none; }
   /* Contato — formulário antes das informações de atendimento */
   .contato__form { order: -1; }
 
+  /* Botão de envio: mesmo fundo da seção (grafite) o deixava sem contorno
+     visível — adiciona uma borda para reforçar que é clicável */
+  .contato__form .btn--dark {
+    border-color: var(--pedra);
+  }
+
+
   /* Sobre — ordem mobile: tag, título, foto, credencial, texto */
   .sobre__grid {
     grid-template-columns: 1fr;
@@ -1978,6 +1997,8 @@ ul { list-style: none; }
   .estrutura__stage { height: clamp(200px, 62vw, 320px); }
   .estrutura__slide { width: clamp(200px, 62vw, 340px); }
   .estrutura__footer { grid-template-columns: 1fr; gap: 1.5rem; }
+  /* Sem setas no mobile — a navegação é só arrastando com o dedo */
+  .estrutura__nav { display: none; }
 }
 
 @media (max-width: 640px) {

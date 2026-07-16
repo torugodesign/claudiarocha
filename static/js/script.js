@@ -297,6 +297,30 @@ document.querySelectorAll('.reveal').forEach(el => {
   gallery.querySelector('.estrutura__nav--prev')?.addEventListener('click', () => { go(current - 1); restart(); });
   gallery.querySelector('.estrutura__nav--next')?.addEventListener('click', () => { go(current + 1); restart(); });
 
+  // Arrastar com o dedo/mouse para trocar de foto (principal forma de navegar no mobile)
+  let dragStartX = null;
+  let dragging = false;
+  const DRAG_THRESHOLD = 40; // px mínimos para considerar um swipe
+
+  stage.addEventListener('pointerdown', e => {
+    dragStartX = e.clientX;
+    dragging = true;
+    stop();
+  });
+  stage.addEventListener('pointermove', e => {
+    if (!dragging || dragStartX === null) return;
+  });
+  window.addEventListener('pointerup', e => {
+    if (!dragging || dragStartX === null) return;
+    const delta = e.clientX - dragStartX;
+    if (Math.abs(delta) > DRAG_THRESHOLD) {
+      go(delta < 0 ? current + 1 : current - 1);
+    }
+    dragging = false;
+    dragStartX = null;
+    restart();
+  });
+
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function start()   { if (reduceMotion) return; timer = setInterval(() => go(current + 1), 3500); }
