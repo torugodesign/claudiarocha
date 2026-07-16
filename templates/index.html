@@ -94,10 +94,8 @@
     <!-- Camada sólida sobre o vídeo — realça o logo e o título -->
     <div class="hero__scrim" aria-hidden="true"></div>
 
-    <!-- Placeholder centralizado enquanto o vídeo não carrega -->
-    <div class="hero__placeholder" id="videoPlaceholder">
-      {% if c.hero_logo and c.hero_logo.imagem %}<img src="{{ c.hero_logo.imagem.url }}" alt="Cláudia Rocha" class="hero__placeholder-logo" />{% else %}<img src="{% static 'img/logo_horizontal.png' %}" alt="Cláudia Rocha" class="hero__placeholder-logo" />{% endif %}
-    </div>
+    <!-- Placeholder centralizado enquanto o vídeo não carrega (sem logo — o logo vertical já cobre isso) -->
+    <div class="hero__placeholder" id="videoPlaceholder"></div>
 
     <!-- Controles discretos no canto inferior direito -->
     <div class="hero__controls">

@@ -498,13 +498,6 @@ ul { list-style: none; }
 }
 .hero__placeholder.hidden { opacity: 0; pointer-events: none; }
 
-.hero__placeholder-logo {
-  height: 60px;
-  width: auto;
-  opacity: 0.55;
-  filter: brightness(0.85);
-}
-
 /* Controles discretos — canto inferior direito */
 .hero__controls {
   position: absolute;
