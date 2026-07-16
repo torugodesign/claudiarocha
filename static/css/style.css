@@ -1016,28 +1016,34 @@ ul { list-style: none; }
   display: block;
 }
 
-/* Nav arrows — discretas, só um leve indicativo (não devem competir com as fotos) */
+/* Nav arrows — minimalistas (sem círculo/fundo), bem coladas na foto
+   em destaque no centro, mesma escala de ícone usada em Avaliações */
 .estrutura__nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 10;
-  width: 36px;
-  height: 36px;
+  z-index: 20;
+  width: 40px;
+  height: 40px;
   border: none;
   background: transparent;
-  color: rgba(224,224,222,.32);
+  color: var(--off-white);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color .25s;
+  transition: opacity .25s, transform .25s;
   padding: 0;
+  opacity: .85;
 }
-.estrutura__nav:hover { color: rgba(224,224,222,.75); }
-.estrutura__nav svg { width: 20px; height: 20px; stroke-width: 1; }
-.estrutura__nav--prev { left: clamp(.5rem, 3vw, 2rem); }
-.estrutura__nav--next { right: clamp(.5rem, 3vw, 2rem); }
+.estrutura__nav:hover { opacity: 1; }
+.estrutura__nav svg { width: 18px; height: 18px; stroke-width: 1.5; }
+/* Distância a partir do centro do palco = metade da largura do card
+   central (que escala 1.35x) + um respiro fixo */
+.estrutura__nav--prev:hover { transform: translateY(-50%) translateX(-3px); }
+.estrutura__nav--next:hover { transform: translateY(-50%) translateX(3px); }
+.estrutura__nav--prev { left: calc(50% - (clamp(260px, 30vw, 520px) * 1.35 / 2) - 3rem); }
+.estrutura__nav--next { right: calc(50% - (clamp(260px, 30vw, 520px) * 1.35 / 2) - 3rem); }
 
 /* Footer text: title left / body right */
 .estrutura__footer {
