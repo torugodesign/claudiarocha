@@ -202,6 +202,8 @@ ul { list-style: none; }
   background: var(--teal);
   border-color: var(--teal);
 }
+/* Quebra de linha do botão de envio: só no mobile (celular) */
+.btn__mobile-break { display: none; }
 
 /* ════════════════════════════════════════
    NAV
@@ -1923,6 +1925,7 @@ ul { list-style: none; }
   .contato__form .btn--dark {
     border-color: var(--pedra);
   }
+  .btn__mobile-break { display: inline; }
 
 
   /* Sobre — ordem mobile: tag, título, foto, credencial, texto */

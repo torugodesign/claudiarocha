@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Cormorant Garamond: fonte dos itálicos / citações -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260716n" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260716o" />
 </head>
 <body>
 
@@ -154,7 +154,7 @@
         <div class="sobre__tag reveal">sobre</div>
 
         <h2 class="sobre__title reveal">
-          {% if c.sobre_titulo %}{{ c.sobre_titulo.titulo }}{% else %}A justiça não é apenas um resultado. É a retomada da sua <em>dignidade.</em>{% endif %}
+          {% if c.sobre_titulo %}{{ c.sobre_titulo.titulo }}{% else %}A justiça não é apenas um resultado.<br>É a retomada da <em>sua dignidade.</em>{% endif %}
         </h2>
 
         <div class="sobre__right">
@@ -249,7 +249,7 @@
       <div class="equipe__layout">
 
         <h2 class="equipe__title reveal">
-          {% if c.equipe_titulo %}{{ c.equipe_titulo.titulo }}{% else %}Uma equipe preparada para<br>compreender e conduzir <em>a sua causa.</em>{% endif %}
+          {% if c.equipe_titulo %}{{ c.equipe_titulo.titulo }}{% else %}Uma equipe preparada<br>para compreender e<br>conduzir <em>a sua causa.</em>{% endif %}
         </h2>
 
         <!-- Foto única do escritório -->
@@ -610,7 +610,7 @@
             <label for="mensagem">Mensagem</label>
             <textarea id="mensagem" name="mensagem" rows="4" placeholder="Descreva brevemente sua situação para uma análise técnica preliminar. Nossa condução começa no seu primeiro contato." required></textarea>
           </div>
-          <button type="submit" class="btn btn--dark">Enviar mensagem<br>ao escritório</button>
+          <button type="submit" class="btn btn--dark">Enviar mensagem<br class="btn__mobile-break">ao escritório</button>
         </form>
       </div>
     </div>
