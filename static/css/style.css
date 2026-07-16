@@ -478,6 +478,10 @@ ul { list-style: none; }
     flex-direction: column;
     align-items: center;
   }
+  /* Texto primeiro, botão depois no mobile (ordem visual — o HTML continua
+     com o CTA primeiro, só inverte como aparece na tela) */
+  .hero-copy__text { order: 1; }
+  .hero-copy__cta  { order: 2; }
   /* CTA "Inicie a retomada do seu direito" — centraliza e adiciona uma
      borda ao redor para sinalizar que é um botão (mesma tipografia) */
   .hero-copy__cta {
