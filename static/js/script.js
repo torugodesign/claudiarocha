@@ -35,17 +35,16 @@ updateNav();
 const toggle = document.getElementById('navToggle');
 const menu   = document.getElementById('navMenu');
 const toggleSpans = toggle.querySelectorAll('span');
+function positionMenu() {
+  const navBottom = nav.getBoundingClientRect().bottom;
+  menu.style.top = Math.max(navBottom, 0) + 'px';
+  menu.style.maxHeight = (window.innerHeight - Math.max(navBottom, 0)) + 'px';
+}
 function setMenuOpen(isOpen) {
-  if (isOpen) {
-    // Posiciona o menu logo abaixo da barra superior real (varia entre topo/rolado)
-    const navBottom = nav.getBoundingClientRect().bottom;
-    menu.style.top = Math.max(navBottom, 0) + 'px';
-    menu.style.maxHeight = (window.innerHeight - Math.max(navBottom, 0)) + 'px';
-  }
+  if (isOpen) positionMenu(); // logo abaixo da barra superior real (varia entre topo/rolado)
   menu.classList.toggle('is-open', isOpen);
   toggle.classList.toggle('is-active', isOpen);
   toggle.setAttribute('aria-expanded', String(isOpen));
-  document.body.classList.toggle('nav-lock', isOpen);
   if (toggleSpans[0]) toggleSpans[0].style.transform = isOpen ? 'translateY(6px) rotate(45deg)'  : '';
   if (toggleSpans[1]) toggleSpans[1].style.opacity   = isOpen ? '0' : '';
   if (toggleSpans[2]) toggleSpans[2].style.transform = isOpen ? 'translateY(-6px) rotate(-45deg)' : '';
@@ -59,6 +58,10 @@ menu.querySelectorAll('.nav__link').forEach(link => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') setMenuOpen(false);
 });
+// Página continua rolável com o menu aberto — reposiciona o painel ao rolar
+window.addEventListener('scroll', () => {
+  if (menu.classList.contains('is-open')) positionMenu();
+}, { passive: true });
 
 // ── HERO VIDEO ──
 const video       = document.getElementById('heroVideo');
