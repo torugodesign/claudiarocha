@@ -1943,18 +1943,57 @@ ul { list-style: none; }
     position: fixed;
     inset: 0;
     background: var(--grafite);
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    padding: 2rem;
+    align-items: stretch;
+    padding: 2rem 2.5rem;
     z-index: 99;
+    animation: navMenuIn .4s ease both;
   }
   .nav__menu.is-open .nav__link {
-    font-size: 1.5rem;
-    padding: 1rem 0;
+    font-family: var(--font-display);
+    font-size: 1.55rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--off-white);
+    text-align: center;
+    padding: 1.15rem 0;
     border: none;
-    letter-spacing: 0.1em;
+    border-bottom: 1px solid rgba(224, 224, 222, 0.12);
+    opacity: 0;
+    animation: navLinkIn .45s ease forwards;
   }
-  .nav__toggle { display: flex; z-index: 101; }
+  .nav__menu.is-open .nav__link:nth-child(1) { animation-delay: .05s; }
+  .nav__menu.is-open .nav__link:nth-child(2) { animation-delay: .10s; }
+  .nav__menu.is-open .nav__link:nth-child(3) { animation-delay: .15s; }
+  .nav__menu.is-open .nav__link:nth-child(4) { animation-delay: .20s; }
+  .nav__menu.is-open .nav__link:nth-child(5) { animation-delay: .25s; }
+  .nav__menu.is-open .nav__link:nth-child(6) { animation-delay: .30s; }
+  .nav__menu.is-open .nav__link--cta {
+    margin-top: 2rem;
+    border: 1px solid var(--pedra);
+    border-bottom: 1px solid var(--pedra);
+    padding: 1rem 0;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  @keyframes navMenuIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes navLinkIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .nav__toggle { display: flex; z-index: 101; position: relative; }
+  .nav__toggle span { transition: transform .3s ease, opacity .2s ease; }
+
+  body.nav-lock { overflow: hidden; }
   .hero__left { padding: 7rem var(--space-sm) var(--space-md); }
   .hero__right { height: 75vw; }
   .footer__inner { flex-direction: column; align-items: flex-start; gap: 1rem; }

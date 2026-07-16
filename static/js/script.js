@@ -34,15 +34,24 @@ updateNav();
 // ── MOBILE MENU ──
 const toggle = document.getElementById('navToggle');
 const menu   = document.getElementById('navMenu');
-toggle.addEventListener('click', () => {
-  const isOpen = menu.classList.toggle('is-open');
+const toggleSpans = toggle.querySelectorAll('span');
+function setMenuOpen(isOpen) {
+  menu.classList.toggle('is-open', isOpen);
+  toggle.classList.toggle('is-active', isOpen);
   toggle.setAttribute('aria-expanded', String(isOpen));
+  document.body.classList.toggle('nav-lock', isOpen);
+  if (toggleSpans[0]) toggleSpans[0].style.transform = isOpen ? 'translateY(6px) rotate(45deg)'  : '';
+  if (toggleSpans[1]) toggleSpans[1].style.opacity   = isOpen ? '0' : '';
+  if (toggleSpans[2]) toggleSpans[2].style.transform = isOpen ? 'translateY(-6px) rotate(-45deg)' : '';
+}
+toggle.addEventListener('click', () => {
+  setMenuOpen(!menu.classList.contains('is-open'));
 });
 menu.querySelectorAll('.nav__link').forEach(link => {
-  link.addEventListener('click', () => {
-    menu.classList.remove('is-open');
-    toggle.setAttribute('aria-expanded', 'false');
-  });
+  link.addEventListener('click', () => setMenuOpen(false));
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') setMenuOpen(false);
 });
 
 // ── HERO VIDEO ──
