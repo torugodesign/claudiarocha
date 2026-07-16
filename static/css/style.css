@@ -1486,8 +1486,12 @@ ul { list-style: none; }
     display: flex;
     grid-template-columns: unset;
     overflow-x: auto;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
+    /* Restringe o gesto a arrastar só na horizontal — sem esticar/bounce vertical */
+    touch-action: pan-x;
+    overscroll-behavior: contain;
     gap: 1rem;
     padding-bottom: 0.5rem;
     margin: 0 calc(var(--space-md) * -1);
@@ -1502,6 +1506,8 @@ ul { list-style: none; }
     flex: 0 0 72vw;
     max-width: 300px;
     scroll-snap-align: start;
+    /* Evita que o card mude de tamanho/estique durante o drag */
+    touch-action: pan-x;
   }
 
   .blog-destaque__vazio { flex: 1; }
