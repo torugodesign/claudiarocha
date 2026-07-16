@@ -1489,14 +1489,18 @@ ul { list-style: none; }
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    /* Restringe o gesto a arrastar só na horizontal — sem esticar/bounce vertical */
-    touch-action: pan-x;
-    overscroll-behavior: contain;
+    /* Não restringe o eixo (auto): permite o navegador decidir — arrasto
+       lateral move o carrossel, mas a rolagem vertical da página continua
+       funcionando normalmente ao tocar sobre ele. */
+    overscroll-behavior-x: contain;
     gap: 1rem;
     padding-bottom: 0.5rem;
     margin: 0 calc(var(--space-md) * -1);
-    padding-left: var(--space-md);
-    padding-right: var(--space-md);
+    /* Um pouco mais que a margem padrão da página, para o respiro antes
+       do 1º card ficar visualmente claro como "espaço de carrossel"
+       (não só a margem normal do conteúdo) — simétrico dos dois lados */
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
@@ -1506,8 +1510,15 @@ ul { list-style: none; }
     flex: 0 0 72vw;
     max-width: 300px;
     scroll-snap-align: start;
-    /* Evita que o card mude de tamanho/estique durante o drag */
-    touch-action: pan-x;
+  }
+
+  /* Evita a "sensação de arrastar" a imagem em si (drag nativo do
+     navegador ao segurar e mover o dedo sobre a foto) */
+  .blog-destaque__img,
+  .blog-destaque__img-wrap {
+    -webkit-user-drag: none;
+    user-select: none;
+    -webkit-touch-callout: none;
   }
 
   .blog-destaque__vazio { flex: 1; }
