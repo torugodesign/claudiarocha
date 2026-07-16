@@ -1920,10 +1920,20 @@ ul { list-style: none; }
     filter: none !important;
   }
   /* O 1º card sobrepõe a seção de introdução (também teal) acima dele,
-     revelando essa mesma cor no corte */
+     revelando essa mesma cor no corte. O overlap de -3.5rem do card
+     "come" parte do padding-bottom da intro, então compensa aqui para
+     sobrar respiro visível abaixo do texto "...clareza e firmeza." */
   .atuacao__intro-section {
     position: relative;
     z-index: 1;
+    padding-bottom: 7rem;
+  }
+  /* Idem entre os cards de tópicos: o overlap negativo do próximo card
+     consome o padding-bottom do card atual, então os cards que não são
+     o último recebem padding extra para sobrar o mesmo respiro visível
+     que já existe depois do último card (Vínculo Empregatício) */
+  .atuacao__stack-item:not(:last-child) {
+    padding-bottom: 7rem;
   }
   .atuacao__stack-title { font-size: clamp(2.2rem, 9vw, 3rem); margin-bottom: 1.25rem; }
   .atuacao__stack-num   { display: none; }
