@@ -1907,8 +1907,10 @@ ul { list-style: none; }
   .atuacao__stack-item {
     position: relative;
     height: auto;
-    /* Mais respiro vertical interno (entre o recorte, o título/texto e a base) */
-    padding: 4.5rem 0 3.5rem;
+    /* Mais respiro vertical interno (entre o recorte, o título/texto e a base).
+       Topo maior que a base para o texto ficar um pouco mais centralizado
+       no card (sem mudar a altura total do card). */
+    padding: 5.5rem 0 2.5rem;
     /* Recorte com dois níveis: rampa diagonal à esquerda + patamar reto à
        direita, com a "ponta" visível no vértice — mesmo formato do
        arquivo plano de fundo.png (não é uma diagonal única) */
@@ -1933,7 +1935,7 @@ ul { list-style: none; }
      o último recebem padding extra para sobrar o mesmo respiro visível
      que já existe depois do último card (Vínculo Empregatício) */
   .atuacao__stack-item:not(:last-child) {
-    padding-bottom: 7rem;
+    padding-bottom: 6rem;
   }
   .atuacao__stack-title { font-size: clamp(2.2rem, 9vw, 3rem); margin-bottom: 1.25rem; }
   .atuacao__stack-num   { display: none; }
