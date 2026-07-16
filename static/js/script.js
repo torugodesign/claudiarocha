@@ -65,9 +65,25 @@ const muteIcon    = document.getElementById('muteIcon');
 const soundIcon   = document.getElementById('soundIcon');
 
 if (video) {
+  // Força autoplay em navegadores exigentes (ex: Safari/iOS) — precisa de
+  // muted=true via propriedade JS (não só o atributo) antes do play().
+  function forcePlay() {
+    video.muted = true;
+    const p = video.play();
+    if (p && typeof p.catch === 'function') p.catch(() => {});
+  }
+  forcePlay();
+  // Safari iOS pode pausar o vídeo ao restaurar a página do cache
+  // de navegação (voltar da aba do WhatsApp, trocar de app, etc.)
+  window.addEventListener('pageshow', forcePlay);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && video.paused) forcePlay();
+  });
+
   // Esconde placeholder assim que o vídeo pode tocar (canplay = mais rápido)
   video.addEventListener('canplay', () => {
     if (placeholder) placeholder.classList.add('hidden');
+    forcePlay();
   });
   video.addEventListener('playing', () => {
     if (placeholder) placeholder.classList.add('hidden');

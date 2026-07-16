@@ -79,9 +79,11 @@
       id="heroVideo"
       class="hero__video"
       playsinline
+      webkit-playsinline
       muted
       loop
       autoplay
+      preload="auto"
       poster="video/poster.jpg"
     >
       {% if c.hero_video and c.hero_video.video %}
@@ -646,7 +648,7 @@
     <span class="whatsapp-float__tooltip">Fale conosco</span>
   </a>
 
-  <script src="{% static 'js/script.js' %}?v=20260716a"></script>
+  <script src="{% static 'js/script.js' %}?v=20260716b"></script>
 </body>
 </html>
 
