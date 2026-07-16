@@ -36,6 +36,12 @@ const toggle = document.getElementById('navToggle');
 const menu   = document.getElementById('navMenu');
 const toggleSpans = toggle.querySelectorAll('span');
 function setMenuOpen(isOpen) {
+  if (isOpen) {
+    // Posiciona o menu logo abaixo da barra superior real (varia entre topo/rolado)
+    const navBottom = nav.getBoundingClientRect().bottom;
+    menu.style.top = Math.max(navBottom, 0) + 'px';
+    menu.style.maxHeight = (window.innerHeight - Math.max(navBottom, 0)) + 'px';
+  }
   menu.classList.toggle('is-open', isOpen);
   toggle.classList.toggle('is-active', isOpen);
   toggle.setAttribute('aria-expanded', String(isOpen));
