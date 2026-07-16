@@ -1914,10 +1914,17 @@ ul { list-style: none; }
     filter: none !important;
   }
   /* O 1º card sobrepõe a seção de introdução (também teal) acima dele,
-     revelando essa mesma cor no corte — mesma lógica usada entre os demais cards */
+     revelando essa mesma cor no corte */
   .atuacao__intro-section {
     position: relative;
     z-index: 1;
+  }
+  /* Espaço entre os cards de tópicos (Direitos Trabalhistas, Restrição
+     Contratual, Assédio Moral, Vínculo Empregatício) — mantém o recorte
+     diagonal de cada card (mesmo formato do plano de fundo.png), só
+     separa visualmente um do outro em vez de ficarem colados */
+  .atuacao__stack-item:not(:first-child) {
+    margin-top: 1.75rem;
   }
   .atuacao__stack-title { font-size: clamp(2.2rem, 9vw, 3rem); margin-bottom: 1rem; }
   .atuacao__stack-num   { display: none; }
