@@ -183,22 +183,6 @@ document.querySelectorAll('.reveal').forEach(el => {
   updateStack();
 })();
 
-// ── AVALIAÇÕES — carrossel ──
-(function () {
-  const track = document.getElementById('avaliacoesTrack');
-  const prev  = document.getElementById('avalPrev');
-  const next  = document.getElementById('avalNext');
-  if (!track) return;
-
-  function getStep() {
-    const card = track.querySelector('.avaliacoes__card');
-    return card ? card.offsetWidth + 20 : 300;
-  }
-
-  prev?.addEventListener('click', () => { track.scrollBy({ left: -getStep(), behavior: 'smooth' }); });
-  next?.addEventListener('click', () => { track.scrollBy({ left:  getStep(), behavior: 'smooth' }); });
-})();
-
 // ── EQUIPE: retrato troca a cada 1.3s (Web Worker — não throttled em aba inativa) ──
 (function () {
   const retratos = Array.from(document.querySelectorAll('.equipe__retrato-img'));
