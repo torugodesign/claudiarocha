@@ -183,61 +183,6 @@ document.querySelectorAll('.reveal').forEach(el => {
   updateStack();
 })();
 
-// ── AVALIAÇÕES — carrossel infinito controlado pelo usuário ──
-// 3 conjuntos de cards (1 real + 2 cópias); começa no conjunto do meio e,
-// conforme o usuário arrasta, "teleporta" o scroll em saltos de 1 conjunto
-// assim que ele se aproxima da borda — sem o usuário perceber o salto,
-// dando a sensação de loop infinito ao arrastar.
-(function () {
-  const track = document.getElementById('avaliacoesTrack');
-  if (!track) return;
-
-  let setWidth = 0;
-
-  function measure() {
-    setWidth = track.scrollWidth / 3;
-    track.scrollLeft = setWidth + (track.scrollLeft % setWidth || 0);
-  }
-
-  function wrap() {
-    if (!setWidth) return;
-    if (track.scrollLeft < setWidth * 0.5) {
-      track.scrollLeft += setWidth;
-    } else if (track.scrollLeft > setWidth * 1.5) {
-      track.scrollLeft -= setWidth;
-    }
-  }
-
-  measure();
-  track.scrollLeft = setWidth;
-  window.addEventListener('load', () => { measure(); track.scrollLeft = setWidth; });
-  window.addEventListener('resize', measure);
-  track.addEventListener('scroll', wrap, { passive: true });
-
-  // Arrastar com o mouse (touch já funciona nativamente via overflow-x)
-  let isDown = false;
-  let startX = 0;
-  let startScroll = 0;
-  track.addEventListener('pointerdown', e => {
-    if (e.pointerType === 'touch') return; // deixa o navegador cuidar do touch
-    isDown = true;
-    track.classList.add('is-dragging');
-    startX = e.clientX;
-    startScroll = track.scrollLeft;
-    track.setPointerCapture(e.pointerId);
-  });
-  track.addEventListener('pointermove', e => {
-    if (!isDown) return;
-    track.scrollLeft = startScroll - (e.clientX - startX);
-  });
-  function endDrag() {
-    isDown = false;
-    track.classList.remove('is-dragging');
-  }
-  track.addEventListener('pointerup', endDrag);
-  track.addEventListener('pointercancel', endDrag);
-})();
-
 // ── EQUIPE: retrato troca a cada 1.3s (Web Worker — não throttled em aba inativa) ──
 (function () {
   const retratos = Array.from(document.querySelectorAll('.equipe__retrato-img'));
