@@ -1236,29 +1236,28 @@ ul { list-style: none; }
   opacity: 0.55;
 }
 
-/* Carrossel infinito — a trilha (cards + cópia) rola continuamente em
-   loop; a cópia (.avaliacoes__track-dup, aria-hidden) garante que o
-   ponto de emenda em -50% seja visualmente idêntico ao início */
+/* Carrossel infinito controlado pelo usuário — arrasta com o dedo/mouse
+   para passar os cards; três conjuntos (1 real + 2 cópias aria-hidden)
+   dão espaço para o JS reposicionar o scroll sem deixar acabar o loop */
 .avaliacoes__track-wrap {
   position: relative;
-  overflow: hidden;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
 }
 .avaliacoes__track {
   display: flex;
   gap: 1.25rem;
-  width: max-content;
   padding: 0.5rem 0 1.5rem;
-  animation: avaliacoesScroll 38s linear infinite;
+  overflow-x: auto;
+  scroll-behavior: auto;
+  cursor: grab;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
 }
+.avaliacoes__track::-webkit-scrollbar { display: none; }
+.avaliacoes__track.is-dragging { cursor: grabbing; scroll-snap-type: none; }
 .avaliacoes__track-dup { display: contents; }
-.avaliacoes__track-wrap:hover .avaliacoes__track { animation-play-state: paused; }
-
-@keyframes avaliacoesScroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
 
 /* Cards */
 .avaliacoes__card {
@@ -2108,14 +2107,6 @@ ul { list-style: none; }
     transform: none !important;
     filter: none !important;
   }
-
-  .avaliacoes__track {
-    animation: none !important;
-    transform: none !important;
-    overflow-x: auto;
-    width: auto;
-  }
-  .avaliacoes__track-dup { display: none !important; }
 
   .estrutura__slide {
     transition: opacity 0.01ms linear !important;
