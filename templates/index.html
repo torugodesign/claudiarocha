@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Cormorant Garamond: fonte dos itálicos / citações -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260716q" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260716s" />
 </head>
 <body>
 
@@ -249,7 +249,7 @@
       <div class="equipe__layout">
 
         <h2 class="equipe__title reveal">
-          {% if c.equipe_titulo %}{{ c.equipe_titulo.titulo }}{% else %}Uma equipe preparada<br>para compreender e<br class="equipe__mobile-break">conduzir <em>a sua causa.</em>{% endif %}
+          {% if c.equipe_titulo %}{{ c.equipe_titulo.titulo }}{% else %}Uma equipe preparada <br class="equipe__mobile-break"> para <br class="equipe__desktop-break"> compreender e <br class="equipe__mobile-break"> conduzir <em>a sua causa.</em>{% endif %}
         </h2>
 
         <!-- Foto única do escritório -->

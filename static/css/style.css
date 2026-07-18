@@ -204,9 +204,11 @@ ul { list-style: none; }
 }
 /* Quebra de linha do botão de envio: só no mobile (celular) */
 .btn__mobile-break { display: none; }
-/* Quebra extra do título de Capital Humano: só no mobile (2 linhas no
-   desktop, 3 linhas no mobile) */
-.equipe__mobile-break { display: none; }
+/* Quebras do título de Capital Humano: pontos de quebra diferentes no
+   desktop (2 linhas, quebra após "para") e no mobile (3 linhas, quebra
+   após "preparada" e após "e") */
+.equipe__mobile-break  { display: none; }
+.equipe__desktop-break { display: inline; }
 
 /* ════════════════════════════════════════
    NAV
@@ -938,6 +940,7 @@ ul { list-style: none; }
   line-height: 1.2;
   text-align: center;
   color: var(--grafite);
+  width: 100%;
   max-width: 900px;
 }
 .equipe__title em {
@@ -1929,7 +1932,8 @@ ul { list-style: none; }
     border-color: var(--pedra);
   }
   .btn__mobile-break { display: inline; }
-  .equipe__mobile-break { display: inline; }
+  .equipe__mobile-break  { display: inline; }
+  .equipe__desktop-break { display: none; }
 
 
   /* Sobre — ordem mobile: tag, título, foto, credencial, texto */
