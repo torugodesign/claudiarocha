@@ -1287,16 +1287,13 @@ ul { list-style: none; }
   flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 0.1rem;
 }
 .avaliacoes__meta strong {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: #1a1a1a;
-}
-.avaliacoes__meta span {
-  font-size: 0.72rem;
-  color: #888;
 }
 .avaliacoes__google {
   width: 20px;
