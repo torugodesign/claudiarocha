@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Cormorant Garamond: fonte dos itálicos / citações -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260717a" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260717b" />
 </head>
 <body>
 
@@ -197,7 +197,7 @@
         <div class="atuacao__tag reveal">atuação</div>
         <h2 class="atuacao__title reveal">{% if c.atuacao_titulo %}{{ c.atuacao_titulo.titulo }}{% else %}Especialidade a serviço da <em>sua reparação.</em>{% endif %}</h2>
         <p class="atuacao__intro reveal">
-          {% if c.atuacao_intro %}{{ c.atuacao_intro.texto }}{% else %}Com 35 anos de atuação, o Escritório Cláudia Rocha defende trabalhadores em causas que exigem atenção técnica, leitura estratégica e compromisso real com a justiça. A atuação é voltada para quem precisa reivindicar direitos com <strong>seriedade, clareza e firmeza.</strong>{% endif %}
+          {% if c.atuacao_intro %}{{ c.atuacao_intro.texto }}{% else %}Com <strong>35 anos de atuação</strong>, o Escritório Cláudia Rocha defende trabalhadores em causas que exigem atenção técnica, leitura estratégica e compromisso real com a justiça. A atuação é voltada para quem precisa reivindicar direitos com <strong>seriedade, clareza e firmeza.</strong>{% endif %}
         </p>
       </div>
     </div>
@@ -317,7 +317,7 @@
           {% if c.estrutura_titulo %}{{ c.estrutura_titulo.titulo }}{% else %}Um espaço pensado para receber com seriedade, clareza e <em>confiança.</em>{% endif %}
         </h2>
         <p class="estrutura__text reveal">
-          {% if c.estrutura_texto %}{{ c.estrutura_texto.texto }}{% else %}O ambiente do escritório reflete a forma como a atuação jurídica é conduzida: com sobriedade, organização e atenção ao cliente. O atendimento acontece de maneira presencial em <strong>Araraquara/SP e Governador Valadares/MG</strong>, além do formato telepresencial para clientes em todo o Brasil. Quando necessário, também pode haver avaliação sobre atendimento presencial em outras localidades.{% endif %}
+          {% if c.estrutura_texto %}{{ c.estrutura_texto.texto }}{% else %}O ambiente do escritório reflete a forma como a atuação jurídica é conduzida: com <strong>sobriedade, organização e atenção ao cliente.</strong> O atendimento acontece de maneira presencial em <strong>Araraquara/SP e Governador Valadares/MG</strong>, além do formato telepresencial para clientes em todo o Brasil. Quando necessário, também pode haver avaliação sobre atendimento presencial em outras localidades.{% endif %}
         </p>
       </div>
     </div>
@@ -335,7 +335,7 @@
             {% if c.dif_titulo %}{{ c.dif_titulo.titulo }}{% else %}Defender uma causa é assumir uma <em>posição.</em>{% endif %}
           </h2>
           <p class="diferenciais__text reveal">
-            {% if c.dif_texto %}{{ c.dif_texto.texto }}{% else %}A atuação do Escritório Cláudia Rocha se apoia em princípios que não se negociam: coragem, técnica, ética e compromisso com a dignidade do trabalhador. <strong>A força da defesa não está no alarde.</strong> Está na preparação, na leitura precisa dos fatos e na condução firme de cada etapa.{% endif %}
+            {% if c.dif_texto %}{{ c.dif_texto.texto }}{% else %}A atuação do Escritório Cláudia Rocha se apoia em princípios que não se negociam: <strong>coragem, técnica, ética e compromisso com a dignidade do trabalhador.</strong> A força da defesa não está no alarde. Está na <strong>preparação, na leitura precisa dos fatos e na condução firme</strong> de cada etapa.{% endif %}
           </p>
           <a href="#contato" class="btn btn--outline reveal">Fale conosco</a>
         </div>
@@ -605,7 +605,7 @@
       <div class="contato__header">
         <div class="contato__tag reveal">contato</div>
         <h2 class="contato__title reveal">{% if c.contato_titulo %}{{ c.contato_titulo.titulo }}{% else %}Inicie a retomada<br />do <em>seu direito.</em>{% endif %}</h2>
-        {% if c.contato_texto %}<p class="contato__intro reveal">{{ c.contato_texto.texto }}</p>{% else %}<p class="contato__intro reveal">Se uma relação de trabalho feriu a sua dignidade, <strong>o primeiro passo é organizar a sua história</strong> e entender quais caminhos jurídicos podem ser avaliados. Envie sua mensagem para o Escritório Cláudia Rocha e inicie uma análise responsável do seu caso.</p>{% endif %}
+        {% if c.contato_texto %}<p class="contato__intro reveal">{{ c.contato_texto.texto }}</p>{% else %}<p class="contato__intro reveal">Se uma relação de trabalho feriu a sua dignidade, <strong>o primeiro passo é organizar a sua história</strong> e entender quais caminhos jurídicos podem ser avaliados. Envie sua mensagem para o Escritório Cláudia Rocha e inicie uma <strong>análise responsável do seu caso.</strong></p>{% endif %}
       </div>
       <div class="contato__grid">
         <div class="contato__info">

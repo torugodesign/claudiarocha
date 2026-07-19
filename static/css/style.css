@@ -791,7 +791,7 @@ ul { list-style: none; }
 }
 .atuacao__intro strong {
   color: var(--off-white);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* ── Cards empilháveis ── */
@@ -965,7 +965,7 @@ ul { list-style: none; }
 }
 .equipe__text strong {
   color: var(--grafite);
-  font-weight: 600;
+  font-weight: 500;
 }
 .equipe__text-col2 {
   display: block;
@@ -1092,7 +1092,7 @@ ul { list-style: none; }
 }
 .estrutura__text strong {
   color: var(--off-white);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* ════════════════════════════════════════
@@ -1159,7 +1159,7 @@ ul { list-style: none; }
 }
 .diferenciais__text strong {
   color: #fff;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .diferenciais__item {
@@ -1692,7 +1692,7 @@ ul { list-style: none; }
 }
 .contato__intro strong {
   color: var(--off-white);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .contato__grid {
