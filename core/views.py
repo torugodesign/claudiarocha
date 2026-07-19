@@ -92,7 +92,7 @@ SECOES = {
         'label': 'Blog — Cabeçalho',
         'campos': [
             {'chave': 'blog_hero_imagem', 'label': 'Imagem de fundo', 'tipo': 'imagem',
-             'recomendado': '1920 × 1000 px', 'peso': '900 KB'},
+             'recomendado': '1920 × 640 px (pessoa enquadrada à direita)', 'peso': '900 KB'},
         ],
     },
 }
