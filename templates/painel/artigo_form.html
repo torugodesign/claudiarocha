@@ -105,4 +105,26 @@
     </div>
   </div>
 </form>
+<script>
+  // Se o texto colado vier com entidades HTML literais (&quot; &amp; etc,
+  // comum ao copiar de fontes que exportam HTML já escapado), decodifica
+  // antes de inserir — em vez de deixar o texto cru no artigo.
+  function decodeHtmlEntities(str) {
+    const el = document.createElement('textarea');
+    el.innerHTML = str;
+    return el.value;
+  }
+  function limparColagem(e) {
+    const texto = (e.clipboardData || window.clipboardData).getData('text/plain');
+    if (!texto || !/&(quot|amp|#39|lt|gt|nbsp|apos);/i.test(texto)) return; // nada a decodificar
+    e.preventDefault();
+    const decoded = decodeHtmlEntities(texto);
+    const el = e.target;
+    const start = el.selectionStart, end = el.selectionEnd;
+    el.value = el.value.slice(0, start) + decoded + el.value.slice(end);
+    el.selectionStart = el.selectionEnd = start + decoded.length;
+  }
+  document.getElementById('conteudo')?.addEventListener('paste', limparColagem);
+  document.getElementById('resumo')?.addEventListener('paste', limparColagem);
+</script>
 {% endblock %}
