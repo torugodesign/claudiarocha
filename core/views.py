@@ -18,13 +18,14 @@ SECOES = {
     'sobre': {
         'label': 'Sobre',
         'campos': [
-            {'chave': 'sobre_titulo',           'label': 'Título principal',       'tipo': 'titulo'},
-            {'chave': 'sobre_p1',               'label': 'Parágrafo 1',            'tipo': 'texto'},
-            {'chave': 'sobre_p2',               'label': 'Parágrafo 2',            'tipo': 'texto'},
-            {'chave': 'sobre_p3',               'label': 'Parágrafo 3',            'tipo': 'texto'},
-            {'chave': 'sobre_credencial_num',   'label': 'Número (ex: 35)',        'tipo': 'titulo'},
-            {'chave': 'sobre_credencial_label', 'label': 'Label (ex: anos de atuação)', 'tipo': 'titulo'},
-            {'chave': 'sobre_imagem',           'label': 'Foto da Cláudia',        'tipo': 'imagem'},
+            {'chave': 'sobre_titulo',  'label': 'Título principal', 'tipo': 'titulo'},
+            {'chave': 'sobre_texto',   'label': 'Texto', 'tipo': 'texto',
+             'hint': 'Use linhas em branco para separar parágrafos.'},
+            {'chave': 'sobre_rodape',  'label': 'Texto auxiliar de rodapé', 'tipo': 'titulo',
+             'placeholder': 'Ex: 35 anos de atuação'},
+            {'chave': 'sobre_cta',     'label': 'Texto do botão', 'tipo': 'titulo',
+             'placeholder': 'Ex: Agende um atendimento'},
+            {'chave': 'sobre_imagem', 'label': 'Foto da Cláudia', 'tipo': 'imagem'},
         ],
     },
     'atuacao': {

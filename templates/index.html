@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Cormorant Garamond: fonte dos itálicos / citações -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260717b" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260717c" />
 </head>
 <body>
 
@@ -166,23 +166,16 @@
         </div>
 
         <div class="sobre__credencial reveal">
-          <div class="sobre__credencial-num">
-            <span class="sobre__numero">{% if c.sobre_credencial_num %}{{ c.sobre_credencial_num.titulo }}{% else %}35{% endif %}</span>
-            <span class="sobre__label">{% if c.sobre_credencial_label %}{{ c.sobre_credencial_label.titulo }}{% else %}anos de atuação{% endif %}</span>
-          </div>
-          <a href="#contato" class="btn btn--vinho-outline">Agende um atendimento</a>
+          <span class="sobre__rodape">{% if c.sobre_rodape %}{{ c.sobre_rodape.titulo }}{% else %}35 anos de atuação{% endif %}</span>
+          <a href="#contato" class="btn btn--vinho-outline">{% if c.sobre_cta %}{{ c.sobre_cta.titulo }}{% else %}Agende um atendimento{% endif %}</a>
         </div>
 
-        <div class="sobre__paragrafos">
-          <p class="sobre__text reveal">
-            {% if c.sobre_p1 %}{{ c.sobre_p1.texto }}{% else %}O trabalho sustenta planos, responsabilidades e parte importante da identidade de uma pessoa. Quando esse ciclo é rompido por abusos, irregularidades ou conflitos, é preciso mais do que orientação: <strong>é preciso condução.</strong>{% endif %}
-          </p>
-          <p class="sobre__text reveal">
-            {% if c.sobre_p2 %}{{ c.sobre_p2.texto }}{% else %}O Escritório Cláudia Rocha atua no Direito do Trabalho com <strong>estratégia, firmeza e sensibilidade</strong> para transformar situações de insegurança em caminhos juridicamente estruturados.{% endif %}
-          </p>
-          <p class="sobre__text reveal">
-            {% if c.sobre_p3 %}{{ c.sobre_p3.texto }}{% else %}Cada caso é analisado a partir dos fatos, das provas e da <strong>história de quem chega até nós.</strong>{% endif %}
-          </p>
+        <div class="sobre__paragrafos reveal">
+          {% if c.sobre_texto %}{{ c.sobre_texto.texto|linebreaks }}{% else %}
+            <p>O trabalho sustenta planos, responsabilidades e parte importante da identidade de uma pessoa. Quando esse ciclo é rompido por abusos, irregularidades ou conflitos, é preciso mais do que orientação: <strong>é preciso condução.</strong></p>
+            <p>O Escritório Cláudia Rocha atua no Direito do Trabalho com <strong>estratégia, firmeza e sensibilidade</strong> para transformar situações de insegurança em caminhos juridicamente estruturados.</p>
+            <p>Cada caso é analisado a partir dos fatos, das provas e da <strong>história de quem chega até nós.</strong></p>
+          {% endif %}
         </div>
 
       </div>

@@ -111,13 +111,14 @@
             {% elif campo.tipo == "titulo" %}
               <div class="form-group">
                 <label>{{ campo.label }}</label>
-                <input type="text" name="{{ campo.chave }}" value="{{ campo.valor_titulo }}" placeholder="—"/>
+                <input type="text" name="{{ campo.chave }}" value="{{ campo.valor_titulo }}" placeholder="{{ campo.placeholder|default:'—' }}"/>
               </div>
 
             {% elif campo.tipo == "texto" %}
               <div class="form-group">
                 <label>{{ campo.label }}</label>
                 <textarea name="{{ campo.chave }}" rows="4">{{ campo.valor_texto }}</textarea>
+                {% if campo.hint %}<span class="form-hint">{{ campo.hint }}</span>{% endif %}
               </div>
 
             {% elif campo.tipo == "imagem" %}
