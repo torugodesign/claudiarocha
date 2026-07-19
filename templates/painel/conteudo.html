@@ -30,7 +30,44 @@
       </div>
       <div class="card-body">
 
-        {% if secao == "estrutura" %}
+        {% if secao == "atuacao" %}
+        <!-- ── Título/intro normais + os 4 cards lado a lado em grade compacta ── -->
+        <div class="form-grid">
+          {% for campo in atuacao_gerais %}
+            {% if campo.tipo == "titulo" %}
+              <div class="form-group">
+                <label>{{ campo.label }}</label>
+                <input type="text" name="{{ campo.chave }}" value="{{ campo.valor_titulo }}" placeholder="{{ campo.placeholder|default:'—' }}"/>
+              </div>
+            {% elif campo.tipo == "texto" %}
+              <div class="form-group">
+                <label>{{ campo.label }}</label>
+                <textarea name="{{ campo.chave }}" rows="4">{{ campo.valor_texto }}</textarea>
+                {% if campo.hint %}<span class="form-hint">{{ campo.hint }}</span>{% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.25rem;min-width:0;">
+          {% for par in atuacao_cards %}
+            <div style="border:1px solid var(--border);border-radius:6px;padding:1rem;background:#fafaf9;min-width:0;">
+              <span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:.75rem;">Card {{ forloop.counter }}</span>
+              {% for campo in par %}
+                <div class="form-group" style="margin-bottom:.6rem;">
+                  <label>{{ campo.label }}</label>
+                  {% if campo.tipo == "titulo" %}
+                    <input type="text" name="{{ campo.chave }}" value="{{ campo.valor_titulo }}" placeholder="—"/>
+                  {% else %}
+                    <textarea name="{{ campo.chave }}" rows="3">{{ campo.valor_texto }}</textarea>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+
+        {% elif secao == "estrutura" %}
         <!-- ── Upload em lote para o escritório ── -->
         <div class="form-grid">
           {% for campo in campos %}

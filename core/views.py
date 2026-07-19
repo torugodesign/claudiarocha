@@ -33,14 +33,14 @@ SECOES = {
         'campos': [
             {'chave': 'atuacao_titulo',      'label': 'Título',              'tipo': 'titulo'},
             {'chave': 'atuacao_intro',       'label': 'Texto introdutório',  'tipo': 'texto'},
-            {'chave': 'atuacao_c1_titulo',   'label': 'Card 1 — Título',     'tipo': 'titulo'},
-            {'chave': 'atuacao_c1_desc',     'label': 'Card 1 — Descrição',  'tipo': 'texto'},
-            {'chave': 'atuacao_c2_titulo',   'label': 'Card 2 — Título',     'tipo': 'titulo'},
-            {'chave': 'atuacao_c2_desc',     'label': 'Card 2 — Descrição',  'tipo': 'texto'},
-            {'chave': 'atuacao_c3_titulo',   'label': 'Card 3 — Título',     'tipo': 'titulo'},
-            {'chave': 'atuacao_c3_desc',     'label': 'Card 3 — Descrição',  'tipo': 'texto'},
-            {'chave': 'atuacao_c4_titulo',   'label': 'Card 4 — Título',     'tipo': 'titulo'},
-            {'chave': 'atuacao_c4_desc',     'label': 'Card 4 — Descrição',  'tipo': 'texto'},
+            {'chave': 'atuacao_c1_titulo',   'label': 'Título',              'tipo': 'titulo'},
+            {'chave': 'atuacao_c1_desc',     'label': 'Descrição',           'tipo': 'texto'},
+            {'chave': 'atuacao_c2_titulo',   'label': 'Título',              'tipo': 'titulo'},
+            {'chave': 'atuacao_c2_desc',     'label': 'Descrição',           'tipo': 'texto'},
+            {'chave': 'atuacao_c3_titulo',   'label': 'Título',              'tipo': 'titulo'},
+            {'chave': 'atuacao_c3_desc',     'label': 'Descrição',           'tipo': 'texto'},
+            {'chave': 'atuacao_c4_titulo',   'label': 'Título',              'tipo': 'titulo'},
+            {'chave': 'atuacao_c4_desc',     'label': 'Descrição',           'tipo': 'texto'},
         ],
     },
     'equipe': {
@@ -359,11 +359,23 @@ def painel_conteudo_secao(request, secao):
             if obj and obj.imagem:
                 fotos_escritorio.append(obj.imagem.url)
 
+    # Atuação: agrupa os campos gerais (título/intro) separados dos 4 cards
+    # (cada card = par título+descrição), para o template exibir os cards
+    # lado a lado em grade compacta em vez de empilhados um embaixo do outro.
+    atuacao_gerais = []
+    atuacao_cards = []
+    if secao == 'atuacao':
+        atuacao_gerais = campos_ctx[:2]
+        pares = campos_ctx[2:]
+        atuacao_cards = [pares[i:i + 2] for i in range(0, len(pares), 2)]
+
     ctx = {
         'secao':            secao,
         'secao_label':      SECOES[secao]['label'],
         'secoes':           SECOES,
         'campos':           campos_ctx,
         'fotos_escritorio': fotos_escritorio,
+        'atuacao_gerais':   atuacao_gerais,
+        'atuacao_cards':    atuacao_cards,
     }
     return render(request, 'painel/conteudo.html', ctx)
