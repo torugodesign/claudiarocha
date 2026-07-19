@@ -124,6 +124,7 @@
     el.value = el.value.slice(0, start) + decoded + el.value.slice(end);
     el.selectionStart = el.selectionEnd = start + decoded.length;
   }
+  document.getElementById('titulo')?.addEventListener('paste', limparColagem);
   document.getElementById('conteudo')?.addEventListener('paste', limparColagem);
   document.getElementById('resumo')?.addEventListener('paste', limparColagem);
 </script>
