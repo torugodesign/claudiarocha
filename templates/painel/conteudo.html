@@ -133,8 +133,8 @@
                 <input type="file" name="{{ campo.chave }}" accept="image/*"
                        style="font-size:.78rem;color:#666;border:1px dashed #ddd;padding:.75rem;border-radius:3px;background:#fafaf9;cursor:pointer;width:100%;"/>
                 <div style="display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.45rem;">
-                  <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:3px;padding:.12em .5em;font-size:.68rem;font-weight:600;color:#1e40af;">📐 900 × 1200 px recomendado</span>
-                  <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:3px;padding:.12em .5em;font-size:.68rem;font-weight:600;color:#1e40af;">⚖️ máx. 600 KB</span>
+                  <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:3px;padding:.12em .5em;font-size:.68rem;font-weight:600;color:#1e40af;">📐 {{ campo.recomendado|default:"900 × 1200 px" }} recomendado</span>
+                  <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:3px;padding:.12em .5em;font-size:.68rem;font-weight:600;color:#1e40af;">⚖️ máx. {{ campo.peso|default:"600 KB" }}</span>
                   <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:3px;padding:.12em .5em;font-size:.68rem;font-weight:600;color:#1e40af;">JPG · PNG · WEBP</span>
                 </div>
               </div>
