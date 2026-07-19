@@ -18,10 +18,45 @@
 
     /* Hero editorial */
     .blog-hero {
+      position: relative;
       background: var(--grafite);
       padding: 9rem 0 5rem;
       border-bottom: 1px solid rgba(192,191,191,0.1);
+      overflow: hidden;
     }
+    /* Imagem de fundo (opcional, via painel): nítida do lado livre (direita),
+       borrada e escurecida atrás do texto (esquerda) — o desfoque/opacidade
+       vai diminuindo em direção à área nítida */
+    .blog-hero__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .blog-hero__bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .blog-hero__bg-img--blur {
+      filter: blur(32px);
+      transform: scale(1.15);
+    }
+    .blog-hero__bg-img--sharp {
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 42%, #000 88%, #000 100%);
+      mask-image: linear-gradient(90deg, transparent 0%, transparent 42%, #000 88%, #000 100%);
+    }
+    .blog-hero__scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg,
+        var(--grafite) 0%,
+        rgba(35,36,37,.88) 38%,
+        rgba(35,36,37,.35) 65%,
+        rgba(35,36,37,0) 92%);
+    }
+    .blog-hero .container { position: relative; z-index: 1; }
     .blog-hero__tag {
       font-size: .62rem;
       letter-spacing: .28em;
@@ -259,6 +294,13 @@
 
   <!-- Hero do blog -->
   <header class="blog-hero">
+    {% if c.blog_hero_imagem and c.blog_hero_imagem.imagem %}
+    <div class="blog-hero__bg" aria-hidden="true">
+      <img src="{{ c.blog_hero_imagem.imagem.url }}" alt="" class="blog-hero__bg-img blog-hero__bg-img--blur" />
+      <img src="{{ c.blog_hero_imagem.imagem.url }}" alt="" class="blog-hero__bg-img blog-hero__bg-img--sharp" />
+      <div class="blog-hero__scrim"></div>
+    </div>
+    {% endif %}
     <div class="container">
       <span class="blog-hero__tag">blog</span>
       <h1 class="blog-hero__title">Informação<br>que protege<br>seus <em>direitos.</em></h1>

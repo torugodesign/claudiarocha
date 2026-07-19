@@ -88,6 +88,12 @@ SECOES = {
             {'chave': 'contato_email',    'label': 'E-mail',              'tipo': 'titulo'},
         ],
     },
+    'blog': {
+        'label': 'Blog — Cabeçalho',
+        'campos': [
+            {'chave': 'blog_hero_imagem', 'label': 'Imagem de fundo', 'tipo': 'imagem'},
+        ],
+    },
 }
 
 
@@ -148,6 +154,7 @@ _ICONES = {
     'estrutura':    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>',
     'diferenciais': '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
     'contato':      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+    'blog':         '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
 }
 
 _DESC = {
@@ -158,6 +165,7 @@ _DESC = {
     'estrutura':    'Carrossel de fotos do escritório',
     'diferenciais': 'Pontos fortes do escritório',
     'contato':      'Endereço, telefone e e-mail',
+    'blog':         'Imagem de fundo do cabeçalho do blog',
 }
 
 @login_required(login_url='/painel/login/')
