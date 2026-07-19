@@ -21,6 +21,7 @@
           <th>Título</th>
           <th>Status</th>
           <th>Criado em</th>
+          <th>Última alteração</th>
           <th style="text-align:right">Ações</th>
         </tr>
       </thead>
@@ -43,6 +44,7 @@
             </form>
           </td>
           <td style="color:#888;font-size:.78rem;white-space:nowrap;">{{ artigo.criado_em|date:"d/m/Y" }}</td>
+          <td style="color:#888;font-size:.78rem;white-space:nowrap;">{{ artigo.atualizado_em|date:"d/m/Y H:i" }}</td>
           <td class="td-actions">
             {% if artigo.publicado %}
             <a href="/blog/{{ artigo.slug }}/" target="_blank" class="btn btn-ghost btn-sm">Ver</a>
@@ -56,7 +58,7 @@
         </tr>
         {% empty %}
         <tr>
-          <td colspan="4">
+          <td colspan="5">
             <div class="empty-state">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
               <p>Nenhum artigo ainda.</p>

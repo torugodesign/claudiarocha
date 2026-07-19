@@ -72,12 +72,12 @@ SECOES = {
         'campos': [
             {'chave': 'dif_titulo',       'label': 'Título',              'tipo': 'titulo'},
             {'chave': 'dif_texto',        'label': 'Texto',               'tipo': 'texto'},
-            {'chave': 'dif_i1_titulo',    'label': 'Item 1 — Título',     'tipo': 'titulo'},
-            {'chave': 'dif_i1_desc',      'label': 'Item 1 — Descrição',  'tipo': 'texto'},
-            {'chave': 'dif_i2_titulo',    'label': 'Item 2 — Título',     'tipo': 'titulo'},
-            {'chave': 'dif_i2_desc',      'label': 'Item 2 — Descrição',  'tipo': 'texto'},
-            {'chave': 'dif_i3_titulo',    'label': 'Item 3 — Título',     'tipo': 'titulo'},
-            {'chave': 'dif_i3_desc',      'label': 'Item 3 — Descrição',  'tipo': 'texto'},
+            {'chave': 'dif_i1_titulo',    'label': 'Título',              'tipo': 'titulo'},
+            {'chave': 'dif_i1_desc',      'label': 'Descrição',           'tipo': 'texto'},
+            {'chave': 'dif_i2_titulo',    'label': 'Título',              'tipo': 'titulo'},
+            {'chave': 'dif_i2_desc',      'label': 'Descrição',           'tipo': 'texto'},
+            {'chave': 'dif_i3_titulo',    'label': 'Título',              'tipo': 'titulo'},
+            {'chave': 'dif_i3_desc',      'label': 'Descrição',           'tipo': 'texto'},
         ],
     },
     'contato': {
@@ -359,15 +359,16 @@ def painel_conteudo_secao(request, secao):
             if obj and obj.imagem:
                 fotos_escritorio.append(obj.imagem.url)
 
-    # Atuação: agrupa os campos gerais (título/intro) separados dos 4 cards
-    # (cada card = par título+descrição), para o template exibir os cards
-    # lado a lado em grade compacta em vez de empilhados um embaixo do outro.
-    atuacao_gerais = []
-    atuacao_cards = []
-    if secao == 'atuacao':
-        atuacao_gerais = campos_ctx[:2]
+    # Atuação e Diferenciais: agrupa os campos gerais (título/texto) separados
+    # dos cards (cada card = par título+descrição), para o template exibir os
+    # cards lado a lado em grade compacta em vez de empilhados um embaixo do
+    # outro.
+    cards_gerais = []
+    cards_pares = []
+    if secao in ('atuacao', 'diferenciais'):
+        cards_gerais = campos_ctx[:2]
         pares = campos_ctx[2:]
-        atuacao_cards = [pares[i:i + 2] for i in range(0, len(pares), 2)]
+        cards_pares = [pares[i:i + 2] for i in range(0, len(pares), 2)]
 
     ctx = {
         'secao':            secao,
@@ -375,7 +376,7 @@ def painel_conteudo_secao(request, secao):
         'secoes':           SECOES,
         'campos':           campos_ctx,
         'fotos_escritorio': fotos_escritorio,
-        'atuacao_gerais':   atuacao_gerais,
-        'atuacao_cards':    atuacao_cards,
+        'cards_gerais':     cards_gerais,
+        'cards_pares':      cards_pares,
     }
     return render(request, 'painel/conteudo.html', ctx)

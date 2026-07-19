@@ -30,10 +30,10 @@
       </div>
       <div class="card-body">
 
-        {% if secao == "atuacao" %}
-        <!-- ── Título/intro normais + os 4 cards lado a lado em grade compacta ── -->
+        {% if secao == "atuacao" or secao == "diferenciais" %}
+        <!-- ── Título/texto gerais + os cards lado a lado em grade compacta ── -->
         <div class="form-grid">
-          {% for campo in atuacao_gerais %}
+          {% for campo in cards_gerais %}
             {% if campo.tipo == "titulo" %}
               <div class="form-group">
                 <label>{{ campo.label }}</label>
@@ -50,9 +50,9 @@
         </div>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.25rem;min-width:0;">
-          {% for par in atuacao_cards %}
+          {% for par in cards_pares %}
             <div style="border:1px solid var(--border);border-radius:6px;padding:1rem;background:#fafaf9;min-width:0;">
-              <span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:.75rem;">Card {{ forloop.counter }}</span>
+              <span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:.75rem;">{% if secao == "atuacao" %}Card {{ forloop.counter }}{% else %}Item {{ forloop.counter }}{% endif %}</span>
               {% for campo in par %}
                 <div class="form-group" style="margin-bottom:.6rem;">
                   <label>{{ campo.label }}</label>
