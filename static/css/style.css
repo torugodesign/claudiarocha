@@ -789,6 +789,10 @@ ul { list-style: none; }
   opacity: 0.85;
   max-width: 540px;
 }
+.atuacao__intro strong {
+  color: var(--off-white);
+  font-weight: 600;
+}
 
 /* ── Cards empilháveis ── */
 .atuacao__stack {
@@ -959,6 +963,10 @@ ul { list-style: none; }
   text-align: left;
   width: 100%;
 }
+.equipe__text strong {
+  color: var(--grafite);
+  font-weight: 600;
+}
 .equipe__text-col2 {
   display: block;
   break-before: column;
@@ -1082,6 +1090,10 @@ ul { list-style: none; }
   color: var(--pedra);
   padding-top: .4rem;
 }
+.estrutura__text strong {
+  color: var(--off-white);
+  font-weight: 600;
+}
 
 /* ════════════════════════════════════════
    DIFERENCIAIS
@@ -1144,6 +1156,10 @@ ul { list-style: none; }
   color: rgba(224, 224, 222, 0.75);
   line-height: 1.8;
   margin-bottom: var(--space-md);
+}
+.diferenciais__text strong {
+  color: #fff;
+  font-weight: 600;
 }
 
 .diferenciais__item {
@@ -1673,6 +1689,10 @@ ul { list-style: none; }
   line-height: 1.75;
   max-width: 620px;
   margin-top: 1.5rem;
+}
+.contato__intro strong {
+  color: var(--off-white);
+  font-weight: 600;
 }
 
 .contato__grid {
