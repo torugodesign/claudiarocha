@@ -7,10 +7,10 @@
 {% endblock %}
 
 {% block content %}
-<div style="display:grid;grid-template-columns:200px 1fr;gap:1.5rem;align-items:start;">
+<div class="split-200-1fr">
 
   <!-- Nav entre seções -->
-  <div style="position:sticky;top:1rem;background:var(--white);border:1px solid var(--border);border-radius:6px;padding:.6rem .5rem;">
+  <div class="secoes-nav-wrap" style="position:sticky;top:1rem;background:var(--white);border:1px solid var(--border);border-radius:6px;padding:.6rem .5rem;">
     <p style="font-size:.6rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:#bbb;padding:.2rem .5rem .5rem;">Seções do site</p>
     {% for slug, info in secoes.items %}
       <a href="/painel/conteudo/{{ slug }}/"
@@ -49,7 +49,7 @@
           {% endfor %}
         </div>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.25rem;min-width:0;">
+        <div class="grid-2col" style="margin-top:1.25rem;min-width:0;">
           {% for par in cards_pares %}
             <div style="border:1px solid var(--border);border-radius:6px;padding:1rem;background:#fafaf9;min-width:0;">
               <span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:.75rem;">{% if secao == "atuacao" %}Card {{ forloop.counter }}{% else %}Item {{ forloop.counter }}{% endif %}</span>

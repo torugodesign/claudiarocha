@@ -460,6 +460,24 @@
     }
     .secao-card:hover .secao-card__arrow { opacity: 1; }
 
+    /* ── LAYOUTS COMPARTILHADOS (duas colunas) ── */
+    .split-200-1fr { display: grid; grid-template-columns: 200px 1fr; gap: 1.5rem; align-items: start; }
+    .split-main-aside { display: grid; grid-template-columns: 1fr 300px; gap: 1.5rem; align-items: start; }
+    .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .stack-col { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    /* ── MENU MOBILE (hamburguer) ── */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: .4rem;
+      margin-right: .5rem;
+    }
+    .menu-toggle svg { width: 22px; height: 22px; color: var(--text); }
+    .sidebar__overlay { display: none; }
+
     /* ── CONTEUDO NAV ── */
     .secao-nav-item {
       display: flex;
@@ -488,6 +506,69 @@
       margin-top: 1px;
     }
     .secao-nav-item.active .secao-nav-desc { color: rgba(67,42,53,.5); }
+
+    /* ══════════════════════════════════════════════════════
+       MOBILE
+       ══════════════════════════════════════════════════════ */
+    @media (max-width: 860px) {
+      .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+
+      /* Sidebar vira gaveta (off-canvas) */
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform .25s ease;
+        width: min(var(--sidebar-w), 82vw);
+        z-index: 200;
+      }
+      .sidebar.is-open { transform: translateX(0); }
+      .sidebar__overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,.4);
+        z-index: 150;
+      }
+      .sidebar__overlay.is-open { display: block; }
+
+      .main { margin-left: 0; }
+
+      .topbar { padding: 0 1rem; }
+      .topbar__title { font-size: .82rem; }
+      .topbar__actions { gap: .5rem; }
+      .topbar__actions .btn-sm { padding: .3rem .6rem; font-size: .68rem; }
+
+      .content { padding: 1rem; }
+
+      .stats-grid { grid-template-columns: 1fr; }
+      .quick-actions { grid-template-columns: 1fr; }
+
+      /* Layouts de duas colunas viram uma só, empilhada */
+      .split-200-1fr { grid-template-columns: 1fr; }
+      .split-main-aside { grid-template-columns: 1fr; }
+      .grid-2col { grid-template-columns: 1fr; }
+
+      /* Nav de seções (conteúdo do site) vira tira horizontal roladável
+         em vez de lista vertical fixa — evita empurrar o formulário pra
+         baixo da tela */
+      .secoes-nav-wrap {
+        position: static !important;
+        display: flex;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: .4rem;
+        padding: .5rem !important;
+      }
+      .secoes-nav-wrap .secao-nav-item {
+        flex: 0 0 auto;
+        margin: 0;
+        white-space: nowrap;
+      }
+      .secoes-nav-wrap .secao-nav-desc { display: none; }
+
+      /* Tabelas — reduz densidade para caber melhor no scroll horizontal */
+      td, thead th { padding: .55rem .65rem; font-size: .76rem; }
+      .td-title { max-width: 200px; }
+    }
   </style>
 </head>
 <body>
@@ -557,9 +638,16 @@
     </div>
   </aside>
 
+  <div class="sidebar__overlay" id="sidebarOverlay"></div>
+
   <main class="main">
     <div class="topbar">
-      <span class="topbar__title">{% block topbar_title %}Painel{% endblock %}</span>
+      <div style="display:flex;align-items:center;min-width:0;">
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <span class="topbar__title">{% block topbar_title %}Painel{% endblock %}</span>
+      </div>
       <div class="topbar__actions">{% block topbar_actions %}{% endblock %}</div>
     </div>
 
@@ -572,6 +660,26 @@
       {% block content %}{% endblock %}
     </div>
   </main>
+
+  <script>
+    (function () {
+      const sidebar = document.querySelector('.sidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      const toggle  = document.getElementById('menuToggle');
+      if (!sidebar || !overlay || !toggle) return;
+
+      function setOpen(open) {
+        sidebar.classList.toggle('is-open', open);
+        overlay.classList.toggle('is-open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        document.body.style.overflow = open ? 'hidden' : '';
+      }
+      toggle.addEventListener('click', () => setOpen(!sidebar.classList.contains('is-open')));
+      overlay.addEventListener('click', () => setOpen(false));
+      // Fecha ao navegar para outra seção pelo menu (mobile)
+      sidebar.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+    })();
+  </script>
 
 </body>
 </html>
