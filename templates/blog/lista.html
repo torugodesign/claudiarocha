@@ -304,6 +304,29 @@
       .blog-card { border-right: none !important; padding-left: 0 !important; }
       .blog-hero__title { font-size: 2.6rem; }
     }
+    @media (max-width: 640px) {
+      /* No mobile o texto ocupa a largura toda (não sobra espaço "livre"
+         ao lado pra foto ficar nítida), então o efeito de borrão+revelação
+         não funciona — a foto vira uma faixa própria acima do texto,
+         mostrando o rosto inteiro, com o texto num fundo sólido embaixo */
+      .blog-hero { padding: 0 0 3rem; }
+      .blog-hero__bg {
+        position: relative;
+        inset: auto;
+        height: 240px;
+        margin-top: 72px; /* espaço pra não ficar atrás do menu fixo */
+      }
+      .blog-hero__bg-img--blur { display: none; }
+      .blog-hero__bg-img--sharp {
+        -webkit-mask-image: none;
+        mask-image: none;
+        object-position: center 22%;
+      }
+      .blog-hero__scrim { display: none; }
+      .blog-hero .container { padding-top: 2rem; }
+      .blog-hero__title { font-size: 2.15rem; line-height: 1.05; }
+      .blog-hero__sub { font-size: .85rem; }
+    }
   </style>
 </head>
 <body class="blog-pg">

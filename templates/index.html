@@ -39,7 +39,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Cormorant Garamond: fonte dos itálicos / citações -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260720c" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260720d" />
 
   <!-- Dados estruturados (Schema.org) — ajuda o Google a entender o negócio -->
   <script type="application/ld+json">
@@ -266,7 +266,7 @@
         <div class="sobre__tag reveal">sobre</div>
 
         <h2 class="sobre__title reveal">
-          {% if c.sobre_titulo %}{{ c.sobre_titulo.titulo }}{% else %}A justiça não é apenas um resultado.<br>É a retomada da <em>sua dignidade.</em>{% endif %}
+          {% if c.sobre_titulo %}{{ c.sobre_titulo.titulo }}{% else %}A justiça não é apenas um resultado.<br><span class="sobre__title-destaque">É a retomada<br>da <em>sua dignidade.</em></span>{% endif %}
         </h2>
 
         <div class="sobre__right">
@@ -278,7 +278,10 @@
         </div>
 
         <div class="sobre__credencial reveal">
-          <span class="sobre__rodape">{% if c.sobre_rodape %}{{ c.sobre_rodape.titulo }}{% else %}35 anos de atuação{% endif %}</span>
+          <div class="sobre__credencial-num">
+            <span class="sobre__numero">{% if c.sobre_credencial_num %}{{ c.sobre_credencial_num.titulo }}{% else %}35{% endif %}</span>
+            <span class="sobre__label">{% if c.sobre_credencial_label %}{{ c.sobre_credencial_label.titulo }}{% else %}anos de atuação{% endif %}</span>
+          </div>
           <a href="#contato" class="btn btn--vinho-outline">{% if c.sobre_cta %}{{ c.sobre_cta.titulo }}{% else %}Agende um atendimento{% endif %}</a>
         </div>
 

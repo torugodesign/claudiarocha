@@ -702,6 +702,12 @@ ul { list-style: none; }
   color: var(--vinho);
   font-size: 1.15em;
 }
+/* "É a retomada da sua dignidade" — levemente maior que a 1ª linha,
+   pra dar um destaque sutil sem competir com o <em> interno */
+.sobre__title-destaque {
+  display: inline-block;
+  font-size: 1.1em;
+}
 
 .sobre__paragrafos { min-width: 0; }
 
@@ -726,11 +732,23 @@ ul { list-style: none; }
   padding-top: 1.5rem;
   border-top: 1px solid rgba(35, 36, 37, 0.15);
 }
-.sobre__rodape {
+.sobre__credencial-num {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.sobre__numero {
   font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 5rem;
+  font-weight: 300;
+  line-height: 1;
   color: var(--vinho);
+}
+.sobre__label {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #666;
 }
 
 /* ════════════════════════════════════════

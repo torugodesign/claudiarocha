@@ -22,8 +22,8 @@ SECOES = {
             {'chave': 'sobre_titulo',  'label': 'Título principal', 'tipo': 'titulo'},
             {'chave': 'sobre_texto',   'label': 'Texto', 'tipo': 'texto',
              'hint': 'Use linhas em branco para separar parágrafos.'},
-            {'chave': 'sobre_rodape',  'label': 'Texto auxiliar de rodapé', 'tipo': 'titulo',
-             'placeholder': 'Ex: 35 anos de atuação'},
+            {'chave': 'sobre_credencial_num',   'label': 'Número', 'tipo': 'titulo', 'placeholder': 'Ex: 35'},
+            {'chave': 'sobre_credencial_label', 'label': 'Frase', 'tipo': 'titulo', 'placeholder': 'Ex: anos de atuação'},
             {'chave': 'sobre_cta',     'label': 'Texto do botão', 'tipo': 'titulo',
              'placeholder': 'Ex: Agende um atendimento'},
             {'chave': 'sobre_imagem', 'label': 'Foto da Cláudia', 'tipo': 'imagem'},
@@ -382,6 +382,12 @@ def painel_conteudo_secao(request, secao):
         pares = campos_ctx[2:]
         cards_pares = [pares[i:i + 2] for i in range(0, len(pares), 2)]
 
+    # Sobre: acesso por chave, pra exibir número + frase lado a lado no
+    # mesmo formulário (o resto da seção continua no layout padrão)
+    sobre_campos = {}
+    if secao == 'sobre':
+        sobre_campos = {c['chave']: c for c in campos_ctx if c.get('chave')}
+
     ctx = {
         'secao':            secao,
         'secao_label':      SECOES[secao]['label'],
@@ -390,5 +396,6 @@ def painel_conteudo_secao(request, secao):
         'fotos_escritorio': fotos_escritorio,
         'cards_gerais':     cards_gerais,
         'cards_pares':      cards_pares,
+        'sobre_campos':     sobre_campos,
     }
     return render(request, 'painel/conteudo.html', ctx)
