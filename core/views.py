@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 from blog.models import Artigo
 from core.models import ConteudoSite
@@ -102,6 +103,17 @@ SECOES = {
 def _carregar_conteudo():
     """Retorna dict {chave: objeto ConteudoSite} para uso no template."""
     return {c.chave: c for c in ConteudoSite.objects.all()}
+
+
+def robots_txt(request):
+    linhas = [
+        'User-agent: *',
+        'Allow: /',
+        'Disallow: /painel/',
+        '',
+        f'Sitemap: {request.scheme}://{request.get_host()}/sitemap.xml',
+    ]
+    return HttpResponse('\n'.join(linhas), content_type='text/plain')
 
 
 def home(request):

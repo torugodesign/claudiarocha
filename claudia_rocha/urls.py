@@ -2,9 +2,19 @@ from django.urls import path, include, reverse_lazy
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from django.contrib.sitemaps.views import sitemap
 from core import views as core_views
+from core.sitemaps import StaticViewSitemap, ArtigoSitemap
+
+sitemaps = {
+    'estatico': StaticViewSitemap,
+    'artigos':  ArtigoSitemap,
+}
 
 urlpatterns = [
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
+    path('robots.txt', core_views.robots_txt, name='robots_txt'),
+
     path('blog/', include('blog.urls')),
 
     # Autenticação do painel

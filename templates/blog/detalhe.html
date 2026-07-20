@@ -5,10 +5,53 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ artigo.titulo }} — Cláudia Rocha Advocacia</title>
+  <meta name="description" content="{{ artigo.resumo }}" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://claudiarochatrabalhista.com.br/blog/{{ artigo.slug }}/" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Cláudia Rocha Advocacia" />
+  <meta property="og:title" content="{{ artigo.titulo }}" />
+  <meta property="og:description" content="{{ artigo.resumo }}" />
+  <meta property="og:url" content="https://claudiarochatrabalhista.com.br/blog/{{ artigo.slug }}/" />
+  {% if artigo.imagem_capa %}<meta property="og:image" content="https://claudiarochatrabalhista.com.br{{ artigo.imagem_capa.url }}" />{% endif %}
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="article:published_time" content="{{ artigo.criado_em|date:'c' }}" />
+  <meta property="article:modified_time" content="{{ artigo.atualizado_em|date:'c' }}" />
+
+  <link rel="icon" href="{% static 'img/favicon.ico' %}" sizes="any" />
+  <link rel="icon" type="image/png" href="{% static 'img/favicon-32x32.png' %}" sizes="32x32" />
+  <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "{{ artigo.titulo|escapejs }}",
+    "description": "{{ artigo.resumo|escapejs }}",
+    "datePublished": "{{ artigo.criado_em|date:'c' }}",
+    "dateModified": "{{ artigo.atualizado_em|date:'c' }}",
+    {% if artigo.imagem_capa %}"image": "https://claudiarochatrabalhista.com.br{{ artigo.imagem_capa.url }}",{% endif %}
+    "author": {
+      "@type": "Person",
+      "name": "Cláudia Rocha"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Cláudia Rocha Advocacia",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://claudiarochatrabalhista.com.br{% static 'img/icon-512.png' %}"
+      }
+    },
+    "mainEntityOfPage": "https://claudiarochatrabalhista.com.br/blog/{{ artigo.slug }}/"
+  }
+  </script>
   <style>
     .artigo-page { background: var(--off-white); min-height:100vh; padding:8rem 0 6rem; }
     .artigo-page .container { max-width:760px; }

@@ -1,0 +1,13 @@
+{
+  "name": "Cláudia Rocha Advocacia",
+  "short_name": "Cláudia Rocha",
+  "description": "Advogada trabalhista em Araraquara/SP — 35 anos de atuação no Direito do Trabalho.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#232425",
+  "theme_color": "#232425",
+  "icons": [
+    { "src": "/static/img/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/static/img/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
