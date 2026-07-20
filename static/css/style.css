@@ -1656,7 +1656,15 @@ ul { list-style: none; }
 }
 
 .contato__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 3rem;
   margin-bottom: var(--space-lg);
+}
+.contato__header-left {
+  flex: 1;
+  min-width: 0;
 }
 .contato__tag {
   font-size: 0.65rem;
@@ -1688,8 +1696,8 @@ ul { list-style: none; }
   font-size: clamp(.85rem, 1.05vw, 1rem);
   color: var(--pedra);
   line-height: 1.75;
-  max-width: 620px;
-  margin-top: 1.5rem;
+  flex: 0 0 380px;
+  margin-top: 0;
 }
 .contato__intro strong {
   color: var(--off-white);
@@ -1919,6 +1927,19 @@ ul { list-style: none; }
   .diferenciais__inner,
   .contato__grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Contato — título e texto auxiliar voltam a empilhar no mobile
+     (no desktop ficam lado a lado) */
+  .contato__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .contato__intro {
+    flex: none;
+    max-width: 100%;
+    margin-top: 1.5rem;
   }
 
   /* Contato — formulário antes das informações de atendimento */

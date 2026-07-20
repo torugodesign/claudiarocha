@@ -39,7 +39,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Cormorant Garamond: fonte dos itálicos / citações -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260720b" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260720c" />
 
   <!-- Dados estruturados (Schema.org) — ajuda o Google a entender o negócio -->
   <script type="application/ld+json">
@@ -708,8 +708,10 @@
   <section class="contato" id="contato">
     <div class="container">
       <div class="contato__header">
-        <div class="contato__tag reveal">contato</div>
-        <h2 class="contato__title reveal">{% if c.contato_titulo %}{{ c.contato_titulo.titulo }}{% else %}Inicie a retomada<br />do <em>seu direito.</em>{% endif %}</h2>
+        <div class="contato__header-left">
+          <div class="contato__tag reveal">contato</div>
+          <h2 class="contato__title reveal">{% if c.contato_titulo %}{{ c.contato_titulo.titulo }}{% else %}Inicie a retomada<br />do <em>seu direito.</em>{% endif %}</h2>
+        </div>
         {% if c.contato_texto %}<p class="contato__intro reveal">{{ c.contato_texto.texto }}</p>{% else %}<p class="contato__intro reveal">Se uma relação de trabalho feriu a sua dignidade, <strong>o primeiro passo é organizar a sua história</strong> e entender quais caminhos jurídicos podem ser avaliados. Envie sua mensagem para o Escritório Cláudia Rocha e inicie uma <strong>análise responsável do seu caso.</strong></p>{% endif %}
       </div>
       <div class="contato__grid">
