@@ -39,7 +39,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Cormorant Garamond: fonte dos itálicos / citações -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260720e" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260720g" />
 
   <!-- Dados estruturados (Schema.org) — ajuda o Google a entender o negócio -->
   <script type="application/ld+json">
@@ -449,7 +449,7 @@
         <div class="diferenciais__right">
           <div class="diferenciais__item reveal">
             <div class="diferenciais__icon">
-              <svg viewBox="0 0 100 95" aria-hidden="true"><use href="#cr-symbol"/></svg>
+              <img src="{% static 'img/simbolo.png' %}" alt="" aria-hidden="true" />
             </div>
             <div>
               <h3>{% if c.dif_i1_titulo %}{{ c.dif_i1_titulo.titulo }}{% else %}Coragem com técnica{% endif %}</h3>

@@ -1186,6 +1186,7 @@ ul { list-style: none; }
   margin-top: 2px;
 }
 .diferenciais__icon svg { width: 100%; height: 100%; }
+.diferenciais__icon img { width: 100%; height: 100%; object-fit: contain; }
 
 .diferenciais__item h3 {
   font-family: var(--font-display);
@@ -1295,16 +1296,23 @@ ul { list-style: none; }
   gap: 0.75rem;
 }
 @media (max-width: 640px) {
-  /* Cards menores no mobile para caber mais de um por vez na tela,
-     em vez de um único card quase do tamanho da tela toda */
+  /* Cards bem menores no mobile — mostra mais de uma avaliação por vez
+     em vez de quase uma única ocupando a tela toda */
+  .avaliacoes__track { gap: 0.75rem; }
   .avaliacoes__card {
-    flex: 0 0 72vw;
-    width: 72vw;
-    max-width: 260px;
-    padding: 1.15rem;
-    gap: 0.5rem;
+    flex: 0 0 58vw;
+    width: 58vw;
+    max-width: 210px;
+    padding: 0.85rem;
+    gap: 0.4rem;
+    border-radius: 5px;
   }
-  .avaliacoes__text { font-size: 0.85rem; line-height: 1.6; }
+  .avaliacoes__card-top { gap: 0.5rem; }
+  .avaliacoes__avatar { width: 30px; height: 30px; font-size: 0.8rem; }
+  .avaliacoes__meta strong { font-size: 0.8rem; }
+  .avaliacoes__google { width: 16px; height: 16px; }
+  .avaliacoes__stars-sm { font-size: 0.75rem; }
+  .avaliacoes__text { font-size: 0.72rem; line-height: 1.5; }
 }
 .avaliacoes__card-top {
   display: flex;
