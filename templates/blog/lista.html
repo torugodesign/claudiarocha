@@ -335,7 +335,10 @@
     <a href="/" class="nav__logo">
       <img src="{% static 'img/logo_horizontal.png' %}" alt="Cláudia Rocha — Direito do Trabalho" class="nav__logo-img" />
     </a>
-    <ul class="nav__menu">
+    <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navMenu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav__menu" id="navMenu">
       <li><a href="/#sobre"        class="nav__link">Sobre</a></li>
       <li><a href="/#atuacao"      class="nav__link">Atuação</a></li>
       <li><a href="/#diferenciais" class="nav__link">Diferenciais</a></li>
@@ -418,5 +421,6 @@
     </div>
   </div>
 
+  <script src="{% static 'js/script.js' %}?v=20260720a"></script>
 </body>
 </html>
