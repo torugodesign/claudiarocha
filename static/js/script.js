@@ -74,10 +74,15 @@ const muteIcon    = document.getElementById('muteIcon');
 const soundIcon   = document.getElementById('soundIcon');
 
 if (video) {
+  // Fica true assim que o usuário ativa o som manualmente — a partir daí
+  // forcePlay() não deve mais silenciar o vídeo (senão o loop remuta
+  // sozinho toda vez que o navegador reavalia o buffer no reinício).
+  let somAtivadoPeloUsuario = false;
+
   // Força autoplay em navegadores exigentes (ex: Safari/iOS) — precisa de
   // muted=true via propriedade JS (não só o atributo) antes do play().
   function forcePlay() {
-    video.muted = true;
+    if (!somAtivadoPeloUsuario) video.muted = true;
     const p = video.play();
     if (p && typeof p.catch === 'function') p.catch(() => {});
   }
@@ -130,6 +135,7 @@ if (video) {
   // Botão mute / unmute — inicia mudo, usuário ativa som
   soundBtn?.addEventListener('click', () => {
     video.muted = !video.muted;
+    somAtivadoPeloUsuario = !video.muted;
     muteIcon.style.display  = video.muted ? '' : 'none';
     soundIcon.style.display = video.muted ? 'none' : '';
   });
