@@ -1120,11 +1120,11 @@ ul { list-style: none; }
   mask-image: url('/static/img/PATTERN_03.png');
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  -webkit-mask-position: right bottom;
-  mask-position: right bottom;
-  -webkit-mask-size: 340px auto;
-  mask-size: 340px auto;
-  opacity: 0.035;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  opacity: 0.02;
   pointer-events: none;
 }
 
@@ -1676,12 +1676,11 @@ ul { list-style: none; }
 .contato__header {
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
-  gap: 3rem;
+  justify-content: flex-start;
   margin-bottom: var(--space-lg);
 }
 .contato__header-left {
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 0;
 }
 .contato__tag {
@@ -1714,8 +1713,11 @@ ul { list-style: none; }
   font-size: clamp(.85rem, 1.05vw, 1rem);
   color: var(--pedra);
   line-height: 1.75;
-  flex: 0 0 380px;
+  flex: 0 1 360px;
   margin-top: 0;
+  margin-left: 2rem;
+  padding-left: 2rem;
+  border-left: 1px solid rgba(224, 224, 222, 0.15);
 }
 .contato__intro strong {
   color: var(--off-white);
@@ -1958,6 +1960,9 @@ ul { list-style: none; }
     flex: none;
     max-width: 100%;
     margin-top: 1.5rem;
+    margin-left: 0;
+    padding-left: 0;
+    border-left: none;
   }
 
   /* Contato — formulário antes das informações de atendimento */
