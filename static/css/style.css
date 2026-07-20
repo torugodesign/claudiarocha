@@ -1100,11 +1100,13 @@ ul { list-style: none; }
   background-color: var(--white);
   -webkit-mask-image: url('/static/img/PATTERN_03.png');
   mask-image: url('/static/img/PATTERN_03.png');
-  -webkit-mask-repeat: repeat;
-  mask-repeat: repeat;
-  -webkit-mask-size: 480px auto;
-  mask-size: 480px auto;
-  opacity: 0.04;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: right bottom;
+  mask-position: right bottom;
+  -webkit-mask-size: 340px auto;
+  mask-size: 340px auto;
+  opacity: 0.035;
   pointer-events: none;
 }
 
@@ -1156,9 +1158,7 @@ ul { list-style: none; }
   gap: 1.5rem;
   align-items: flex-start;
   padding: 1.75rem 0;
-  border-bottom: 1px solid rgba(224, 224, 222, 0.1);
 }
-.diferenciais__item:last-child { border-bottom: none; }
 
 .diferenciais__icon {
   flex-shrink: 0;
