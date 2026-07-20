@@ -14,10 +14,15 @@
   <meta property="og:title" content="{{ artigo.titulo }}" />
   <meta property="og:description" content="{{ artigo.resumo }}" />
   <meta property="og:url" content="https://claudiarochatrabalhista.com.br/blog/{{ artigo.slug }}/" />
-  {% if artigo.imagem_capa %}<meta property="og:image" content="https://claudiarochatrabalhista.com.br{{ artigo.imagem_capa.url }}" />{% endif %}
+  {% if artigo.imagem_capa %}<meta property="og:image" content="https://claudiarochatrabalhista.com.br{{ artigo.imagem_capa.url }}" />{% else %}<meta property="og:image" content="https://claudiarochatrabalhista.com.br{% static 'img/og-share.jpg' %}" />{% endif %}
   <meta property="og:locale" content="pt_BR" />
   <meta property="article:published_time" content="{{ artigo.criado_em|date:'c' }}" />
   <meta property="article:modified_time" content="{{ artigo.atualizado_em|date:'c' }}" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ artigo.titulo }}" />
+  <meta name="twitter:description" content="{{ artigo.resumo }}" />
+  {% if artigo.imagem_capa %}<meta name="twitter:image" content="https://claudiarochatrabalhista.com.br{{ artigo.imagem_capa.url }}" />{% else %}<meta name="twitter:image" content="https://claudiarochatrabalhista.com.br{% static 'img/og-share.jpg' %}" />{% endif %}
 
   <link rel="icon" href="{% static 'img/favicon.ico' %}" sizes="any" />
   <link rel="icon" type="image/png" href="{% static 'img/favicon-32x32.png' %}" sizes="32x32" />
@@ -50,6 +55,18 @@
       }
     },
     "mainEntityOfPage": "https://claudiarochatrabalhista.com.br/blog/{{ artigo.slug }}/"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Início", "item": "https://claudiarochatrabalhista.com.br/"},
+      {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://claudiarochatrabalhista.com.br/blog/"},
+      {"@type": "ListItem", "position": 3, "name": "{{ artigo.titulo|escapejs }}", "item": "https://claudiarochatrabalhista.com.br/blog/{{ artigo.slug }}/"}
+    ]
   }
   </script>
   <style>

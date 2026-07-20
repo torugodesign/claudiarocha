@@ -13,6 +13,10 @@ class StaticViewSitemap(Sitemap):
     def location(self, item):
         return reverse(item)
 
+    def lastmod(self, item):
+        ultimo = Artigo.objects.filter(publicado=True).order_by('-atualizado_em').first()
+        return ultimo.atualizado_em if ultimo else None
+
 
 class ArtigoSitemap(Sitemap):
     priority = 0.7
