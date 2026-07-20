@@ -1957,6 +1957,13 @@ ul { list-style: none; }
     grid-template-columns: 1fr;
   }
 
+  /* Diferenciais — botão "Fale conosco" centralizado no mobile */
+  .diferenciais__left .btn {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+  }
+
   /* Contato — título e texto auxiliar voltam a empilhar no mobile
      (no desktop ficam lado a lado) */
   .contato__header {
