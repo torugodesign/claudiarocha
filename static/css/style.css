@@ -941,7 +941,7 @@ ul { list-style: none; }
   color: var(--grafite);
   letter-spacing: .02em;
   min-height: 1.4em;
-  text-align: center;
+  text-align: left;
 }
 
 /* Linha abaixo da foto de grupo: galeria de retratos (esquerda) +
@@ -962,7 +962,7 @@ ul { list-style: none; }
 .equipe__frame-galeria {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 4;
   border-radius: 4px;
   overflow: hidden;
   background: rgba(67, 42, 53, 0.07);
