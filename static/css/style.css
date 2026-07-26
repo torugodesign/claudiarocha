@@ -1794,6 +1794,10 @@ ul { list-style: none; }
   padding: 1.5rem 0;
   border-bottom: 1px solid rgba(192, 191, 191, 0.12);
 }
+/* Alinha o rótulo do primeiro item com o rótulo "Nome" do formulário ao lado */
+.contato__item:first-child {
+  padding-top: 0;
+}
 .contato__label {
   font-size: 0.65rem;
   letter-spacing: 0.18em;
@@ -1809,6 +1813,17 @@ ul { list-style: none; }
 }
 .contato__link { transition: color var(--transition); }
 .contato__link:hover { color: var(--pedra); }
+
+.contato__social {
+  display: flex;
+  gap: 0.9rem;
+}
+.contato__social-link {
+  color: rgba(224, 224, 222, 0.55);
+  transition: color var(--transition);
+}
+.contato__social-link:hover { color: var(--pedra); }
+.contato__social-link svg { width: 22px; height: 22px; }
 
 /* Form */
 .contato__form {
