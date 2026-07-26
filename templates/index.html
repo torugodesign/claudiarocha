@@ -39,7 +39,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Cormorant Garamond: fonte dos itálicos / citações -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260720j" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260720k" />
 
   <!-- Dados estruturados (Schema.org) — ajuda o Google a entender o negócio -->
   <script type="application/ld+json">
@@ -370,9 +370,41 @@
           </div>
         </div>
 
-        <p class="equipe__text reveal">
-          {% if c.equipe_texto %}{{ c.equipe_texto.texto }}{% else %}Sob a liderança da Dra. Cláudia Rocha, o escritório atua com um princípio claro: <strong>cada caso precisa ser compreendido antes de ser conduzido.</strong> Por trás de um processo, existem documentos, provas, prazos, expectativas e decisões importantes.<span class="equipe__text-col2">Por isso, a equipe trabalha com organização, atenção técnica e comunicação clara em cada etapa. Mais do que movimentar processos, o compromisso é oferecer uma <strong>condução jurídica responsável.</strong></span>{% endif %}
-        </p>
+        <!-- Galeria de retratos (esquerda, troca automática) + texto empilhado (direita) -->
+        <div class="equipe__row">
+          <div class="equipe__col-galeria">
+            <div class="equipe__frame-galeria">
+              <img class="equipe__retrato-img is-active" data-nome="Adriana" src="{% static 'img/equipe/adriana.jpg' %}" alt="Adriana — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Conceição" src="{% static 'img/equipe/conceicao.jpg' %}" alt="Conceição — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Fátima" src="{% static 'img/equipe/fatima.jpg' %}" alt="Fátima — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Gabrielle" src="{% static 'img/equipe/gabrielle.jpg' %}" alt="Gabrielle — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Júlia" src="{% static 'img/equipe/julia.jpg' %}" alt="Júlia — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Karine" src="{% static 'img/equipe/karine.jpg' %}" alt="Karine — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Larissa" src="{% static 'img/equipe/larissa.jpg' %}" alt="Larissa — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Laís" src="{% static 'img/equipe/lais.jpg' %}" alt="Laís — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Lidiane" src="{% static 'img/equipe/lidiane.jpg' %}" alt="Lidiane — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Lilian" src="{% static 'img/equipe/lilian.jpg' %}" alt="Lilian — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Lucas" src="{% static 'img/equipe/lucas.jpg' %}" alt="Lucas — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Luis Henrique" src="{% static 'img/equipe/luis-henrique.jpg' %}" alt="Luis Henrique — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Luiza" src="{% static 'img/equipe/luiza.jpg' %}" alt="Luiza — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Maira" src="{% static 'img/equipe/maira.jpg' %}" alt="Maira — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Patrícia" src="{% static 'img/equipe/patricia.jpg' %}" alt="Patrícia — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Roberval" src="{% static 'img/equipe/roberval.jpg' %}" alt="Roberval — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Tarik" src="{% static 'img/equipe/tarik.jpg' %}" alt="Tarik — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Valkiria" src="{% static 'img/equipe/valkiria.jpg' %}" alt="Valkiria — Escritório Cláudia Rocha" loading="lazy"/>
+            </div>
+            <div class="equipe__nome" id="equipeNome">Adriana</div>
+          </div>
+
+          <div class="equipe__col-texto">
+            {% if c.equipe_texto %}
+              <p class="equipe__text-stack reveal">{{ c.equipe_texto.texto }}</p>
+            {% else %}
+              <p class="equipe__text-stack reveal">Sob a liderança da Dra. Cláudia Rocha, o escritório atua com um princípio claro: <strong>cada caso precisa ser compreendido antes de ser conduzido.</strong> Por trás de um processo, existem documentos, provas, prazos, expectativas e decisões importantes.</p>
+              <p class="equipe__text-stack reveal">Por isso, a equipe trabalha com organização, atenção técnica e comunicação clara em cada etapa. Mais do que movimentar processos, o compromisso é oferecer uma <strong>condução jurídica responsável.</strong></p>
+            {% endif %}
+          </div>
+        </div>
 
       </div>
     </div>
@@ -797,7 +829,7 @@
     <span class="whatsapp-float__tooltip">Fale conosco</span>
   </a>
 
-  <script src="{% static 'js/script.js' %}?v=20260720c"></script>
+  <script src="{% static 'js/script.js' %}?v=20260720d"></script>
 </body>
 </html>
 

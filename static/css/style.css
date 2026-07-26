@@ -941,6 +941,46 @@ ul { list-style: none; }
   color: var(--grafite);
   letter-spacing: .02em;
   min-height: 1.4em;
+  text-align: center;
+}
+
+/* Linha abaixo da foto de grupo: galeria de retratos (esquerda) +
+   texto empilhado (direita) */
+.equipe__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  width: 100%;
+}
+.equipe__col-galeria {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.equipe__frame-galeria {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  overflow: hidden;
+  background: rgba(67, 42, 53, 0.07);
+}
+.equipe__col-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.equipe__text-stack {
+  font-size: 1.02rem;
+  line-height: 1.85;
+  color: #444;
+  text-align: left;
+}
+.equipe__text-stack strong {
+  color: var(--grafite);
+  font-weight: 500;
 }
 
 /* ── Título + texto ── */
@@ -2072,6 +2112,7 @@ ul { list-style: none; }
   .equipe__layout { gap: 2.5rem; }
   .equipe__text { columns: 1; }
   .equipe__text-col2 { display: inline; break-before: auto; }
+  .equipe__row { grid-template-columns: 1fr; gap: 1.75rem; }
   .estrutura__stage { height: clamp(200px, 62vw, 320px); }
   .estrutura__slide { width: clamp(200px, 62vw, 340px); }
   .estrutura__footer { grid-template-columns: 1fr; gap: 1.5rem; }
