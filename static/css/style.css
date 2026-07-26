@@ -978,7 +978,7 @@ ul { list-style: none; }
   align-self: flex-start;
   margin-top: auto;
   /* Alinha com a base da FOTO, não com o nome que fica logo abaixo dela */
-  margin-bottom: 2.6rem;
+  margin-bottom: 4.6rem;
 }
 .equipe__text-stack {
   font-size: 1.02rem;
