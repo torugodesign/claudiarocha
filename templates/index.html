@@ -359,15 +359,35 @@
           {% if c.equipe_titulo %}{{ c.equipe_titulo.titulo }}{% else %}Uma equipe preparada <br class="equipe__mobile-break"> para <br class="equipe__desktop-break"> compreender e <br class="equipe__mobile-break"> conduzir <em>a sua causa.</em>{% endif %}
         </h2>
 
-        <!-- Foto única do escritório -->
+        <!-- Retratos da equipe — troca automática com nome embaixo (script.js) -->
         <div class="equipe__col-foto">
           <div class="equipe__frame">
             {% if c.equipe_foto and c.equipe_foto.imagem %}
               <img class="equipe__retrato-img is-active" src="{{ c.equipe_foto.imagem.url }}" alt="Equipe do Escritório Cláudia Rocha" loading="lazy"/>
             {% else %}
-              <img class="equipe__retrato-img is-active" src="{% static 'img/equipe/IMG_1686.jpg' %}" alt="Equipe do Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img is-active" data-nome="Adriana" src="{% static 'img/equipe/adriana.jpg' %}" alt="Adriana — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Conceição" src="{% static 'img/equipe/conceicao.jpg' %}" alt="Conceição — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Fátima" src="{% static 'img/equipe/fatima.jpg' %}" alt="Fátima — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Gabrielle" src="{% static 'img/equipe/gabrielle.jpg' %}" alt="Gabrielle — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Júlia" src="{% static 'img/equipe/julia.jpg' %}" alt="Júlia — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Karine" src="{% static 'img/equipe/karine.jpg' %}" alt="Karine — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Larissa" src="{% static 'img/equipe/larissa.jpg' %}" alt="Larissa — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Laís" src="{% static 'img/equipe/lais.jpg' %}" alt="Laís — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Lidiane" src="{% static 'img/equipe/lidiane.jpg' %}" alt="Lidiane — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Lilian" src="{% static 'img/equipe/lilian.jpg' %}" alt="Lilian — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Lucas" src="{% static 'img/equipe/lucas.jpg' %}" alt="Lucas — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Luis Henrique" src="{% static 'img/equipe/luis-henrique.jpg' %}" alt="Luis Henrique — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Luiza" src="{% static 'img/equipe/luiza.jpg' %}" alt="Luiza — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Maira" src="{% static 'img/equipe/maira.jpg' %}" alt="Maira — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Patrícia" src="{% static 'img/equipe/patricia.jpg' %}" alt="Patrícia — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Roberval" src="{% static 'img/equipe/roberval.jpg' %}" alt="Roberval — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Tarik" src="{% static 'img/equipe/tarik.jpg' %}" alt="Tarik — Escritório Cláudia Rocha" loading="lazy"/>
+              <img class="equipe__retrato-img" data-nome="Valkiria" src="{% static 'img/equipe/valkiria.jpg' %}" alt="Valkiria — Escritório Cláudia Rocha" loading="lazy"/>
             {% endif %}
           </div>
+          {% if not c.equipe_foto or not c.equipe_foto.imagem %}
+          <div class="equipe__nome" id="equipeNome">Adriana</div>
+          {% endif %}
         </div>
 
         <p class="equipe__text reveal">
@@ -399,13 +419,12 @@
           <div class="estrutura__slide" data-i="0"><img class="estrutura__img" src="{% static 'img/escritorio/foto1.jpg' %}" alt="Escritório Cláudia Rocha — foto 1" loading="lazy"/></div>
           <div class="estrutura__slide" data-i="1"><img class="estrutura__img" src="{% static 'img/escritorio/foto2.jpg' %}" alt="Escritório Cláudia Rocha — foto 2" loading="lazy"/></div>
           <div class="estrutura__slide" data-i="2"><img class="estrutura__img" src="{% static 'img/escritorio/foto3.jpg' %}" alt="Escritório Cláudia Rocha — foto 3" loading="lazy"/></div>
-          <div class="estrutura__slide" data-i="3"><img class="estrutura__img" src="{% static 'img/escritorio/foto4.jpg' %}" alt="Escritório Cláudia Rocha — foto 4" loading="lazy"/></div>
-          <div class="estrutura__slide" data-i="4"><img class="estrutura__img" src="{% static 'img/escritorio/foto5.jpg' %}" alt="Escritório Cláudia Rocha — foto 5" loading="lazy"/></div>
-          <div class="estrutura__slide" data-i="5"><img class="estrutura__img" src="{% static 'img/escritorio/foto6.jpg' %}" alt="Escritório Cláudia Rocha — foto 6" loading="lazy"/></div>
-          <div class="estrutura__slide" data-i="6"><img class="estrutura__img" src="{% static 'img/escritorio/foto7.jpg' %}" alt="Escritório Cláudia Rocha — foto 7" loading="lazy"/></div>
-          <div class="estrutura__slide" data-i="7"><img class="estrutura__img" src="{% static 'img/escritorio/foto8.jpg' %}" alt="Escritório Cláudia Rocha — foto 8" loading="lazy"/></div>
-          <div class="estrutura__slide" data-i="8"><img class="estrutura__img" src="{% static 'img/escritorio/foto9.jpg' %}" alt="Escritório Cláudia Rocha — foto 9" loading="lazy"/></div>
-          <div class="estrutura__slide" data-i="9"><img class="estrutura__img" src="{% static 'img/escritorio/foto10.jpg' %}" alt="Escritório Cláudia Rocha — foto 10" loading="lazy"/></div>
+          <div class="estrutura__slide" data-i="3"><img class="estrutura__img" src="{% static 'img/escritorio/foto5.jpg' %}" alt="Escritório Cláudia Rocha — foto 4" loading="lazy"/></div>
+          <div class="estrutura__slide" data-i="4"><img class="estrutura__img" src="{% static 'img/escritorio/foto6.jpg' %}" alt="Escritório Cláudia Rocha — foto 5" loading="lazy"/></div>
+          <div class="estrutura__slide" data-i="5"><img class="estrutura__img" src="{% static 'img/escritorio/foto7.jpg' %}" alt="Escritório Cláudia Rocha — foto 6" loading="lazy"/></div>
+          <div class="estrutura__slide" data-i="6"><img class="estrutura__img" src="{% static 'img/escritorio/foto8.jpg' %}" alt="Escritório Cláudia Rocha — foto 7" loading="lazy"/></div>
+          <div class="estrutura__slide" data-i="7"><img class="estrutura__img" src="{% static 'img/escritorio/foto9.jpg' %}" alt="Escritório Cláudia Rocha — foto 8" loading="lazy"/></div>
+          <div class="estrutura__slide" data-i="8"><img class="estrutura__img" src="{% static 'img/escritorio/foto10.jpg' %}" alt="Escritório Cláudia Rocha — foto 9" loading="lazy"/></div>
         {% endif %}
       </div>
 
