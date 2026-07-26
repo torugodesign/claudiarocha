@@ -941,46 +941,6 @@ ul { list-style: none; }
   color: var(--grafite);
   letter-spacing: .02em;
   min-height: 1.4em;
-  text-align: center;
-}
-
-/* Linha abaixo da foto do escritório: retrato individual (retrato, à
-   esquerda) + os dois blocos de texto empilhados (à direita) */
-.equipe__row {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 2.5rem;
-  align-items: start;
-  width: 100%;
-}
-.equipe__col-retrato {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-}
-.equipe__frame-retrato {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  border-radius: 4px;
-  overflow: hidden;
-  background: rgba(67, 42, 53, 0.07);
-}
-.equipe__col-texto {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-.equipe__text-stack {
-  font-size: 1.02rem;
-  line-height: 1.85;
-  color: #444;
-  text-align: left;
-}
-.equipe__text-stack strong {
-  color: var(--grafite);
-  font-weight: 500;
 }
 
 /* ── Título + texto ── */
@@ -2112,9 +2072,6 @@ ul { list-style: none; }
   .equipe__layout { gap: 2.5rem; }
   .equipe__text { columns: 1; }
   .equipe__text-col2 { display: inline; break-before: auto; }
-  /* Retrato empilha acima do texto, centralizado e mais estreito */
-  .equipe__row { grid-template-columns: 1fr; gap: 1.75rem; }
-  .equipe__col-retrato { max-width: 220px; margin: 0 auto; }
   .estrutura__stage { height: clamp(200px, 62vw, 320px); }
   .estrutura__slide { width: clamp(200px, 62vw, 340px); }
   .estrutura__footer { grid-template-columns: 1fr; gap: 1.5rem; }

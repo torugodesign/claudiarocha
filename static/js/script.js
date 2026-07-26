@@ -191,7 +191,7 @@ document.querySelectorAll('.reveal').forEach(el => {
 
 // ── EQUIPE: retrato troca a cada 1.3s (Web Worker — não throttled em aba inativa) ──
 (function () {
-  const retratos = Array.from(document.querySelectorAll('.equipe__frame-retrato .equipe__retrato-img'));
+  const retratos = Array.from(document.querySelectorAll('.equipe__retrato-img'));
   const nomeEl   = document.getElementById('equipeNome');
   if (retratos.length < 2 || !nomeEl) return;
 
