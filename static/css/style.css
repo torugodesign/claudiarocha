@@ -948,9 +948,9 @@ ul { list-style: none; }
    texto empilhado (direita) */
 .equipe__row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 260px 1fr;
   gap: 2.5rem;
-  align-items: center;
+  align-items: start;
   width: 100%;
 }
 .equipe__col-galeria {
