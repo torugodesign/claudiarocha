@@ -950,7 +950,7 @@ ul { list-style: none; }
   display: grid;
   grid-template-columns: 300px 1fr;
   gap: 2.5rem;
-  align-items: start;
+  align-items: stretch;
   width: 100%;
 }
 .equipe__col-galeria {
@@ -970,7 +970,13 @@ ul { list-style: none; }
 .equipe__col-texto {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 1.5rem;
+  max-width: 480px;
+}
+.equipe__col-texto .btn {
+  align-self: flex-start;
+  margin-top: auto;
 }
 .equipe__text-stack {
   font-size: 1.02rem;

@@ -39,7 +39,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Cormorant Garamond: fonte dos itálicos / citações -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260720s" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260720t" />
 
   <!-- Dados estruturados (Schema.org) — ajuda o Google a entender o negócio -->
   <script type="application/ld+json">
@@ -249,7 +249,7 @@
   <!-- HERO — texto de apoio abaixo do vídeo -->
   <div class="hero-copy">
     <div class="container hero-copy__inner">
-      <a href="#contato" class="hero-copy__cta">Inicie a retomada<br>do <em>seu direito</em></a>
+      <a href="#contato" class="hero-copy__cta">Agende um atendimento<br><em>jurídico e eficaz</em></a>
       <div class="hero-copy__text">
         <p>Causas trabalhistas envolvem mais do que documentos. Envolvem dignidade, ruptura, prova e reconstrução.</p>
         <p>No Escritório Cláudia Rocha, sua história é conduzida com escuta, coragem e rigor técnico.</p>
@@ -278,7 +278,7 @@
 
         <div class="sobre__credencial reveal">
           <div class="sobre__credencial-num">
-            <span class="sobre__numero">{% if c.sobre_credencial_num %}{{ c.sobre_credencial_num.titulo }}{% else %}35{% endif %}</span>
+            <span class="sobre__numero">{{ anos_atuacao }}</span>
             <span class="sobre__label">{% if c.sobre_credencial_label %}{{ c.sobre_credencial_label.titulo }}{% else %}anos de atuação{% endif %}</span>
           </div>
           <a href="#contato" class="btn btn--vinho-outline">{% if c.sobre_cta %}{{ c.sobre_cta.titulo }}{% else %}Agende o seu horário{% endif %}</a>
@@ -744,7 +744,7 @@
       <div class="contato__header">
         <div class="contato__header-left">
           <div class="contato__tag reveal">contato</div>
-          <h2 class="contato__title reveal">{% if c.contato_titulo %}{{ c.contato_titulo.titulo }}{% else %}Inicie a retomada<br />do <em>seu direito.</em>{% endif %}</h2>
+          <h2 class="contato__title reveal">{% if c.contato_titulo %}{{ c.contato_titulo.titulo }}{% else %}Seu direito foi violado.<br /><em>Entre em contato.</em>{% endif %}</h2>
         </div>
         {% if c.contato_texto %}<p class="contato__intro reveal">{{ c.contato_texto.texto }}</p>{% else %}<p class="contato__intro reveal">Se uma relação de trabalho feriu a sua dignidade, <strong>o primeiro passo é organizar a sua história</strong> e entender quais caminhos jurídicos podem ser avaliados. Envie sua mensagem para o Escritório Cláudia Rocha e inicie uma <strong>análise responsável do seu caso.</strong></p>{% endif %}
       </div>

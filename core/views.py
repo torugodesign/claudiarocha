@@ -22,7 +22,6 @@ SECOES = {
             {'chave': 'sobre_titulo',  'label': 'Título principal', 'tipo': 'titulo'},
             {'chave': 'sobre_texto',   'label': 'Texto', 'tipo': 'texto',
              'hint': 'Use linhas em branco para separar parágrafos.'},
-            {'chave': 'sobre_credencial_num',   'label': 'Número', 'tipo': 'titulo', 'placeholder': 'Ex: 35'},
             {'chave': 'sobre_credencial_label', 'label': 'Frase', 'tipo': 'titulo', 'placeholder': 'Ex: anos de atuação'},
             {'chave': 'sobre_cta',     'label': 'Texto do botão', 'tipo': 'titulo',
              'placeholder': 'Ex: Agende um atendimento'},
@@ -105,6 +104,19 @@ def _carregar_conteudo():
     return {c.chave: c for c in ConteudoSite.objects.all()}
 
 
+def _anos_atuacao():
+    """Anos de atuação do escritório, calculado automaticamente.
+
+    Não é editável pelo painel: o número sobe sozinho todo dia 1º de
+    dezembro (ex.: 35 até 30/11/2026, 36 a partir de 01/12/2026, e assim
+    por diante a cada ano).
+    """
+    import datetime
+    hoje = datetime.date.today()
+    ano_referencia = hoje.year if (hoje.month, hoje.day) >= (12, 1) else hoje.year - 1
+    return ano_referencia - 1990
+
+
 def robots_txt(request):
     linhas = [
         'User-agent: *',
@@ -132,6 +144,7 @@ def home(request):
         'artigos_recentes': artigos_recentes,
         'c': c,
         'estrutura_fotos':  estrutura_fotos,
+        'anos_atuacao': _anos_atuacao(),
     })
 
 
