@@ -134,15 +134,6 @@
       margin-bottom: 4rem;
       border-bottom: 1px solid rgba(35,36,37,.12);
     }
-    .blog-destaque-item__num {
-      font-family: var(--font-display);
-      font-size: 7rem;
-      font-weight: 600;
-      color: var(--vinho);
-      line-height: 1;
-      opacity: .18;
-      margin-bottom: -.5rem;
-    }
     .blog-destaque-item__data {
       font-size: .62rem;
       letter-spacing: .18em;
@@ -234,15 +225,6 @@
     .blog-card:nth-child(3n+2) { padding-left: 2rem; }
     .blog-card:nth-child(3n)   { padding-left: 2rem; border-right: none; }
 
-    .blog-card__num {
-      font-family: var(--font-display);
-      font-size: 3.5rem;
-      font-weight: 600;
-      color: var(--vinho);
-      opacity: .15;
-      line-height: 1;
-      margin-bottom: .5rem;
-    }
     .blog-card__data {
       font-size: .6rem;
       letter-spacing: .15em;
@@ -372,7 +354,6 @@
         <!-- Artigo destaque -->
         <article class="blog-destaque-item">
           <div>
-            <div class="blog-destaque-item__num">01</div>
             <span class="blog-destaque-item__data">{{ destaque.criado_em|date:"d \d\e F \d\e Y" }}</span>
             <h2 class="blog-destaque-item__titulo">{{ destaque.titulo }}</h2>
             <p class="blog-destaque-item__resumo">{{ destaque.resumo }}</p>
@@ -403,7 +384,6 @@
               <img src="{{ artigo.imagem_capa.url }}" alt="{{ artigo.titulo }}" class="blog-card__thumb" loading="lazy"/>
             </div>
             {% endif %}
-            <div class="blog-card__num">0{{ forloop.counter }}</div>
             <span class="blog-card__data">{{ artigo.criado_em|date:"d M Y" }}</span>
             <h3 class="blog-card__titulo">{{ artigo.titulo }}</h3>
             <p class="blog-card__resumo">{{ artigo.resumo }}</p>
