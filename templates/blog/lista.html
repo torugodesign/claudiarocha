@@ -267,8 +267,7 @@
       letter-spacing: .28em;
       text-transform: uppercase;
       color: #aaa;
-      padding: 2rem 0 1.5rem;
-      border-top: 1px solid rgba(35,36,37,.1);
+      padding-bottom: 1.5rem;
       margin-bottom: 0;
     }
 
@@ -283,19 +282,34 @@
     }
     @media (max-width: 600px) {
       .blog-grade { grid-template-columns: 1fr; gap: 0; }
+      /* Só a matéria em destaque (a mais recente) mantém imagem grande +
+         linha fina. As demais viram uma lista compacta: título e data à
+         esquerda, miniatura quadrada à direita — sem resumo, sem "ler artigo" */
       .blog-card {
+        display: grid;
+        grid-template-columns: 1fr 84px;
+        grid-template-areas: "titulo thumb" "data thumb";
+        align-items: center;
+        column-gap: 1rem;
         border-right: none !important;
-        padding: 0 0 1.75rem !important;
+        padding: 1.1rem 0 !important;
       }
-      /* No desktop só os cards da 2ª linha (a partir do 4º) ganham divisória —
-         no mobile, empilhado numa coluna só, todo card após o 1º precisa dela */
-      .blog-card:nth-child(n+4) { border-top: none; padding-top: 0; }
+      .blog-card:first-child { border-top: none; }
       .blog-card:not(:first-child) {
         border-top: 1px solid rgba(35,36,37,.1);
-        padding-top: 1.75rem;
       }
-      .blog-card__thumb-wrap { height: 52vw; max-height: 220px; }
+      .blog-card__thumb-wrap {
+        grid-area: thumb;
+        width: 84px;
+        height: 84px;
+        margin-bottom: 0;
+      }
+      .blog-card__titulo { grid-area: titulo; margin-bottom: .35rem; font-size: 1rem; }
+      .blog-card__data { grid-area: data; margin-bottom: 0; }
+      .blog-card__resumo, .blog-card__ler { display: none; }
       .blog-hero__title { font-size: 2.6rem; }
+      .blog-destaque-item { padding-bottom: 2rem; margin-bottom: 1.5rem; }
+      .blog-section-label { padding-bottom: 1rem; }
     }
     @media (max-width: 640px) {
       /* No mobile o texto ocupa a largura toda (não sobra espaço "livre"
@@ -313,7 +327,10 @@
       .blog-hero__bg-img--sharp {
         -webkit-mask-image: none;
         mask-image: none;
-        object-position: center 22%;
+        /* A foto é enviada com a pessoa enquadrada à direita (pensada pro
+           corte ultra-wide do desktop) — no mobile o corte precisa seguir
+           esse mesmo lado, senão pega só o fundo vazio do centro. */
+        object-position: 85% 20%;
       }
       .blog-hero__scrim { display: none; }
       .blog-hero .container { padding-top: 2rem; }
