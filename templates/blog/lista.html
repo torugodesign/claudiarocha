@@ -134,6 +134,19 @@
       margin-bottom: 4rem;
       border-bottom: 1px solid rgba(35,36,37,.12);
     }
+    .blog-destaque-item__badge {
+      display: inline-block;
+      font-size: .62rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--vinho);
+      background: rgba(67,42,53,.08);
+      border: 1px solid rgba(67,42,53,.2);
+      border-radius: 2px;
+      padding: .3rem .6rem;
+      margin-bottom: .85rem;
+    }
     .blog-destaque-item__data {
       font-size: .62rem;
       letter-spacing: .18em;
@@ -425,6 +438,7 @@
         <!-- Artigo destaque -->
         <article class="blog-destaque-item">
           <div>
+            <span class="blog-destaque-item__badge">Publicação mais recente</span>
             <span class="blog-destaque-item__data">{{ destaque.criado_em|date:"d \d\e F \d\e Y" }}</span>
             <h2 class="blog-destaque-item__titulo">{{ destaque.titulo }}</h2>
             <p class="blog-destaque-item__resumo">{{ destaque.resumo }}</p>
