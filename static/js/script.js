@@ -351,7 +351,7 @@ if (form) {
       mensagem,
     ].filter(l => l !== null).join('\n');
 
-    const numero = '5516991120865';
+    const numero = '5516993396976';
     const url    = `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
     window.open(url, '_blank');
   });
