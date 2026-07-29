@@ -23,7 +23,13 @@
 
 // ── NAV — aparece ao sair do hero fullscreen ──
 const nav = document.getElementById('nav');
+// Páginas sem hero fullscreen (blog) marcam o nav com este atributo pra
+// ele ficar sempre visível, em vez de escondido até passar do scroll —
+// sem isso, updateNav() rodava no load com scrollY=0 e removia as
+// classes "visible"/"scrolled" que o HTML já tinha fixado, sumindo o menu.
+const navSempreVisivel = nav.dataset.alwaysVisible === 'true';
 function updateNav() {
+  if (navSempreVisivel) return;
   const past = window.scrollY > 10;
   nav.classList.toggle('visible', past);
   nav.classList.toggle('scrolled', past);
