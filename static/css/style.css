@@ -2194,6 +2194,8 @@ ul { list-style: none; }
   .equipe__text { columns: 1; }
   .equipe__text-col2 { display: inline; break-before: auto; }
   .equipe__row { grid-template-columns: 1fr; gap: 1.75rem; }
+  .equipe__col-galeria { max-width: 220px; margin: 0 auto; }
+  .equipe__col-texto .btn { align-self: center; margin-top: 0; margin-bottom: 0; }
   .estrutura__stage { height: clamp(200px, 62vw, 320px); }
   .estrutura__slide { width: clamp(200px, 62vw, 340px); }
   .estrutura__footer { grid-template-columns: 1fr; gap: 1.5rem; }
