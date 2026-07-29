@@ -282,8 +282,19 @@
       .blog-card:nth-child(2n) { padding-left: 2rem; }
     }
     @media (max-width: 600px) {
-      .blog-grade { grid-template-columns: 1fr; }
-      .blog-card { border-right: none !important; padding-left: 0 !important; }
+      .blog-grade { grid-template-columns: 1fr; gap: 0; }
+      .blog-card {
+        border-right: none !important;
+        padding: 0 0 1.75rem !important;
+      }
+      /* No desktop só os cards da 2ª linha (a partir do 4º) ganham divisória —
+         no mobile, empilhado numa coluna só, todo card após o 1º precisa dela */
+      .blog-card:nth-child(n+4) { border-top: none; padding-top: 0; }
+      .blog-card:not(:first-child) {
+        border-top: 1px solid rgba(35,36,37,.1);
+        padding-top: 1.75rem;
+      }
+      .blog-card__thumb-wrap { height: 52vw; max-height: 220px; }
       .blog-hero__title { font-size: 2.6rem; }
     }
     @media (max-width: 640px) {
