@@ -986,6 +986,13 @@ ul { list-style: none; }
   color: #444;
   text-align: left;
 }
+.equipe__text-full {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  width: 100%;
+}
 .equipe__text-stack strong {
   color: var(--grafite);
   font-weight: 500;
