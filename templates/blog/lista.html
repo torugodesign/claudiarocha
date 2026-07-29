@@ -321,13 +321,12 @@
       .blog-section-label { padding-bottom: 1rem; }
     }
     @media (max-width: 640px) {
-      /* Igual ao desktop: a foto fica como plano de fundo da seção inteira,
-         com o texto sobreposto em cima — só que sem o efeito de borrão (não
-         há espaço livre ao lado no retrato do celular) e com um degradê
-         mais forte embaixo pra garantir leitura do texto. */
+      /* A foto fica como plano de fundo da seção inteira, levemente desfocada
+         (dá pra reconhecer o rosto da Cláudia) pra não competir com o texto
+         sobreposto, com um degradê embaixo reforçando a leitura. */
       .blog-hero {
         padding: 0;
-        min-height: 78vh;
+        min-height: 72vh;
         display: flex;
         align-items: flex-end;
       }
@@ -345,17 +344,25 @@
            corte ultra-wide do desktop) — no mobile o corte precisa seguir
            esse mesmo lado, senão pega só o fundo vazio do centro. */
         object-position: 85% 20%;
+        filter: blur(5px);
+        transform: scale(1.06); /* evita ver a borda desfocada nas bordas */
       }
       .blog-hero__scrim {
         display: block;
         background: linear-gradient(180deg,
-          rgba(35,36,37,.1) 0%,
-          rgba(35,36,37,.55) 55%,
-          rgba(35,36,37,.94) 100%);
+          rgba(35,36,37,.15) 0%,
+          rgba(35,36,37,.4) 45%,
+          rgba(35,36,37,.88) 100%);
       }
-      .blog-hero .container { padding: 2rem 0 2.5rem; }
-      .blog-hero__title { font-size: 2.15rem; line-height: 1.05; }
-      .blog-hero__sub { font-size: .85rem; }
+      .blog-hero .container {
+        padding: 2.5rem 0 3rem;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+      }
+      .blog-hero__tag { margin-bottom: 0; }
+      .blog-hero__title { font-size: 2.15rem; line-height: 1.1; max-width: 90%; }
+      .blog-hero__sub { font-size: .85rem; margin-top: .5rem; max-width: 100%; }
     }
 
     /* Botão "voltar ao topo" — só no mobile, aparece depois de rolar */
