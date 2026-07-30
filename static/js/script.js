@@ -80,20 +80,32 @@ const muteIcon    = document.getElementById('muteIcon');
 const soundIcon   = document.getElementById('soundIcon');
 
 if (video) {
-  // Fica true assim que o som é ativado (automaticamente ou pelo usuário) —
-  // a partir daí forcePlay() não deve mais silenciar o vídeo (senão o loop
-  // remuta sozinho toda vez que o navegador reavalia o buffer no reinício).
+  // Fica true assim que o som é decidido (automaticamente ou pelo usuário) —
+  // a partir daí o autoplay de segurança não deve mais forçar mute sozinho.
   let somAtivadoPeloUsuario = false;
+  // Fica true quando o usuário pausa manualmente — nenhuma rotina automática
+  // (retomada de aba, gesto, loop) deve reiniciar o vídeo até ele mesmo dar play.
+  let pausadoPeloUsuario = false;
 
-  function mostrarComoAtivo() {
-    somAtivadoPeloUsuario = true;
-    muteIcon.style.display  = 'none';
-    soundIcon.style.display = '';
+  // Ícones sempre refletem o estado real do vídeo (evento do próprio <video>),
+  // nunca são setados "na mão" em cada handler — isso é o que causava o
+  // ícone de mudo aparecer com o vídeo tocando com som, e vice-versa.
+  function syncSoundIcon() {
+    muteIcon.style.display  = video.muted ? '' : 'none';
+    soundIcon.style.display = video.muted ? 'none' : '';
   }
+  function syncPlayIcon() {
+    playIcon.style.display  = video.paused ? '' : 'none';
+    pauseIcon.style.display = video.paused ? 'none' : '';
+  }
+  video.addEventListener('volumechange', syncSoundIcon);
+  video.addEventListener('play',  syncPlayIcon);
+  video.addEventListener('pause', syncPlayIcon);
 
   // Força autoplay em navegadores exigentes (ex: Safari/iOS) — precisa de
   // muted=true via propriedade JS (não só o atributo) antes do play().
   function forcePlay() {
+    if (pausadoPeloUsuario) return;
     if (!somAtivadoPeloUsuario) video.muted = true;
     const p = video.play();
     if (p && typeof p.catch === 'function') p.catch(() => {});
@@ -107,10 +119,10 @@ if (video) {
     video.muted = false;
     const p = video.play();
     if (p && typeof p.catch === 'function') {
-      p.then(() => { if (!video.muted) mostrarComoAtivo(); })
+      p.then(() => { if (!video.muted) somAtivadoPeloUsuario = true; })
        .catch(forcePlay);
     } else if (!video.paused && !video.muted) {
-      mostrarComoAtivo();
+      somAtivadoPeloUsuario = true;
     } else {
       forcePlay();
     }
@@ -126,52 +138,47 @@ if (video) {
   // Se o autoplay com som for bloqueado, o primeiro gesto do usuário em
   // qualquer parte da página (rolar, tocar, clicar) já libera o som
   // automaticamente — não precisa clicar especificamente no botão de som.
+  // Cliques nos próprios botões de play/som são ignorados aqui: eles já têm
+  // seus próprios handlers e não podem ser "desfeitos" por este listener.
   const gestureEvents = ['touchstart', 'scroll', 'pointerdown', 'click'];
-  function retryOnGesture() {
-    if (video.paused) forcePlay();
+  function retryOnGesture(e) {
+    if (e.target.closest && e.target.closest('#heroPlayBtn, #heroSoundBtn')) return;
     if (!somAtivadoPeloUsuario) {
       video.muted = false;
-      mostrarComoAtivo();
+      somAtivadoPeloUsuario = true;
     }
-    if (!video.paused) {
-      gestureEvents.forEach(evt => document.removeEventListener(evt, retryOnGesture));
-    }
+    if (video.paused) forcePlay();
+    gestureEvents.forEach(evt => document.removeEventListener(evt, retryOnGesture));
   }
   gestureEvents.forEach(evt => document.addEventListener(evt, retryOnGesture, { passive: true }));
 
   // Esconde placeholder assim que o vídeo pode tocar (canplay = mais rápido)
   video.addEventListener('canplay', () => {
     if (placeholder) placeholder.classList.add('hidden');
-    forcePlay();
   });
   video.addEventListener('playing', () => {
     if (placeholder) placeholder.classList.add('hidden');
-    playIcon.style.display  = 'none';
-    pauseIcon.style.display = '';
-  });
-
-  // Se autoplay for bloqueado pelo browser, mostra ícone de play
-  video.addEventListener('pause', () => {
-    playIcon.style.display  = '';
-    pauseIcon.style.display = 'none';
   });
 
   // Botão play / pause
   playBtn?.addEventListener('click', () => {
     if (video.paused) {
+      pausadoPeloUsuario = false;
       video.play();
     } else {
+      pausadoPeloUsuario = true;
       video.pause();
     }
   });
 
-  // Botão mute / unmute — inicia mudo, usuário ativa som
+  // Botão mute / unmute
   soundBtn?.addEventListener('click', () => {
     video.muted = !video.muted;
-    somAtivadoPeloUsuario = !video.muted;
-    muteIcon.style.display  = video.muted ? '' : 'none';
-    soundIcon.style.display = video.muted ? 'none' : '';
+    somAtivadoPeloUsuario = true;
   });
+
+  syncSoundIcon();
+  syncPlayIcon();
 }
 
 // ── REVEAL ON SCROLL ──
