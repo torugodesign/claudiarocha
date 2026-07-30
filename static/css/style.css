@@ -2193,12 +2193,18 @@ ul { list-style: none; }
   .equipe__layout { gap: 2.5rem; }
   .equipe__text { columns: 1; }
   .equipe__text-col2 { display: inline; break-before: auto; }
-  /* Carrossel de retratos maior, alinhado à esquerda, com o botão de CTA
-     ao lado. O texto corrido fica todo junto, abaixo dessa fileira. */
-  .equipe__row { grid-template-columns: 150px auto; gap: 1.25rem; align-items: center; }
-  .equipe__col-galeria { max-width: 150px; margin: 0; }
-  .equipe__nome { font-size: .85rem; }
-  .equipe__row-btn { font-size: .66rem; padding: .8rem 1.4rem; }
+  /* Carrossel de retratos centralizado, com o botão numa linha só logo
+     abaixo dele. O texto corrido fica todo junto, abaixo dessa fileira. */
+  .equipe__row {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+  .equipe__col-galeria { max-width: 150px; margin: 0 auto; }
+  .equipe__nome { font-size: .85rem; text-align: center; }
+  .equipe__row-btn { justify-self: center; white-space: nowrap; font-size: .66rem; padding: .8rem 1.4rem; }
+  .equipe__row-btn-break { display: none; }
   .estrutura__stage { height: clamp(200px, 62vw, 320px); }
   .estrutura__slide { width: clamp(200px, 62vw, 340px); }
   .estrutura__footer { grid-template-columns: 1fr; gap: 1.5rem; }
