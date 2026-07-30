@@ -988,7 +988,7 @@ ul { list-style: none; }
   text-align: left;
 }
 .equipe__text-full {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 1.5rem;
   margin-top: 2rem;
@@ -2220,6 +2220,7 @@ ul { list-style: none; }
   /* No mobile a frase não fica ao lado da foto — ela reaparece junto do
      resto do texto corrido, no bloco abaixo */
   .equipe__text-beside { display: none; }
+  .equipe__text-full { display: flex; }
   .equipe__text-first { display: block; }
   .estrutura__stage { height: clamp(200px, 62vw, 320px); }
   .estrutura__slide { width: clamp(200px, 62vw, 340px); }
