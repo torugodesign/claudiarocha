@@ -974,14 +974,12 @@ ul { list-style: none; }
   flex-direction: column;
   align-items: flex-start;
   gap: 1.5rem;
-  max-width: 480px;
+  max-width: 560px;
 }
 .equipe__row-btn {
   align-self: flex-start;
-  margin-top: auto;
+  margin-top: .5rem;
   white-space: nowrap;
-  /* Alinha com a base da FOTO, não com o nome que fica logo abaixo dela */
-  margin-bottom: 4.6rem;
 }
 .equipe__text-stack {
   font-size: 1.02rem;
