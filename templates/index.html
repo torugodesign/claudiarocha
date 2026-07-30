@@ -39,7 +39,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Cormorant Garamond: fonte dos itálicos / citações -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260729c" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260729d" />
 
   <!-- Dados estruturados (Schema.org) — ajuda o Google a entender o negócio -->
   <script type="application/ld+json">
@@ -379,7 +379,6 @@
               <img class="equipe__retrato-img" data-nome="Fátima" src="{% static 'img/equipe/fatima.jpg' %}" alt="Fátima — Escritório Cláudia Rocha" loading="lazy"/>
               <img class="equipe__retrato-img" data-nome="Gabrielle" src="{% static 'img/equipe/gabrielle.jpg' %}" alt="Gabrielle — Escritório Cláudia Rocha" loading="lazy"/>
               <img class="equipe__retrato-img" data-nome="Júlia" src="{% static 'img/equipe/julia.jpg' %}" alt="Júlia — Escritório Cláudia Rocha" loading="lazy"/>
-              <img class="equipe__retrato-img" data-nome="Karine" src="{% static 'img/equipe/karine.jpg' %}" alt="Karine — Escritório Cláudia Rocha" loading="lazy"/>
               <img class="equipe__retrato-img" data-nome="Larissa" src="{% static 'img/equipe/larissa.jpg' %}" alt="Larissa — Escritório Cláudia Rocha" loading="lazy"/>
               <img class="equipe__retrato-img" data-nome="Laís" src="{% static 'img/equipe/lais.jpg' %}" alt="Laís — Escritório Cláudia Rocha" loading="lazy"/>
               <img class="equipe__retrato-img" data-nome="Lidiane" src="{% static 'img/equipe/lidiane.jpg' %}" alt="Lidiane — Escritório Cláudia Rocha" loading="lazy"/>
@@ -396,18 +395,23 @@
             <div class="equipe__nome" id="equipeNome">Adriana</div>
           </div>
 
-          <a href="#contato" class="btn btn--vinho-outline reveal equipe__row-btn">Agende um<br class="equipe__row-btn-break"> horário</a>
+          <div class="equipe__col-texto">
+            {% if c.equipe_texto %}
+              <p class="equipe__text-stack reveal equipe__text-beside">{{ c.equipe_texto.texto }}</p>
+            {% else %}
+              <p class="equipe__text-stack reveal equipe__text-beside">Sob a liderança da Dra. Cláudia Rocha, o escritório atua com um princípio claro: <strong>cada caso precisa ser compreendido antes de ser conduzido.</strong></p>
+            {% endif %}
+            <a href="#contato" class="btn btn--vinho-outline reveal equipe__row-btn">Agende um<br class="equipe__row-btn-break"> horário</a>
+          </div>
         </div>
 
+        {% if not c.equipe_texto %}
         <div class="equipe__text-full">
-          {% if c.equipe_texto %}
-            <p class="equipe__text-stack reveal">{{ c.equipe_texto.texto }}</p>
-          {% else %}
-            <p class="equipe__text-stack reveal">Sob a liderança da Dra. Cláudia Rocha, o escritório atua com um princípio claro: <strong>cada caso precisa ser compreendido antes de ser conduzido.</strong></p>
-            <p class="equipe__text-stack reveal">Por trás de um processo, existem documentos, provas, prazos, expectativas e decisões importantes.</p>
-            <p class="equipe__text-stack reveal">Por isso, a equipe trabalha com organização, atenção técnica e comunicação clara em cada etapa. Mais do que movimentar processos, o compromisso é oferecer uma <strong>condução jurídica responsável.</strong></p>
-          {% endif %}
+          <p class="equipe__text-stack reveal equipe__text-first">Sob a liderança da Dra. Cláudia Rocha, o escritório atua com um princípio claro: <strong>cada caso precisa ser compreendido antes de ser conduzido.</strong></p>
+          <p class="equipe__text-stack reveal">Por trás de um processo, existem documentos, provas, prazos, expectativas e decisões importantes.</p>
+          <p class="equipe__text-stack reveal">Por isso, a equipe trabalha com organização, atenção técnica e comunicação clara em cada etapa. Mais do que movimentar processos, o compromisso é oferecer uma <strong>condução jurídica responsável.</strong></p>
         </div>
+        {% endif %}
 
       </div>
     </div>

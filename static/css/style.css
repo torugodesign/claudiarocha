@@ -944,13 +944,15 @@ ul { list-style: none; }
   text-align: left;
 }
 
-/* Linha abaixo da foto de grupo: galeria de retratos + botão ao lado.
-   O texto corrido fica todo junto, num bloco à parte logo abaixo. */
+/* Linha abaixo da foto de grupo: galeria de retratos (esquerda) + primeira
+   frase e botão (direita). No desktop o restante do texto corrido fica
+   num bloco à parte, logo abaixo (equipe__text-first fica escondido ali
+   pra não duplicar a frase que já aparece ao lado da foto). */
 .equipe__row {
   display: grid;
-  grid-template-columns: 300px auto;
+  grid-template-columns: 300px 1fr;
   gap: 2.5rem;
-  align-items: center;
+  align-items: stretch;
   width: 100%;
 }
 .equipe__col-galeria {
@@ -967,10 +969,18 @@ ul { list-style: none; }
   overflow: hidden;
   background: rgba(67, 42, 53, 0.07);
 }
+.equipe__col-texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  max-width: 480px;
+}
 .equipe__row-btn {
-  justify-self: start;
-  text-align: center;
-  line-height: 1.6;
+  align-self: flex-start;
+  margin-top: auto;
+  /* Alinha com a base da FOTO, não com o nome que fica logo abaixo dela */
+  margin-bottom: 4.6rem;
 }
 .equipe__text-stack {
   font-size: 1.02rem;
@@ -986,6 +996,9 @@ ul { list-style: none; }
   max-width: 720px;
   width: 100%;
 }
+/* No desktop essa frase já aparece ao lado da foto — escondida aqui
+   pra não repetir. No mobile ela reaparece (ver media query). */
+.equipe__text-first { display: none; }
 .equipe__text-stack strong {
   color: var(--grafite);
   font-weight: 500;
@@ -2203,8 +2216,13 @@ ul { list-style: none; }
   }
   .equipe__col-galeria { max-width: 150px; margin: 0 auto; }
   .equipe__nome { font-size: .85rem; text-align: center; }
-  .equipe__row-btn { justify-self: center; white-space: nowrap; font-size: .66rem; padding: .8rem 1.4rem; }
+  .equipe__col-texto { align-items: center; gap: 1rem; max-width: 100%; }
+  .equipe__row-btn { justify-self: center; align-self: center; margin: 0; white-space: nowrap; font-size: .66rem; padding: .8rem 1.4rem; }
   .equipe__row-btn-break { display: none; }
+  /* No mobile a frase não fica ao lado da foto — ela reaparece junto do
+     resto do texto corrido, no bloco abaixo */
+  .equipe__text-beside { display: none; }
+  .equipe__text-first { display: block; }
   .estrutura__stage { height: clamp(200px, 62vw, 320px); }
   .estrutura__slide { width: clamp(200px, 62vw, 340px); }
   .estrutura__footer { grid-template-columns: 1fr; gap: 1.5rem; }
