@@ -944,13 +944,13 @@ ul { list-style: none; }
   text-align: left;
 }
 
-/* Linha abaixo da foto de grupo: galeria de retratos (esquerda) +
-   texto empilhado (direita) */
+/* Linha abaixo da foto de grupo: galeria de retratos + botão ao lado.
+   O texto corrido fica todo junto, num bloco à parte logo abaixo. */
 .equipe__row {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 300px auto;
   gap: 2.5rem;
-  align-items: stretch;
+  align-items: center;
   width: 100%;
 }
 .equipe__col-galeria {
@@ -967,18 +967,10 @@ ul { list-style: none; }
   overflow: hidden;
   background: rgba(67, 42, 53, 0.07);
 }
-.equipe__col-texto {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1.5rem;
-  max-width: 480px;
-}
-.equipe__col-texto .btn {
-  align-self: flex-start;
-  margin-top: auto;
-  /* Alinha com a base da FOTO, não com o nome que fica logo abaixo dela */
-  margin-bottom: 4.6rem;
+.equipe__row-btn {
+  justify-self: start;
+  text-align: center;
+  line-height: 1.6;
 }
 .equipe__text-stack {
   font-size: 1.02rem;
@@ -991,6 +983,7 @@ ul { list-style: none; }
   flex-direction: column;
   gap: 1.5rem;
   margin-top: 2rem;
+  max-width: 720px;
   width: 100%;
 }
 .equipe__text-stack strong {
@@ -2200,14 +2193,12 @@ ul { list-style: none; }
   .equipe__layout { gap: 2.5rem; }
   .equipe__text { columns: 1; }
   .equipe__text-col2 { display: inline; break-before: auto; }
-  /* Carrossel de retratos menor, alinhado à esquerda, com o texto ao lado
-     (mesma composição do desktop, só que compacta). Centralizado
-     verticalmente porque a foto é bem mais baixa que o bloco de texto —
-     sem isso, ela fica "flutuando" no topo com um vão vazio embaixo. */
-  .equipe__row { grid-template-columns: 112px 1fr; gap: 1.1rem; align-items: center; }
-  .equipe__col-galeria { max-width: 112px; margin: 0; }
-  .equipe__nome { font-size: .78rem; }
-  .equipe__col-texto .btn { align-self: flex-start; margin-top: .25rem; margin-bottom: 0; }
+  /* Carrossel de retratos maior, alinhado à esquerda, com o botão de CTA
+     ao lado. O texto corrido fica todo junto, abaixo dessa fileira. */
+  .equipe__row { grid-template-columns: 150px auto; gap: 1.25rem; align-items: center; }
+  .equipe__col-galeria { max-width: 150px; margin: 0; }
+  .equipe__nome { font-size: .85rem; }
+  .equipe__row-btn { font-size: .66rem; padding: .8rem 1.4rem; }
   .estrutura__stage { height: clamp(200px, 62vw, 320px); }
   .estrutura__slide { width: clamp(200px, 62vw, 340px); }
   .estrutura__footer { grid-template-columns: 1fr; gap: 1.5rem; }

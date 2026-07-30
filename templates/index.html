@@ -39,7 +39,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Cormorant Garamond: fonte dos itálicos / citações -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260729a" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260729b" />
 
   <!-- Dados estruturados (Schema.org) — ajuda o Google a entender o negócio -->
   <script type="application/ld+json">
@@ -396,22 +396,18 @@
             <div class="equipe__nome" id="equipeNome">Adriana</div>
           </div>
 
-          <div class="equipe__col-texto">
-            {% if c.equipe_texto %}
-              <p class="equipe__text-stack reveal">{{ c.equipe_texto.texto }}</p>
-            {% else %}
-              <p class="equipe__text-stack reveal">Sob a liderança da Dra. Cláudia Rocha, o escritório atua com um princípio claro: <strong>cada caso precisa ser compreendido antes de ser conduzido.</strong></p>
-            {% endif %}
-            <a href="#contato" class="btn btn--vinho-outline reveal">Agende um horário</a>
-          </div>
+          <a href="#contato" class="btn btn--vinho-outline reveal equipe__row-btn">Agende um<br>horário</a>
         </div>
 
-        {% if not c.equipe_texto %}
         <div class="equipe__text-full">
-          <p class="equipe__text-stack reveal">Por trás de um processo, existem documentos, provas, prazos, expectativas e decisões importantes.</p>
-          <p class="equipe__text-stack reveal">Por isso, a equipe trabalha com organização, atenção técnica e comunicação clara em cada etapa. Mais do que movimentar processos, o compromisso é oferecer uma <strong>condução jurídica responsável.</strong></p>
+          {% if c.equipe_texto %}
+            <p class="equipe__text-stack reveal">{{ c.equipe_texto.texto }}</p>
+          {% else %}
+            <p class="equipe__text-stack reveal">Sob a liderança da Dra. Cláudia Rocha, o escritório atua com um princípio claro: <strong>cada caso precisa ser compreendido antes de ser conduzido.</strong></p>
+            <p class="equipe__text-stack reveal">Por trás de um processo, existem documentos, provas, prazos, expectativas e decisões importantes.</p>
+            <p class="equipe__text-stack reveal">Por isso, a equipe trabalha com organização, atenção técnica e comunicação clara em cada etapa. Mais do que movimentar processos, o compromisso é oferecer uma <strong>condução jurídica responsável.</strong></p>
+          {% endif %}
         </div>
-        {% endif %}
 
       </div>
     </div>
