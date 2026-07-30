@@ -2201,11 +2201,13 @@ ul { list-style: none; }
   .equipe__text { columns: 1; }
   .equipe__text-col2 { display: inline; break-before: auto; }
   /* Carrossel de retratos menor, alinhado à esquerda, com o texto ao lado
-     (mesma composição do desktop, só que compacta) */
-  .equipe__row { grid-template-columns: 100px 1fr; gap: 1rem; align-items: start; }
-  .equipe__col-galeria { max-width: 100px; margin: 0; }
-  .equipe__nome { font-size: .8rem; }
-  .equipe__col-texto .btn { align-self: center; margin-top: 0; margin-bottom: 0; }
+     (mesma composição do desktop, só que compacta). Centralizado
+     verticalmente porque a foto é bem mais baixa que o bloco de texto —
+     sem isso, ela fica "flutuando" no topo com um vão vazio embaixo. */
+  .equipe__row { grid-template-columns: 112px 1fr; gap: 1.1rem; align-items: center; }
+  .equipe__col-galeria { max-width: 112px; margin: 0; }
+  .equipe__nome { font-size: .78rem; }
+  .equipe__col-texto .btn { align-self: flex-start; margin-top: .25rem; margin-bottom: 0; }
   .estrutura__stage { height: clamp(200px, 62vw, 320px); }
   .estrutura__slide { width: clamp(200px, 62vw, 340px); }
   .estrutura__footer { grid-template-columns: 1fr; gap: 1.5rem; }
