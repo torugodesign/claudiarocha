@@ -80,10 +80,16 @@ const muteIcon    = document.getElementById('muteIcon');
 const soundIcon   = document.getElementById('soundIcon');
 
 if (video) {
-  // Fica true assim que o usuário ativa o som manualmente — a partir daí
-  // forcePlay() não deve mais silenciar o vídeo (senão o loop remuta
-  // sozinho toda vez que o navegador reavalia o buffer no reinício).
+  // Fica true assim que o som é ativado (automaticamente ou pelo usuário) —
+  // a partir daí forcePlay() não deve mais silenciar o vídeo (senão o loop
+  // remuta sozinho toda vez que o navegador reavalia o buffer no reinício).
   let somAtivadoPeloUsuario = false;
+
+  function mostrarComoAtivo() {
+    somAtivadoPeloUsuario = true;
+    muteIcon.style.display  = 'none';
+    soundIcon.style.display = '';
+  }
 
   // Força autoplay em navegadores exigentes (ex: Safari/iOS) — precisa de
   // muted=true via propriedade JS (não só o atributo) antes do play().
@@ -92,7 +98,24 @@ if (video) {
     const p = video.play();
     if (p && typeof p.catch === 'function') p.catch(() => {});
   }
-  forcePlay();
+
+  // Tenta iniciar já com som — os navegadores só permitem isso em uma
+  // fração dos casos (visitantes com bastante histórico de interação no
+  // site, pelo critério interno de cada navegador). Quando bloqueado, cai
+  // para o autoplay mudo normal.
+  function tentarAutoplayComSom() {
+    video.muted = false;
+    const p = video.play();
+    if (p && typeof p.catch === 'function') {
+      p.then(() => { if (!video.muted) mostrarComoAtivo(); })
+       .catch(forcePlay);
+    } else if (!video.paused && !video.muted) {
+      mostrarComoAtivo();
+    } else {
+      forcePlay();
+    }
+  }
+  tentarAutoplayComSom();
   // Safari iOS pode pausar o vídeo ao restaurar a página do cache
   // de navegação (voltar da aba do WhatsApp, trocar de app, etc.)
   window.addEventListener('pageshow', forcePlay);
@@ -100,12 +123,16 @@ if (video) {
     if (!document.hidden && video.paused) forcePlay();
   });
 
-  // Se o autoplay inicial for bloqueado (ex: iOS em Modo de Baixo Consumo),
-  // qualquer gesto do usuário — inclusive o primeiro scroll da página —
-  // libera a reprodução automaticamente, sem precisar tocar no vídeo.
+  // Se o autoplay com som for bloqueado, o primeiro gesto do usuário em
+  // qualquer parte da página (rolar, tocar, clicar) já libera o som
+  // automaticamente — não precisa clicar especificamente no botão de som.
   const gestureEvents = ['touchstart', 'scroll', 'pointerdown', 'click'];
   function retryOnGesture() {
     if (video.paused) forcePlay();
+    if (!somAtivadoPeloUsuario) {
+      video.muted = false;
+      mostrarComoAtivo();
+    }
     if (!video.paused) {
       gestureEvents.forEach(evt => document.removeEventListener(evt, retryOnGesture));
     }
