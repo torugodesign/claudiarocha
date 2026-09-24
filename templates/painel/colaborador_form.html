@@ -18,6 +18,7 @@
             <div class="form-group">
               <label for="nome">Nome</label>
               <input type="text" id="nome" name="nome" value="{{ colaborador.nome|default:'' }}" placeholder="Ex: Gabrielle" required/>
+              <span class="form-hint">Preenchido automaticamente com o nome do arquivo da foto — pode editar se quiser.</span>
             </div>
 
             {% if colaborador %}
@@ -73,4 +74,20 @@
     </div>
   </div>
 </form>
+<script>
+  // Sugere o nome a partir do arquivo escolhido (ex: "claudia-rocha.png" → "Claudia Rocha"),
+  // só quando o campo Nome ainda está vazio — não sobrescreve um nome já digitado.
+  document.getElementById('foto')?.addEventListener('change', function() {
+    const nomeInput = document.getElementById('nome');
+    if (!nomeInput || nomeInput.value.trim() || !this.files.length) return;
+    const semExtensao = this.files[0].name.replace(/\.[^/.]+$/, '');
+    const sugestao = semExtensao
+      .replace(/[_-]+/g, ' ')
+      .trim()
+      .split(' ')
+      .map(p => p ? p.charAt(0).toUpperCase() + p.slice(1).toLowerCase() : '')
+      .join(' ');
+    nomeInput.value = sugestao;
+  });
+</script>
 {% endblock %}

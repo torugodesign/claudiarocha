@@ -223,10 +223,18 @@
                   <label style="margin:0;">Fotos do carrossel (uma foto por colaborador)</label>
                   <a href="/painel/equipe/novo/" class="btn btn-primary btn-sm">+ Novo colaborador</a>
                 </div>
-                <p class="form-hint" style="margin-bottom:1rem;">
+                <p class="form-hint" style="margin-bottom:.6rem;">
                   Essas fotos aparecem, uma de cada vez, no carrossel ao lado do texto da seção "Capital Humano".
-                  Apenas colaboradores marcados como <strong>Ativo</strong> aparecem no site.
                 </p>
+                <div style="display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:1rem;">
+                  <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:3px;padding:.12em .5em;font-size:.68rem;font-weight:600;color:#1e40af;">📐 900 × 1200 px recomendado</span>
+                  <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:3px;padding:.12em .5em;font-size:.68rem;font-weight:600;color:#1e40af;">⚖️ máx. 600 KB por arquivo</span>
+                  <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:3px;padding:.12em .5em;font-size:.68rem;font-weight:600;color:#1e40af;">🖼️ proporção retrato 3:4</span>
+                </div>
+                <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:5px;padding:.65rem .85rem;margin-bottom:1.25rem;">
+                  <p style="font-size:.78rem;color:#92400e;margin:0 0 .3rem;"><strong>⚠ Todas as fotos listadas abaixo já aparecem no site.</strong></p>
+                  <p style="font-size:.76rem;color:#92400e;margin:0;">O nome do arquivo enviado vira o nome exibido no carrossel — por exemplo, <strong>Claudia.png</strong> aparecerá como <strong>"Claudia"</strong> no site.</p>
+                </div>
                 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:1rem;">
                   {% for col in colaboradores %}
                   <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;background:#fafaf9;">
