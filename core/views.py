@@ -275,12 +275,7 @@ def painel_artigo_deletar(request, pk):
 
 
 # ── EQUIPE (colaboradores do carrossel "Capital Humano") ─
-
-@login_required(login_url='/painel/login/')
-def painel_colaboradores(request):
-    colaboradores = Colaborador.objects.order_by('ordem', 'id')
-    return render(request, 'painel/colaboradores.html', {'colaboradores': colaboradores})
-
+# Gerenciados dentro de Conteúdo do site → Capital Humano (painel_conteudo_secao)
 
 @login_required(login_url='/painel/login/')
 def painel_colaborador_novo(request):
@@ -295,7 +290,7 @@ def painel_colaborador_novo(request):
             colaborador.foto = request.FILES['foto']
         colaborador.save()
         messages.success(request, 'Colaborador adicionado.')
-        return redirect('painel_colaboradores')
+        return redirect('painel_conteudo_secao', secao='equipe')
     return render(request, 'painel/colaborador_form.html', {'colaborador': None})
 
 
@@ -311,7 +306,7 @@ def painel_colaborador_editar(request, pk):
             colaborador.foto = request.FILES['foto']
         colaborador.save()
         messages.success(request, 'Alterações salvas.')
-        return redirect('painel_colaboradores')
+        return redirect('painel_conteudo_secao', secao='equipe')
     return render(request, 'painel/colaborador_form.html', {'colaborador': colaborador})
 
 
@@ -321,7 +316,7 @@ def painel_colaborador_deletar(request, pk):
         colaborador = get_object_or_404(Colaborador, pk=pk)
         colaborador.delete()
         messages.success(request, 'Colaborador removido.')
-    return redirect('painel_colaboradores')
+    return redirect('painel_conteudo_secao', secao='equipe')
 
 
 # ── CONTEÚDO DO SITE ────────────────────────────────────
@@ -452,6 +447,10 @@ def painel_conteudo_secao(request, secao):
     if secao == 'sobre':
         sobre_campos = {c['chave']: c for c in campos_ctx if c.get('chave')}
 
+    colaboradores = []
+    if secao == 'equipe':
+        colaboradores = Colaborador.objects.order_by('ordem', 'id')
+
     ctx = {
         'secao':            secao,
         'secao_label':      SECOES[secao]['label'],
@@ -461,5 +460,6 @@ def painel_conteudo_secao(request, secao):
         'cards_gerais':     cards_gerais,
         'cards_pares':      cards_pares,
         'sobre_campos':     sobre_campos,
+        'colaboradores':    colaboradores,
     }
     return render(request, 'painel/conteudo.html', ctx)

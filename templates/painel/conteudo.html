@@ -256,6 +256,45 @@
     </div>
   </form>
 
+  {% if secao == "equipe" %}
+  <div class="card" style="margin-top:1.25rem;">
+    <div class="card-header">
+      <h2>Fotos do carrossel (Capital Humano)</h2>
+      <a href="/painel/equipe/novo/" class="btn btn-primary btn-sm">+ Novo colaborador</a>
+    </div>
+    <div class="card-body">
+      <p class="form-hint" style="margin-bottom:1rem;">
+        Essas fotos aparecem, uma de cada vez, no carrossel ao lado do texto da seção "Capital Humano".
+        Apenas colaboradores marcados como <strong>Ativo</strong> aparecem no site.
+      </p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem;">
+        {% for col in colaboradores %}
+        <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;background:#fafaf9;">
+          <div style="position:relative;aspect-ratio:3/4;">
+            <img src="{{ col.foto.url }}" alt="{{ col.nome }}" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+            {% if not col.ativo %}
+              <span style="position:absolute;top:.4rem;left:.4rem;background:rgba(0,0,0,.65);color:#fff;font-size:.6rem;font-weight:600;letter-spacing:.04em;padding:.15em .5em;border-radius:3px;">OCULTO</span>
+            {% endif %}
+          </div>
+          <div style="padding:.55rem .65rem;">
+            <p style="font-size:.78rem;font-weight:600;color:var(--grafite);margin-bottom:.5rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ col.nome }}</p>
+            <div style="display:flex;gap:.35rem;">
+              <a href="/painel/equipe/{{ col.id }}/editar/" class="btn btn-ghost btn-sm" style="flex:1;text-align:center;justify-content:center;">Editar</a>
+              <form method="post" action="/painel/equipe/{{ col.id }}/deletar/" onsubmit="return confirm('Remover {{ col.nome }} do carrossel permanentemente?')">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm" title="Remover">✕</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p style="color:#999;font-size:.85rem;grid-column:1/-1;">Nenhum colaborador cadastrado ainda.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
 </div>
 
 <script>

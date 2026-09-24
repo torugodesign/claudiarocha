@@ -1,9 +1,9 @@
 {% extends "painel/base.html" %}
 {% block title %}{% if colaborador %}Editar colaborador{% else %}Novo colaborador{% endif %}{% endblock %}
-{% block nav_equipe %}active{% endblock %}
+{% block nav_conteudo %}active{% endblock %}
 {% block topbar_title %}{% if colaborador %}Editar colaborador{% else %}Novo colaborador{% endif %}{% endblock %}
 {% block topbar_actions %}
-  <a href="/painel/equipe/" class="btn btn-ghost btn-sm">← Voltar</a>
+  <a href="/painel/conteudo/equipe/" class="btn btn-ghost btn-sm">← Voltar</a>
 {% endblock %}
 
 {% block content %}

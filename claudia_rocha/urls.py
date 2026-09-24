@@ -59,8 +59,7 @@ urlpatterns = [
     path('painel/artigos/<int:pk>/publicar/',    core_views.painel_artigo_publicar, name='painel_artigo_publicar'),
     path('painel/artigos/<int:pk>/deletar/',     core_views.painel_artigo_deletar,  name='painel_artigo_deletar'),
 
-    # Equipe (colaboradores)
-    path('painel/equipe/',                        core_views.painel_colaboradores,       name='painel_colaboradores'),
+    # Equipe (colaboradores) — gerenciados em /painel/conteudo/equipe/
     path('painel/equipe/novo/',                    core_views.painel_colaborador_novo,    name='painel_colaborador_novo'),
     path('painel/equipe/<int:pk>/editar/',         core_views.painel_colaborador_editar,  name='painel_colaborador_editar'),
     path('painel/equipe/<int:pk>/deletar/',        core_views.painel_colaborador_deletar, name='painel_colaborador_deletar'),
