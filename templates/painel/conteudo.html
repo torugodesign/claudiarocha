@@ -181,6 +181,81 @@
           <p id="dropzoneError" style="display:none;color:#c0392b;font-size:.78rem;font-weight:600;margin-top:.6rem;"></p>
         </div>
 
+        {% elif secao == "equipe" %}
+        <!-- ── Capital Humano: título/foto/texto padrão + galeria de colaboradores ── -->
+        <div class="form-grid">
+          {% for campo in campos %}
+            {% if campo.tipo == "titulo" %}
+              <div class="form-group">
+                <label>{{ campo.label }}</label>
+                <input type="text" name="{{ campo.chave }}" value="{{ campo.valor_titulo }}" placeholder="{{ campo.placeholder|default:'—' }}"/>
+              </div>
+
+            {% elif campo.tipo == "texto" %}
+              <div class="form-group">
+                <label>{{ campo.label }}</label>
+                <textarea name="{{ campo.chave }}" rows="4">{{ campo.valor_texto }}</textarea>
+                {% if campo.hint %}<span class="form-hint">{{ campo.hint }}</span>{% endif %}
+              </div>
+
+            {% elif campo.tipo == "imagem" %}
+              <div class="form-group">
+                <label>{{ campo.label }}</label>
+                {% if campo.imagem_url %}
+                  <img src="{{ campo.imagem_url }}" style="width:100%;max-height:200px;object-fit:cover;border-radius:3px;margin-bottom:.5rem;"/>
+                  <label class="form-check" style="margin-bottom:.5rem;">
+                    <input type="checkbox" name="remover_{{ campo.chave }}"/>
+                    <span style="font-size:.75rem;color:#888;">Remover imagem atual</span>
+                  </label>
+                {% endif %}
+                <input type="file" name="{{ campo.chave }}" accept="image/*"
+                       style="font-size:.78rem;color:#666;border:1px dashed #ddd;padding:.75rem;border-radius:3px;background:#fafaf9;cursor:pointer;width:100%;"/>
+                <div style="display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.45rem;">
+                  <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:3px;padding:.12em .5em;font-size:.68rem;font-weight:600;color:#1e40af;">📐 {{ campo.recomendado|default:"900 × 1200 px" }} recomendado</span>
+                  <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:3px;padding:.12em .5em;font-size:.68rem;font-weight:600;color:#1e40af;">⚖️ máx. {{ campo.peso|default:"600 KB" }}</span>
+                  <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:3px;padding:.12em .5em;font-size:.68rem;font-weight:600;color:#1e40af;">JPG · PNG · WEBP</span>
+                </div>
+              </div>
+
+              <!-- Galeria de colaboradores — logo abaixo da foto (paisagem) -->
+              <div style="border-top:1px solid var(--border);padding-top:1.25rem;margin-top:.25rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.6rem;margin-bottom:.5rem;">
+                  <label style="margin:0;">Fotos do carrossel (uma foto por colaborador)</label>
+                  <a href="/painel/equipe/novo/" class="btn btn-primary btn-sm">+ Novo colaborador</a>
+                </div>
+                <p class="form-hint" style="margin-bottom:1rem;">
+                  Essas fotos aparecem, uma de cada vez, no carrossel ao lado do texto da seção "Capital Humano".
+                  Apenas colaboradores marcados como <strong>Ativo</strong> aparecem no site.
+                </p>
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:1rem;">
+                  {% for col in colaboradores %}
+                  <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;background:#fafaf9;">
+                    <div style="position:relative;aspect-ratio:3/4;">
+                      <img src="{{ col.foto.url }}" alt="{{ col.nome }}" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+                      {% if not col.ativo %}
+                        <span style="position:absolute;top:.5rem;left:.5rem;background:rgba(0,0,0,.65);color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.04em;padding:.2em .55em;border-radius:3px;">OCULTO</span>
+                      {% endif %}
+                    </div>
+                    <div style="padding:.7rem .75rem;">
+                      <p style="font-size:.88rem;font-weight:700;color:var(--grafite);margin-bottom:.6rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ col.nome }}</p>
+                      <div style="display:flex;gap:.4rem;">
+                        <a href="/painel/equipe/{{ col.id }}/editar/" class="btn btn-ghost btn-sm" style="flex:1;text-align:center;justify-content:center;">Editar</a>
+                        <button type="submit" formaction="/painel/equipe/{{ col.id }}/deletar/" formmethod="post" formnovalidate
+                                class="btn btn-danger btn-sm" title="Remover"
+                                onclick="return confirm('Remover {{ col.nome }} do carrossel permanentemente?')">✕</button>
+                      </div>
+                    </div>
+                  </div>
+                  {% empty %}
+                  <p style="color:#999;font-size:.85rem;grid-column:1/-1;">Nenhum colaborador cadastrado ainda.</p>
+                  {% endfor %}
+                </div>
+              </div>
+
+            {% endif %}
+          {% endfor %}
+        </div>
+
         {% else %}
         <!-- ── Campos padrão para todas as outras seções ── -->
         <div class="form-grid">
@@ -255,45 +330,6 @@
       </div>
     </div>
   </form>
-
-  {% if secao == "equipe" %}
-  <div class="card" style="margin-top:1.25rem;">
-    <div class="card-header">
-      <h2>Fotos do carrossel (Capital Humano)</h2>
-      <a href="/painel/equipe/novo/" class="btn btn-primary btn-sm">+ Novo colaborador</a>
-    </div>
-    <div class="card-body">
-      <p class="form-hint" style="margin-bottom:1rem;">
-        Essas fotos aparecem, uma de cada vez, no carrossel ao lado do texto da seção "Capital Humano".
-        Apenas colaboradores marcados como <strong>Ativo</strong> aparecem no site.
-      </p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem;">
-        {% for col in colaboradores %}
-        <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;background:#fafaf9;">
-          <div style="position:relative;aspect-ratio:3/4;">
-            <img src="{{ col.foto.url }}" alt="{{ col.nome }}" style="width:100%;height:100%;object-fit:cover;display:block;"/>
-            {% if not col.ativo %}
-              <span style="position:absolute;top:.4rem;left:.4rem;background:rgba(0,0,0,.65);color:#fff;font-size:.6rem;font-weight:600;letter-spacing:.04em;padding:.15em .5em;border-radius:3px;">OCULTO</span>
-            {% endif %}
-          </div>
-          <div style="padding:.55rem .65rem;">
-            <p style="font-size:.78rem;font-weight:600;color:var(--grafite);margin-bottom:.5rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ col.nome }}</p>
-            <div style="display:flex;gap:.35rem;">
-              <a href="/painel/equipe/{{ col.id }}/editar/" class="btn btn-ghost btn-sm" style="flex:1;text-align:center;justify-content:center;">Editar</a>
-              <form method="post" action="/painel/equipe/{{ col.id }}/deletar/" onsubmit="return confirm('Remover {{ col.nome }} do carrossel permanentemente?')">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger btn-sm" title="Remover">✕</button>
-              </form>
-            </div>
-          </div>
-        </div>
-        {% empty %}
-        <p style="color:#999;font-size:.85rem;grid-column:1/-1;">Nenhum colaborador cadastrado ainda.</p>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-  {% endif %}
 
 </div>
 
