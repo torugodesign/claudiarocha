@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 from blog.models import Artigo
-from core.models import ConteudoSite
+from core.models import ConteudoSite, Colaborador
 
 # Mapa completo de campos editáveis por seção
 SECOES = {
@@ -145,6 +145,7 @@ def home(request):
         'c': c,
         'estrutura_fotos':  estrutura_fotos,
         'anos_atuacao': _anos_atuacao(),
+        'colaboradores': Colaborador.objects.filter(ativo=True),
     })
 
 
@@ -271,6 +272,56 @@ def painel_artigo_deletar(request, pk):
         artigo.delete()
         messages.success(request, 'Artigo deletado.')
     return redirect('painel_artigos')
+
+
+# ── EQUIPE (colaboradores do carrossel "Capital Humano") ─
+
+@login_required(login_url='/painel/login/')
+def painel_colaboradores(request):
+    colaboradores = Colaborador.objects.order_by('ordem', 'id')
+    return render(request, 'painel/colaboradores.html', {'colaboradores': colaboradores})
+
+
+@login_required(login_url='/painel/login/')
+def painel_colaborador_novo(request):
+    if request.method == 'POST':
+        ultimo = Colaborador.objects.order_by('-ordem').first()
+        colaborador = Colaborador(
+            nome  = request.POST['nome'],
+            ordem = (ultimo.ordem + 1) if ultimo else 0,
+            ativo = 'ativo' in request.POST,
+        )
+        if request.FILES.get('foto'):
+            colaborador.foto = request.FILES['foto']
+        colaborador.save()
+        messages.success(request, 'Colaborador adicionado.')
+        return redirect('painel_colaboradores')
+    return render(request, 'painel/colaborador_form.html', {'colaborador': None})
+
+
+@login_required(login_url='/painel/login/')
+def painel_colaborador_editar(request, pk):
+    colaborador = get_object_or_404(Colaborador, pk=pk)
+    if request.method == 'POST':
+        colaborador.nome  = request.POST['nome']
+        colaborador.ativo = 'ativo' in request.POST
+        if request.POST.get('ordem', '').isdigit():
+            colaborador.ordem = int(request.POST['ordem'])
+        if request.FILES.get('foto'):
+            colaborador.foto = request.FILES['foto']
+        colaborador.save()
+        messages.success(request, 'Alterações salvas.')
+        return redirect('painel_colaboradores')
+    return render(request, 'painel/colaborador_form.html', {'colaborador': colaborador})
+
+
+@login_required(login_url='/painel/login/')
+def painel_colaborador_deletar(request, pk):
+    if request.method == 'POST':
+        colaborador = get_object_or_404(Colaborador, pk=pk)
+        colaborador.delete()
+        messages.success(request, 'Colaborador removido.')
+    return redirect('painel_colaboradores')
 
 
 # ── CONTEÚDO DO SITE ────────────────────────────────────

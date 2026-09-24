@@ -13,6 +13,27 @@ def _upload_video(instance, filename):
     return f'site/videos/{uuid.uuid4().hex}{ext}'
 
 
+def _upload_colaborador(instance, filename):
+    ext = os.path.splitext(filename)[1].lower()
+    return f'colaboradores/{uuid.uuid4().hex}{ext}'
+
+
+class Colaborador(models.Model):
+    """Fotos individuais da equipe, exibidas no carrossel de 'Capital Humano'."""
+    nome  = models.CharField('Nome', max_length=100)
+    foto  = models.ImageField('Foto (retrato)', upload_to=_upload_colaborador)
+    ordem = models.PositiveIntegerField('Ordem', default=0)
+    ativo = models.BooleanField('Ativo', default=True)
+
+    class Meta:
+        verbose_name = 'Colaborador'
+        verbose_name_plural = 'Colaboradores'
+        ordering = ['ordem', 'id']
+
+    def __str__(self):
+        return self.nome
+
+
 class ConteudoSite(models.Model):
     """Textos, imagens e vídeo editáveis pelo painel."""
     SECAO_CHOICES = [

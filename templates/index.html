@@ -374,25 +374,11 @@
         <div class="equipe__row">
           <div class="equipe__col-galeria">
             <div class="equipe__frame-galeria">
-              <img class="equipe__retrato-img is-active" data-nome="Adriana" src="{% static 'img/equipe/adriana.jpg' %}" alt="Adriana — Escritório Cláudia Rocha" loading="lazy"/>
-              <img class="equipe__retrato-img" data-nome="Conceição" src="{% static 'img/equipe/conceicao.jpg' %}" alt="Conceição — Escritório Cláudia Rocha" loading="lazy"/>
-              <img class="equipe__retrato-img" data-nome="Fátima" src="{% static 'img/equipe/fatima.jpg' %}" alt="Fátima — Escritório Cláudia Rocha" loading="lazy"/>
-              <img class="equipe__retrato-img" data-nome="Gabrielle" src="{% static 'img/equipe/gabrielle.jpg' %}" alt="Gabrielle — Escritório Cláudia Rocha" loading="lazy"/>
-              <img class="equipe__retrato-img" data-nome="Júlia" src="{% static 'img/equipe/julia.jpg' %}" alt="Júlia — Escritório Cláudia Rocha" loading="lazy"/>
-              <img class="equipe__retrato-img" data-nome="Larissa" src="{% static 'img/equipe/larissa.jpg' %}" alt="Larissa — Escritório Cláudia Rocha" loading="lazy"/>
-              <img class="equipe__retrato-img" data-nome="Laís" src="{% static 'img/equipe/lais.jpg' %}" alt="Laís — Escritório Cláudia Rocha" loading="lazy"/>
-              <img class="equipe__retrato-img" data-nome="Lidiane" src="{% static 'img/equipe/lidiane.jpg' %}" alt="Lidiane — Escritório Cláudia Rocha" loading="lazy"/>
-              <img class="equipe__retrato-img" data-nome="Lilian" src="{% static 'img/equipe/lilian.jpg' %}" alt="Lilian — Escritório Cláudia Rocha" loading="lazy"/>
-              <img class="equipe__retrato-img" data-nome="Lucas" src="{% static 'img/equipe/lucas.jpg' %}" alt="Lucas — Escritório Cláudia Rocha" loading="lazy"/>
-              <img class="equipe__retrato-img" data-nome="Luis Henrique" src="{% static 'img/equipe/luis-henrique.jpg' %}" alt="Luis Henrique — Escritório Cláudia Rocha" loading="lazy"/>
-              <img class="equipe__retrato-img" data-nome="Luiza" src="{% static 'img/equipe/luiza.jpg' %}" alt="Luiza — Escritório Cláudia Rocha" loading="lazy"/>
-              <img class="equipe__retrato-img" data-nome="Maira" src="{% static 'img/equipe/maira.jpg' %}" alt="Maira — Escritório Cláudia Rocha" loading="lazy"/>
-              <img class="equipe__retrato-img" data-nome="Patrícia" src="{% static 'img/equipe/patricia.jpg' %}" alt="Patrícia — Escritório Cláudia Rocha" loading="lazy"/>
-              <img class="equipe__retrato-img" data-nome="Roberval" src="{% static 'img/equipe/roberval.jpg' %}" alt="Roberval — Escritório Cláudia Rocha" loading="lazy"/>
-              <img class="equipe__retrato-img" data-nome="Tarik" src="{% static 'img/equipe/tarik.jpg' %}" alt="Tarik — Escritório Cláudia Rocha" loading="lazy"/>
-              <img class="equipe__retrato-img" data-nome="Valkiria" src="{% static 'img/equipe/valkiria.jpg' %}" alt="Valkiria — Escritório Cláudia Rocha" loading="lazy"/>
+              {% for col in colaboradores %}
+              <img class="equipe__retrato-img{% if forloop.first %} is-active{% endif %}" data-nome="{{ col.nome }}" src="{{ col.foto.url }}" alt="{{ col.nome }} — Escritório Cláudia Rocha" loading="lazy"/>
+              {% endfor %}
             </div>
-            <div class="equipe__nome" id="equipeNome">Adriana</div>
+            <div class="equipe__nome" id="equipeNome">{{ colaboradores.0.nome }}</div>
           </div>
 
           <div class="equipe__col-texto">
